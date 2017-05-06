@@ -8,7 +8,7 @@
   <tr>
     <td width="197" align="right" valign="top"><!-- <img src="{{env('phase1')}}/plateforme/wp-content/uploads/logo-immo-clic.png" width="197" height="61" style="display:block;" /> --></td>
     <td align="left" valign="middle" bgcolor="" style="background-color:#FFF ; padding:20px; color:#ffffff;">
-    <div style="font-size:24px;">UDEX</div>
+    <div style="font-size:24px;"></div>
     </td>
   </tr>
 </table>
@@ -25,7 +25,7 @@
               <td align="left" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#53231a;"><div style="font-size:19px;">
               </div>
                 <div>
-                <p>Udex,</p> 
+                <p>Team,</p> 
                 </div></td>
             </tr>
           </table>

@@ -232,13 +232,13 @@ class Helper {
     * Response :  
     * Return : true or false
     */
-    public  function sendMail($email_content, $template)
+     public  function sendMail($email_content, $template)
     {        
-         
+          
         return  Mail::send('emails.'.$template, array('content' => $email_content), function($message) use($email_content)
           {
-            $name = "Udex";
-            $message->from('no-reply@indianic.com',$name);  
+            $name = $_SERVER['SERVER_NAME'];
+            $message->from('no-reply@admin.com',$name);  
             $message->to($email_content['receipent_email'])->subject($email_content['subject']);
             
           });

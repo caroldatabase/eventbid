@@ -17,6 +17,10 @@ use App\Helpers\Helper as Helper;
 use App\User;
 use App\ProfessorProfile;
 use App\StudentProfile;
+use App\PostTask;
+use App\SubCategory;
+use App\Category;
+
 
 
 
@@ -137,8 +141,18 @@ class ApiController extends Controller
         $user->first_name    = ($request->input('firstName'))?$request->input('firstName'):$user->first_name;
         $user->last_name     = ($request->input('lastName'))?$request->input('lastName'):$user->last_name;  
         $user->user_type     = ($request->input('userType'))?$request->input('userType'):$user->user_type;  
-        $user->company_url   = ($request->input('companyUrl'))?$request->input('companyUrl'):$user->company_url;  
+        $user->company_url   = ($request->input('companyUrl'))?$request->input('companyUrl'):$user->company_url; 
+         
+        $user->specialization   = ($request->input('specialization'))?$request->input('specialization'):$user->specialization; 
 
+        $user->about_me         = ($request->input('aboutMe'))?$request->input('aboutMe'):$user->about_me; 
+
+        $user->verification_skills   = ($request->input('verificationSkills'))?$request->input('verificationSkills'):$user->verification_skills; 
+
+        $user->review_rating   = ($request->input('reviewRating'))?$request->input('reviewRating'):$user->review_rating; 
+
+        $user->portfolio        = ($request->input('portfolio'))?$request->input('portfolio'):$user->portfolio; 
+         $user->save();
         
         return response()->json(
                             [ 
@@ -150,7 +164,113 @@ class ApiController extends Controller
                         );
          
     }
+    public function category(Request $request, Category $category) 
+    {  
+ 
+        $parent_id = $request->get('categoryId');
+        $level=1;
+        while (1) {
+           $data = SubCategory::find($parent_id);
+           
+            if($data)
+            {
+                $level++;
+                $parent_id = $data->parent_id;
+                $cname[] = ['id'=>$data->id, 'cname'=>$data->name,'level'=>$data->level];
+            }else{
+                break;
+            }
+        }
 
+      //  dd($cname);
+        $cat = new Category;
+        if($request->get('categoryId')){
+             $cat  = Category::find($parent_id);
+        } 
+
+        $validator = Validator::make($request->all(), [
+           'categoryName'     => "required" ,  
+
+        ]);
+
+        if ($validator->fails()) {
+                    $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return Response::json(array(
+                'status' => 0,
+                'code'   => 500,
+                'message' => $error_msg[0],
+                'data'  =>  $request->all()
+                )
+            );
+        }  
+
+        $cat->name                  =   $request->get('categoryName');
+        $cat->slug                  =   strtolower(str_slug($request->get('categoryName')));
+        $cat->parent_id             =   $request->get('category_id'); 
+        $cat->level                 =   $level;
+        $cat->save(); 
+
+         return response()->json(
+                                    [ 
+                                        "status"=>1,
+                                        "code"=>200,
+                                        "message"=>"category created successfully." ,
+                                        'data' => $cat
+                                    ]
+                                );
+
+        
+    }
+
+    public function postTask(Request $request)
+    {
+        $postTask = new PostTask;
+        $validator = Validator::make($request->all(), [
+           'eventTitle'     => "required" ,  
+           'eventType'     => 'required'
+
+        ]);
+
+        if ($validator->fails()) {
+                    $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return Response::json(array(
+                'status' => 0,
+                'code'   => 500,
+                'message' => $error_msg[0],
+                'data'  =>  $request->all()
+                )
+            );
+        }  
+
+        $postTask->event_title      =  $request->get('eventTitle');
+        $postTask->event_type       =  $request->get('eventType');
+        $postTask->date_required    =  $request->get('dateRequired');
+        $postTask->time_from        =  $request->get('timeFrom');
+        $postTask->time_to          =  $request->get('timeTo');
+        $postTask->category         =  $request->get('category');
+        $postTask->inspiration_photo=  $request->get('inspirationPhoto');
+        $postTask->save();
+
+        return response()->json(
+                                    [ 
+                                        "status"=>1,
+                                        "code"=>200,
+                                        "message"=>"Post task created successfully." ,
+                                        'data' => $postTask
+                                    ]
+                                );
+
+
+
+    }
    /* @method : login
     * @param : email,password and deviceID
     * Response : json
@@ -202,14 +322,14 @@ class ApiController extends Controller
         $data['userType']       =   $user->user_type;
         $data['token']          =   $token; 
  
-        return response()->json(
-                                [ 
-                                    "status"=>1,
-                                    "code"=>200,
-                                    "message"=>"Successfully logged in." ,
-                                    'data' => $data 
-                                ]
-                            );
+            return response()->json(
+                                    [ 
+                                        "status"=>1,
+                                        "code"=>200,
+                                        "message"=>"Successfully logged in." ,
+                                        'data' => $data 
+                                    ]
+                                );
 
     } 
    /* @method : get user details
@@ -222,10 +342,20 @@ class ApiController extends Controller
     {
         $user = JWTAuth::toUser($request->input('token'));
         $data = [];
-        $data['userId']         = $user->id;
-        $data['name']           = $user->name;
-        $data['email']          = $user->email;
-        $data['roleType']       = ($user->role_type==1)?"professor":"student";
+        $data['userId']         =   $user->id;
+        $data['firstName']      =   $user->first_name; 
+        $data['email']          =   $user->email; 
+        $data['lastName']       =   $user->last_name;
+        $data['userType']       =   $user->user_type;
+
+        $data['photo']          =   $user->photo;
+        $data['specialization'] =   $user->specialization;
+        $data['aboutMe']        =   $user->about_me;
+        $data['verificationSkills']       =   $user->verification_skills;
+        $data['reviewRating']   =   $user->review_rating;
+        $data['portfolio']      =   $user->portfolio;
+        $data['companyUrl']     =   $user->company_url;
+        $data['token']          =   $token; 
        
 
         return response()->json(
@@ -288,9 +418,10 @@ class ApiController extends Controller
     * Response : json
     * Return : json response 
     */
-    public function forgetPassword(Request $request)
-    {   
+     public function forgetPassword(Request $request)
+    {  
         $email = $request->input('email');
+
         //Server side valiation
         $validator = Validator::make($request->all(), [
             'email' => 'required|email'
@@ -312,7 +443,7 @@ class ApiController extends Controller
             );
         }
 
-        $user =   User::where('email',$email)->get();
+        $user =   User::where('email',$email)->first();
 
         if($user->count()==0){
             return Response::json(array(
@@ -322,7 +453,7 @@ class ApiController extends Controller
                 )
             );
         }
-        $user_data = User::find($user[0]->userID);
+        $user_data = User::find($user->id);
         $temp_password = Hash::make($email);
        
         
@@ -332,7 +463,7 @@ class ApiController extends Controller
         $email_content = array(
                         'receipent_email'   => $request->input('email'),
                         'subject'           => 'Your Account Password',
-                        'name'              => $user[0]->first_name,
+                        'name'              => $user->first_name,
                         'temp_password'     => $temp_password,
                         'encrypt_key'       => Crypt::encrypt($email)
                     );
