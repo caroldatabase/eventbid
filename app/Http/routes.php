@@ -35,6 +35,7 @@ Route::group(['prefix' => 'api/v1'], function()
             
             Route::match(['post','get'],'post-task/create','ApiController@postTask'); 
             Route::match(['post','get'],'post-task/category','ApiController@category');  
+            Route::match(['post','get'],'post-task/getcategory','ApiController@getCategory');  
             
 
             Route::match(['post','get'],'validate_user','ApiController@validateUser');

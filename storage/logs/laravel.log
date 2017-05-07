@@ -22571,3 +22571,6 @@ Stack trace:
 #72 /var/www/html/eventbid/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(99): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
 #73 /var/www/html/eventbid/index.php(53): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
 #74 {main}  
+[2017-05-07 20:19:38] local.ERROR: Symfony\Component\Debug\Exception\FatalErrorException: Cannot redeclare App\Http\Controllers\ApiController::category() in /var/www/html/eventbid/app/Http/Controllers/ApiController.php:229
+Stack trace:
+#0 {main}  

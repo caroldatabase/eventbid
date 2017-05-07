@@ -226,6 +226,33 @@ class ApiController extends Controller
         
     }
 
+    public function getCategory(Request $request, Category $category) 
+    {
+        $cat =  Category::all();
+        if($cat)
+        {
+              return response()->json(
+                                    [ 
+                                        "status"=>1,
+                                        "code"=>200,
+                                        "message"=>"category list." ,
+                                        'data' => $cat
+                                    ]
+                                );
+          }else{
+              return response()->json(
+                                    [ 
+                                        "status"=>0,
+                                        "code"=>204,
+                                        "message"=>"category list not found." ,
+                                        'data' => $cat
+                                    ]
+                                );
+          }
+      
+
+    }
+
     public function postTask(Request $request)
     {
         $postTask = new PostTask;
