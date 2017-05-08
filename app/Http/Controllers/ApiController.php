@@ -284,7 +284,51 @@ class ApiController extends Controller
       
 
     }
+    public function deleteCategory(Request $request, Category $category) 
+    {
+        
+         $validator = Validator::make($request->all(), [
+           'categoryId'     => "required" ,  
 
+        ]);
+
+        if ($validator->fails()) {
+                    $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return Response::json(array(
+                'status' => 0,
+                'code'   => 500,
+                'message' => $error_msg[0],
+                'data'  =>  $request->all()
+                )
+            );
+        }  
+
+        $cat = Category::where('id','=', $request->input('categoryId'))->first(); 
+            if($cat==null){
+                 return Response::json(array(
+                    'status' => 0,
+                    'code'   => 500,
+                    'message' => 'Invalid category id!',
+                    'data'  =>  $request->all()
+                    )
+                );
+            }   
+        $cat = Category::where('id',$request->input('categoryId'))->delete();
+
+        return response()->json(
+                            [ 
+                                "status"=>0,
+                                "code"=>200,
+                                "message"=>"category deleted successfully." ,
+                                'data' => $request->all()
+                            ]
+                        );
+
+    }
     public function postTask(Request $request)
     {
         $postTask = new PostTask;
