@@ -471,8 +471,8 @@ class ApiController extends Controller
         }
 
         $user =   User::where('email',$email)->first();
-
-        if($user->count()==0){
+      
+        if($user==null){
             return Response::json(array(
                 'status' => 0,
                 'message' => "Oh no! The address you provided isn't in our system",
