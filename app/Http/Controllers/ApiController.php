@@ -167,7 +167,7 @@ class ApiController extends Controller
     public function category(Request $request, Category $category) 
     {  
  
-        $parent_id = $request->get('categoryId');
+        $parent_id = $request->input('categoryId');
         $level=1;
         while (1) {
            $data = SubCategory::find($parent_id);
@@ -183,15 +183,40 @@ class ApiController extends Controller
         }
 
       //  dd($cname);
-        $cat = new Category;
-        if($request->get('categoryId')){
-             $cat  = Category::find($parent_id);
-        } 
-
+       
         $validator = Validator::make($request->all(), [
            'categoryName'     => "required" ,  
 
         ]);
+
+
+        if($parent_id == null)
+        {
+            $cat = Category::where('name',$request->input('categoryName'))->get();
+             
+            if($cat->count()>0){
+                 return Response::json(array(
+                    'status' => 0,
+                    'code'   => 500,
+                    'message' => 'Category name already taken!',
+                    'data'  =>  $request->all()
+                    )
+                );
+            }
+        }else{
+            $cat = Category::where('name',$request->input('categoryName'))
+                    ->where('id','!=', $parent_id)->first(); 
+            if($cat){
+                 return Response::json(array(
+                    'status' => 0,
+                    'code'   => 500,
+                    'message' => 'Category name already taken!',
+                    'data'  =>  $request->all()
+                    )
+                );
+            }        
+        } 
+
 
         if ($validator->fails()) {
                     $error_msg  =   [];
@@ -207,12 +232,19 @@ class ApiController extends Controller
                 )
             );
         }  
+        $cat = new Category;
+        if($request->input('categoryId')){
+             $cat  = Category::find($parent_id);
+        } 
 
-        $cat->name                  =   $request->get('categoryName');
-        $cat->slug                  =   strtolower(str_slug($request->get('categoryName')));
-        $cat->parent_id             =   $request->get('category_id'); 
+       
+        $cat->name                  =   $request->input('categoryName');
+        $cat->slug                  =   strtolower(str_slug($request->input('categoryName')));
+        $cat->parent_id             =   !empty($request->input('category_id'))?$request->input('category_id'):0; 
         $cat->level                 =   $level;
+        
         $cat->save(); 
+        $cat->id;
 
          return response()->json(
                                     [ 
