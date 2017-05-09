@@ -14,7 +14,8 @@
         "barryvdh/laravel-dompdf": "0.6.*",
         "maatwebsite/excel": "^2.0",
         "gloudemans/shoppingcart": "^2.3",
-        "atayahmet/laravel-nestable": "^0.7.3"
+        "atayahmet/laravel-nestable": "^0.7.3",
+        "phpmailer/phpmailer": "^5.2" 
 
     },
     "require-dev": {

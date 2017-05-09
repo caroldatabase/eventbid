@@ -571,11 +571,11 @@ class ApiController extends Controller
                         'encrypt_key'       => Crypt::encrypt($email)
                     );
         $helper = new Helper;
-        $email_response = $helper->sendMail(
+        $email_response = $helper->sendEmail(
                                 $email_content,
                                 'forgot_password_link'
                             ); 
-       
+ 
        return   response()->json(
                     [ 
                         "status"=>1,
