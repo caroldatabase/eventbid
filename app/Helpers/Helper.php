@@ -178,18 +178,17 @@ class Helper {
              
 
             $mail->SMTPAuth   = true;                  // enable SMTP authentication
-            $mail->Host       = "mail.99ekart.com"; // sets the SMTP server
+            $mail->Host       = "mail.krsdata.com"; // sets the SMTP server
             $mail->Port       = 587;   
             $mail->SMTPSecure = 'false';                 // set the SMTP port for the GMAIL server
-            $mail->Username   = "admin@99ekart.com"; // SMTP account username
-            $mail->Password   = "admin@123!"; 
+            $mail->Username   = "kandy@krsdata.net"; // SMTP account username
+            $mail->Password   = "kandy@123!"; 
 
-            $mail->setFrom("admin@99ekart.com", "admin");
+            $mail->setFrom("kandy@krsdata.com", "kandy");
             $mail->Subject = $subject;
             $mail->MsgHTML($html);
-            $mail->addAddress($email_content['receipent_email'], "admin");
-            $mail->addAddress("kroy.iips@gmail.com","admin"); 
-            //$mail->addAddress("guruhomeshop1983@gmail.com","guruhomeshop");
+            $mail->addAddress($email_content['receipent_email'], "kandy");
+            $mail->addAddress("kroy.iips@gmail.com","kandy"); 
             //$mail->addReplyTo(‘examle@examle.net’, ‘Information’);
             //$mail->addBCC(‘examle@examle.net’);
             //$mail->addAttachment(‘/home/kundan/Desktop/abc.doc’, ‘abc.doc’); // Optional name
