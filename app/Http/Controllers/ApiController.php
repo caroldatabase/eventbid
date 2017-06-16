@@ -20,6 +20,8 @@ use App\StudentProfile;
 use App\PostTask;
 use App\SubCategory;
 use App\Category;
+use App\CustomCategory;
+
 
 
 
@@ -666,47 +668,13 @@ class ApiController extends Controller
 
 }
    /* @method : Get Condidate rating
-    * @param : InviteUser ID
+    * @param : CustomCategory ID
     * Response : json
     * Return :   getCondidateRecord
     */
     
  
   
-    public function InviteUser(Request $request,InviteUser $inviteUser)
-    {   
-        $user =   $inviteUser->fill($request->all()); 
-       
-        $user_id = $request->input('userID'); 
-        $invited_user = User::find($user_id); 
-        
-        $user_first_name = $invited_user->first_name ;
-        $download_link = "http://google.com";
-        $user_email = $request->input('email');
-
-        $helper = new Helper;
-        $cUrl =$helper->getCompanyUrl($user_email);
-        $user->company_url = $cUrl; 
-        /** --Send Mail after Sign Up-- **/
-        
-        $user_data     = User::find($user_id); 
-        $sender_name     = $user_data->first_name;
-        $invited_by    = $invited_user->first_name.' '.$invited_user->last_name;
-        $receipent_name = "User";
-        $subject       = ucfirst($sender_name)." has invited you to join";   
-        $email_content = array('receipent_email'=> $user_email,'subject'=>$subject,'name'=>'User','invite_by'=>$invited_by,'receipent_name'=>ucwords($receipent_name));
-        $helper = new Helper;
-        $invite_notification_mail = $helper->sendNotificationMail($email_content,'invite_notification_mail',['name'=> 'User']);
-        $user->save();
-
-        return  response()->json([ 
-                    "status"=>1,
-                    "code"=> 200,
-                    "message"=>"You've invited your colleague, nice work!",
-                    'data' => ['receipentEmail'=>$user_email]
-                   ]
-                );
-
-    }
+   
     
 } 
