@@ -359,7 +359,7 @@ class ApiController extends Controller
         $postTask->date_required    =  $request->get('dateRequired');
         $postTask->time_from        =  $request->get('timeFrom');
         $postTask->time_to          =  $request->get('timeTo');
-        $postTask->category         =  $request->get('category');
+        $postTask->category_id      =  $request->get('category');
         $postTask->inspiration_photo=  $request->get('inspirationPhoto');
         $postTask->save();
 
