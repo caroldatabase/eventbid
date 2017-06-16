@@ -367,16 +367,19 @@ class ApiController extends Controller
 
         //post task question
         $q = [];
-        foreach ($request->get('category_question') as $key => $result) {
-           $task_post_id = $postTask->id;
-           $category_question = new CategoryQuestion;
-           $category_question->category_id              =   $request->get('category');
-           $category_question->post_task_id             =   $task_post_id;
-           $category_question->category_question_key    =   $result['question_key'];
-           $category_question->category_question_value  =   $result['question_value'];
-           $category_question->save();
-           $q[] = ['question_key'=>$result['question_key'],'question_value'=>$result['question_value']];
+        if($request->get('category_question')) {
+            foreach ($request->get('category_question') as $key => $result) {
+               $task_post_id = $postTask->id;
+               $category_question = new CategoryQuestion;
+               $category_question->category_id              =   $request->get('category');
+               $category_question->post_task_id             =   $task_post_id;
+               $category_question->category_question_key    =   $result['question_key'];
+               $category_question->category_question_value  =   $result['question_value'];
+               $category_question->save();
+               $q[] = ['question_key'=>$result['question_key'],'question_value'=>$result['question_value']];
+            }
         }
+        
         unset($postTask->id);
         $postTask->category_question=$q;
 
