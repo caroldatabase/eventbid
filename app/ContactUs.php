@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class StudentProfile extends Model
+class ContactUs extends Model
 {
      /**
      * The metrics table.
      * 
      * @var string
      */
-    protected $table = 'student_profiles';
+    protected $table = 'contact_us';
     protected $guarded = ['created_at' , 'updated_at' , 'id' ];
-    protected $fillable = ['name','email','phone','address'];
+    protected $fillable = ['name','email','subject','message'];
 }

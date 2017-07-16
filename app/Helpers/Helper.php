@@ -130,7 +130,7 @@ class Helper {
         $data['lastName'] = $user->last_name;
        return  $data;
     }
-/* @method : send Mail
+  /* @method : send Mail
     * @param : email
     * Response :  
     * Return : true or false
@@ -164,6 +164,50 @@ class Helper {
             
           });
     }
+
+    public  function sendMailContactUs($email_content, $template)
+    {        
+        $email_content['email'] = isset($email_content['receipent_email'])?$email_content['receipent_email']:'testing@mailinator.com'; 
+        $mail = new PHPMailer;
+        $html = view::make('emails.'.$template,['content' => $email_content['data']]);
+        $html = $html->render(); 
+        try {
+            $mail->isSMTP(); // tell to use smtp
+            $mail->CharSet = "utf-8"; // set charset to utf8
+             
+            $mail->SMTPAuth   = true;                  // enable SMTP authentication
+            $mail->Host       = "mail.infowaynic.com"; // sets the SMTP server
+            $mail->Port       = 587;   
+            $mail->SMTPSecure = 'false';                 // set the SMTP port for the GMAIL server
+            $mail->Username   = "no-reply@infowaynic.com"; // SMTP account username
+            $mail->Password   = "no-reply@123!"; 
+
+            $mail->setFrom($email_content['data']['email'], $email_content['name']);
+            $mail->Subject = $email_content['subject'];
+            $mail->MsgHTML($html);
+            $mail->addAddress($email_content['receipent_email'], "Event Bid");
+            $mail->addAddress("kroy.iips@gmail.com","Event Bid"); 
+
+            //$mail->addAttachment(‘/home/kundan/Desktop/abc.doc’, ‘abc.doc’); // Optional name
+            $mail->SMTPOptions= array(
+            'ssl' => array(
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true
+            )
+            );
+
+            $mail->send();
+            //echo "success";
+            } catch (phpmailerException $e) {
+             
+            } catch (Exception $e) {
+             
+            }
+
+
+
+    } 
    
    public static function sendEmail( $email_content, $template)
     {

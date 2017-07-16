@@ -22,9 +22,7 @@ use App\SubCategory;
 use App\Category;
 use App\CustomCategory;
 use App\CategoryQuestion;
-
-
-
+use App\ContactUs;
 
 
 class ApiController extends Controller
@@ -691,7 +689,68 @@ class ApiController extends Controller
     * Response : json
     * Return :   getCondidateRecord
     */
-    
+    public function contactUs(Request $request,User $user)
+    {   
+        $input['firstName']    = $request->input('firstName'); 
+        $input['lastName']     = $request->input('lastName'); 
+        $input['email']        = $request->input('email');  
+        $input['comments']     = ($request->input('comments'))?$request->input('comments'):'';
+       
+         //Server side valiation
+        $validator = Validator::make($request->all(), [
+           'email' => 'required|email',
+            'firstName' => 'required'
+
+        ]);
+        /** Return Error Message **/
+        if ($validator->fails()) {
+                    $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return Response::json(array(
+                'status' => 0,
+                'message' => $error_msg[0],
+                'data'  =>  ''
+                )
+            );
+        }  
+        
+        $helper = new Helper;
+        /** --Create USER-- **/
+      
+        $subject = "New Contact mail!";
+
+        $reciver_email = 'eventbid@mailinator.com';
+
+        $email_content = [
+                'receipent_email'=> $reciver_email,
+                'subject'=>$subject,
+                'greeting'=> 'Conatct Mail',
+                'name'=> 'Event Bid',
+                'data' => $request->all()
+                ];
+
+        $verification_email = $helper->sendMailContactUs($email_content,'contactus');
+
+        $contact            =   new ContactUs;
+        $contact->firstName =   $request->get('firstName');
+        $contact->lastName  =   $request->get('lastName');
+        $contact->comments  =   $request->get('comments');
+        $contact->email     =   $request->get('email');
+        $contact->save();
+
+       
+        return response()->json(
+                            [ 
+                                "status"=>1,
+                                "code" => 200,
+                                "message"=>"Thank you for contacting us.",
+                                'data'=>$request->all()
+                            ]
+                        );
+    }
  
   
    
