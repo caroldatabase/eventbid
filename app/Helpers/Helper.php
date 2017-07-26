@@ -168,6 +168,7 @@ class Helper {
     public  function sendMailContactUs($email_content, $template)
     {        
         $email_content['email'] = isset($email_content['receipent_email'])?$email_content['receipent_email']:'testing@mailinator.com'; 
+
         $mail = new PHPMailer;
         $html = view::make('emails.'.$template,['content' => $email_content['data']]);
         $html = $html->render(); 
@@ -181,12 +182,12 @@ class Helper {
             $mail->SMTPSecure = 'false';                 // set the SMTP port for the GMAIL server
             $mail->Username   = "no-reply@infowaynic.com"; // SMTP account username
             $mail->Password   = "no-reply@123!"; 
-
-            $mail->setFrom($email_content['data']['email'], $email_content['name']);
+            $email = isset($email_content['data']['email'])?$email_content['data']['email']:$email_content['data']['mailId'];
+            $mail->setFrom($email, $email_content['name']);
             $mail->Subject = $email_content['subject'];
             $mail->MsgHTML($html);
             $mail->addAddress($email_content['receipent_email'], "Event Bid");
-            $mail->addAddress("kroy.iips@gmail.com","Event Bid"); 
+           // $mail->addAddress("kroy.iips@gmail.com","Event Bid"); 
 
             //$mail->addAttachment(‘/home/kundan/Desktop/abc.doc’, ‘abc.doc’); // Optional name
             $mail->SMTPOptions= array(

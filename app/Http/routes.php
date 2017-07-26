@@ -27,7 +27,8 @@ Route::get('/', function () {
 Route::group(['prefix' => 'api/v1'], function()
 {   
     Route::group(['middleware' => 'api'], function () {
-            Route::match(['post','get'],'contactus','ApiController@contactUs');  
+            Route::match(['post','get'],'contactus','ApiController@contactUs'); 
+            Route::match(['post','get'],'EBManagerContactEnquiry','ApiController@EBManagerContactEnquiry');   
             Route::match(['post','get'],'user/signup','ApiController@register');  
             Route::match(['post','get'],'user/update-profile/{user_id}','ApiController@updateProfile'); 
             Route::match(['post','get'],'user/login', 'ApiController@login'); 
