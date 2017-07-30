@@ -27,6 +27,9 @@ Route::get('/', function () {
 Route::group(['prefix' => 'api/v1'], function()
 {   
     Route::group(['middleware' => 'api'], function () {
+        
+            Route::match(['post','get'],'newCategorey/create','CustomCategoryController@newCategory'); 
+
             Route::match(['post','get'],'contactus','ApiController@contactUs'); 
             Route::match(['post','get'],'EBManagerContactEnquiry','ApiController@EBManagerContactEnquiry');   
             Route::match(['post','get'],'user/signup','ApiController@register');  
@@ -39,6 +42,7 @@ Route::group(['prefix' => 'api/v1'], function()
             Route::match(['post','get'],'post-task/category','ApiController@category');  
             Route::match(['post','get'],'post-task/getcategory','ApiController@getCategory'); 
             Route::match(['post','get'],'category/delete','ApiController@deleteCategory');  
+
             
             Route::match(['post','get'],'post-task/request-category','CustomCategoryController@customCategory'); 
              
