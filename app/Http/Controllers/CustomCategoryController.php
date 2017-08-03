@@ -56,7 +56,7 @@ class CustomCategoryController extends Controller {
             'category_title'    => "required|unique:custom_categories,category_title" ,
             'first_name'        => 'required',
             'last_name'         => 'required',
-            'email'             => 'required|email' 
+            'email'             => 'required|email', 
         ]);
         // Return Error Message
         if ($validator->fails()) {
@@ -91,11 +91,11 @@ class CustomCategoryController extends Controller {
             );
     }
 
-    public function newCategory(Request $request, NewCategory $newCategory)
+    public function newEBCategory(Request $request, NewCategory $newCategory)
     {    
         
         $validator = Validator::make($request->all(), [
-            'titleOfNewCtaegory'    => "required|unique:new_category,titleOfNewCtaegory" ,
+            'titleOfNewCategory'    => "required|unique:new_category,titleOfNewCategory" ,
             'firstName'        => 'required',
             'lastName'         => 'required',
             'email'             => 'required|email',
@@ -122,8 +122,8 @@ class CustomCategoryController extends Controller {
         $newCategory->lastName          = $request->get('lastName');
         $newCategory->email             = $request->get('email');
         $newCategory->userType          = $request->get('userType'); 
-        $newCategory->titleOfNewCtaegory =  $request->get('titleOfNewCtaegory');
-        $newCategory->whyNeedCtaegory   = $request->get('whyNeedCtaegory');
+        $newCategory->titleOfNewCtaegory =  $request->get('titleOfNewCategory');
+        $newCategory->whyNeedCtaegory   = $request->get('whyNeedCategory');
         
         $newCategory->save();
 
@@ -137,17 +137,5 @@ class CustomCategoryController extends Controller {
     }
 
 
-    
-    /*
-     *Delete User
-     * @param ID
-     * 
-     */
-    public function destroy(Course $course) { 
-    }
-
-    public function show(Course $course) {
-        
-    }
-
+   
 }

@@ -28,7 +28,7 @@ Route::group(['prefix' => 'api/v1'], function()
 {   
     Route::group(['middleware' => 'api'], function () {
         
-            Route::match(['post','get'],'newCategorey/create','CustomCategoryController@newCategory'); 
+            Route::match(['post','get'],'newEBCategory/create','CustomCategoryController@newEBCategory'); 
 
             Route::match(['post','get'],'contactus','ApiController@contactUs'); 
             Route::match(['post','get'],'EBManagerContactEnquiry','ApiController@EBManagerContactEnquiry');   
