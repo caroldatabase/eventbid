@@ -17,8 +17,8 @@ class NewCategory extends Model
                             'lastName',
                             'email',
                             'userType',
-                            'titleOfNewCtaegory', 
-                            'whyNeedCtaegory',
+                            'titleOfNewCategory', 
+                            'whyNeedCategory',
                         ];
  
 }

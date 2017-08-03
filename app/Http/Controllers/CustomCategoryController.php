@@ -115,16 +115,14 @@ class CustomCategoryController extends Controller {
                 'data'      => $request->all()
                 )
             );
-        }
-        $newCactegory                   = new NewCategory;
 
-        $newCategory->firstName         = $request->get('firstName');
-        $newCategory->lastName          = $request->get('lastName');
-        $newCategory->email             = $request->get('email');
-        $newCategory->userType          = $request->get('userType'); 
-        $newCategory->titleOfNewCtaegory =  $request->get('titleOfNewCategory');
-        $newCategory->whyNeedCtaegory   = $request->get('whyNeedCategory');
-        
+        }
+
+        $newCactegory                   = new NewCategory;
+        foreach ($newCactegory->getfillable() as $key => $value) {
+            $newCategory->$value = $request->get($value);
+        }
+
         $newCategory->save();
 
          return Response::json(array(
