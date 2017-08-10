@@ -45,10 +45,32 @@ class CustomCategoryController extends Controller {
     {  
     }
 
-    /*
-     * create Group method
-     * */
+    public function customCategoryDelete($categoryId)
+    {    
+        
+        $cat = CustomCategory::where('id','=', $categoryId)->first(); 
+            if($cat==null){
+                 return Response::json(array(
+                    'status' => 0,
+                    'code'   => 500,
+                    'message' => 'Custom Category id does not exist in database!',
+                    'data'  =>  ['categoryId'=>$categoryId]
+                    )
+                );
+            }   
 
+        $cat = CustomCategory::where('id',$categoryId)->delete();
+
+        return response()->json(
+                            [ 
+                                "status"=>1,
+                                "code"=>200,
+                                "message"=>"Custom Category deleted successfully." ,
+                                'data' => ['categoryId'=>$categoryId]
+                            ]
+                        );
+ 
+    }
     public function customCategory(Request $request, CustomCategory $customCategory)
     {    
         
@@ -136,4 +158,30 @@ class CustomCategoryController extends Controller {
 
 
    
+    public function newEBCategoryDelete(Request $request, $categoryId)
+    {    
+        
+        $cat = NewCategory::where('id','=', $categoryId)->first(); 
+            if($cat==null){
+                 return Response::json(array(
+                    'status' => 0,
+                    'code'   => 500,
+                    'message' => 'New Category id does not exist in database!',
+                    'data'  =>  ['categoryId'=>$categoryId]
+                    )
+                );
+            }   
+
+        $cat = NewCategory::where('id',$categoryId)->delete();
+
+        return response()->json(
+                            [ 
+                                "status"=>1,
+                                "code"=>200,
+                                "message"=>"New Category deleted successfully." ,
+                                'data' => ['categoryId'=>$categoryId]
+                            ]
+                        );
+ 
+    }
 }

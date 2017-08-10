@@ -185,8 +185,7 @@ class ApiController extends Controller
         }
        
         $validator = Validator::make($request->all(), [
-           'categoryName'     => "required" ,  
-
+           'categoryName'     => "required" 
         ]);
 
 
@@ -242,7 +241,7 @@ class ApiController extends Controller
         $cat->slug                  =   strtolower(str_slug($request->input('categoryName')));
         $cat->parent_id             =   !empty($request->input('category_id'))?$request->input('category_id'):0; 
         $cat->level                 =   $level;
-        
+        $cat->categoryImage         =   $request->input('categoryImage');
         $cat->save(); 
         $cat->id;
 
@@ -284,10 +283,10 @@ class ApiController extends Controller
       
 
     }
-    public function deleteCategory(Request $request, Category $category) 
+    public function deleteCategory(Request $request, $categoryId) 
     {
         
-         $validator = Validator::make($request->all(), [
+         $validator = Validator::make(['categoryId'=>$categoryId], [
            'categoryId'     => "required" ,  
 
         ]);
@@ -306,28 +305,51 @@ class ApiController extends Controller
                 )
             );
         }  
-
-        $cat = Category::where('id','=', $request->input('categoryId'))->first(); 
+        $cat = Category::where('id','=', $categoryId)->first(); 
             if($cat==null){
                  return Response::json(array(
                     'status' => 0,
                     'code'   => 500,
-                    'message' => 'Invalid category id!',
-                    'data'  =>  $request->all()
+                    'message' => 'Category id does not exist in database!',
+                    'data'  =>  ['categoryId'=>$categoryId]
                     )
                 );
             }   
-        $cat = Category::where('id',$request->input('categoryId'))->delete();
+        $cat = Category::where('id',$categoryId)->delete();
 
         return response()->json(
                             [ 
-                                "status"=>0,
+                                "status"=>1,
                                 "code"=>200,
-                                "message"=>"category deleted successfully." ,
-                                'data' => $request->all()
+                                "message"=>"Category deleted successfully." ,
+                                'data' => ['categoryId'=>$categoryId]
                             ]
                         );
 
+    }
+    public function postTaskDelete($post_task_id)
+    {
+         $obj = PostTask::where('id','=', $post_task_id)->first(); 
+            if($obj==null){
+                 return Response::json(array(
+                    'status' => 0,
+                    'code'   => 500,
+                    'message' => 'Post Task id does not exist in database!',
+                    'data'  =>  ['post_task_id'=>$post_task_id]
+                    )
+                );
+            }   
+
+        PostTask::where('id',$post_task_id)->delete();
+
+        return response()->json(
+                            [ 
+                                "status"=>1,
+                                "code"=>200,
+                                "message"=>"Post Task deleted successfully." ,
+                                'data' => ['post_task_id'=>$post_task_id]
+                            ]
+                        );
     }
     public function postTask(Request $request)
     {
