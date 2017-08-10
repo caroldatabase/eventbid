@@ -259,7 +259,7 @@ class ApiController extends Controller
 
     public function getCategory(Request $request, Category $category) 
     {
-        $cat =  Category::all();
+        $cat =  Category::all(['name as CategoryName','categoryImage']);
         if($cat)
         {
               return response()->json(
