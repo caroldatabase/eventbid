@@ -329,7 +329,7 @@ class ApiController extends Controller
     }
     public function postTaskDelete($post_task_id)
     {
-         $obj = PostTask::where('id','=', $post_task_id)->first(); 
+        $obj = PostTask::where('id','=', $post_task_id)->first(); 
             if($obj==null){
                  return Response::json(array(
                     'status' => 0,
@@ -350,6 +350,26 @@ class ApiController extends Controller
                                 'data' => ['post_task_id'=>$post_task_id]
                             ]
                         );
+    }
+
+    public function getPostTask(Request $request, $id)
+    {
+        if($id) {
+            $postTask = PostTask::find($id);  
+        }else{
+            $postTask = PostTask::all();
+        }
+        
+
+        return response()->json(
+                                    [ 
+                                        "status"=>1,
+                                        "code"=>200,
+                                        "message"=>"Post task record." ,
+                                        'data' => $postTask
+                                    ]
+                                );
+
     }
     public function postTask(Request $request)
     {
@@ -381,29 +401,42 @@ class ApiController extends Controller
         $postTask->time_from        =  $request->get('timeFrom');
         $postTask->time_to          =  $request->get('timeTo');
         $postTask->category_id      =  $request->get('category');
-        $postTask->inspiration_photo=  $request->get('inspirationPhoto');
-        $postTask->save();
-
-        $postTask->post_task_id = $postTask->id;
-
-        //post task question
-        $q = [];
-        if($request->get('category_question')) {
-            foreach ($request->get('category_question') as $key => $result) {
-               $task_post_id = $postTask->id;
-               $category_question = new CategoryQuestion;
-               $category_question->category_id              =   $request->get('category');
-               $category_question->post_task_id             =   $task_post_id;
-               $category_question->category_question_key    =   $result['question_key'];
-               $category_question->category_question_value  =   $result['question_value'];
-               $category_question->save();
-               $q[] = ['question_key'=>$result['question_key'],'question_value'=>$result['question_value']];
+        $postTask->category_question      =  json_encode($request->get('category_question'));
+        $photo = $request->get('inspirationPhoto'); 
+        foreach ($photo  as $key => $value) {
+            $keyName= 'inspiration_photo'.++$key;
+            if(++$key==4){
+                break;
             }
-        }
-        
-        unset($postTask->id);
-        $postTask->category_question=$q;
-
+            $postTask->$keyName = $value;
+        } 
+        try{
+             $postTask->save(); 
+            //post task question
+            /*$q = [];
+            if($request->get('category_question')) {
+                foreach ($request->get('category_question') as $key => $result) {
+                   $task_post_id = $postTask->id;
+                   $category_question = new CategoryQuestion;
+                   $category_question->category_id              =   $request->get('category');
+                   $category_question->post_task_id             =   $task_post_id;
+                   $category_question->category_question_key    =   $result['question_key'];
+                   $category_question->category_question_value  =   $result['question_value'];
+                   $category_question->save();
+                   $q[] = ['question_key'=>$result['question_key'],'question_value'=>$result['question_value']];
+                }
+            }*/
+        }catch(\Exception  $e) { 
+            return response()->json(
+                                    [ 
+                                        "status"=>0,
+                                        "code"=>500,
+                                        "message"=>$e->getMessage(),
+                                        'data' => $postTask
+                                    ]
+                                );
+        }  
+       
         return response()->json(
                                     [ 
                                         "status"=>1,

@@ -40,6 +40,10 @@ Route::group(['prefix' => 'api/v1'], function()
             Route::match(['post','get'],'user/forget-password','ApiController@forgetPassword'); 
             
             Route::match(['post','get'],'post-task/create','ApiController@postTask'); 
+            Route::match(['post','get'],'post-task/getPostTask','ApiController@getPostTask'); 
+            Route::match(['post','get'],'post-task/getPostTask/{id}','ApiController@getPostTask'); 
+
+
             Route::match(['post','get'],'post-task/delete/{id}','ApiController@postTaskDelete'); 
             
             Route::match(['post','get'],'post-task/category','ApiController@category');  
