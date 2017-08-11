@@ -352,7 +352,7 @@ class ApiController extends Controller
                         );
     }
 
-    public function getPostTask(Request $request, $id)
+    public function getPostTask($id=null)
     {
         if($id) {
             $postTask = PostTask::find($id);  
