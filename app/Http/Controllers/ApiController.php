@@ -406,7 +406,7 @@ class ApiController extends Controller
         $photo = $request->get('inspirationPhoto'); 
         foreach ($photo  as $key => $value) {
             $keyName= 'inspiration_photo'.++$key;
-            if(++$key==4){
+            if($keyName=='inspiration_photo4'){
                 break;
             }
             $postTask->$keyName = $value;
