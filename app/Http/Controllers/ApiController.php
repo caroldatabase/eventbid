@@ -406,27 +406,15 @@ class ApiController extends Controller
         $photo = $request->get('inspirationPhoto'); 
         foreach ($photo  as $key => $value) {
             $keyName= 'inspiration_photo'.++$key;
-            if($keyName=='inspiration_photo4'){
+            
+            $postTask->$keyName = $value;
+            if($keyName=='inspiration_photo3'){
                 break;
             }
-            $postTask->$keyName = $value;
         } 
         try{
              $postTask->save(); 
-            //post task question
-            /*$q = [];
-            if($request->get('category_question')) {
-                foreach ($request->get('category_question') as $key => $result) {
-                   $task_post_id = $postTask->id;
-                   $category_question = new CategoryQuestion;
-                   $category_question->category_id              =   $request->get('category');
-                   $category_question->post_task_id             =   $task_post_id;
-                   $category_question->category_question_key    =   $result['question_key'];
-                   $category_question->category_question_value  =   $result['question_value'];
-                   $category_question->save();
-                   $q[] = ['question_key'=>$result['question_key'],'question_value'=>$result['question_value']];
-                }
-            }*/
+           
         }catch(\Exception  $e) { 
             return response()->json(
                                     [ 
