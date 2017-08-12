@@ -405,15 +405,17 @@ class ApiController extends Controller
         $postTask->category_question      =  json_encode($request->get('category_question'));
         $photo = $request->get('inspirationPhoto'); 
         foreach ($photo  as $key => $value) {
+            if($key==3){
+                break;
+            }
+
             $keyName= 'inspiration_photo'.++$key;
             
             $postTask->$keyName = $value;
-            if($keyName=='inspiration_photo3'){
-                break;
-            }
+            
         } 
         try{
-             $postTask->save(); 
+            $postTask->save(); 
            
         }catch(\Exception  $e) { 
             return response()->json(
