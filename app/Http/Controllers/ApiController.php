@@ -401,6 +401,7 @@ class ApiController extends Controller
         $postTask->time_from        =  $request->get('timeFrom');
         $postTask->time_to          =  $request->get('timeTo');
         $postTask->category_id      =  $request->get('category');
+        $postTask->user_id          =  $request->get('userId');
         $postTask->category_question      =  json_encode($request->get('category_question'));
         $photo = $request->get('inspirationPhoto'); 
         foreach ($photo  as $key => $value) {
