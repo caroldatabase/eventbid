@@ -59,5 +59,7 @@ class Category extends Eloquent {
     {
         return $this->hasMany('App\Category', 'parent_id','id');
     } 
+
+   
   
 }

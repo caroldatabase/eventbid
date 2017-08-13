@@ -19,8 +19,17 @@ class PostTask extends Model
     					'date_required',
     					'time_from',
     					'time_to',
-    					'category',
-    					'inspiration_photo'
+    					'category_id',
+    					'inspiration_photo1',
+                        'inspiration_photo2',
+                        'inspiration_photo3',
+                        'task_status',
+                        'category_question'
 
     					];
+
+    public function category()
+    {
+        return $this->belongsTo('App\Category', 'category_id','id')->select('id','name','categoryImage');
+    } 
 }

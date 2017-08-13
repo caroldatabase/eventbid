@@ -352,23 +352,77 @@ class ApiController extends Controller
                         );
     }
 
-    public function getPostTask($id=null)
+    public function getPostTask(Request $request, $id=null)
     {
-        if($id) {
-            $postTask = PostTask::find($id);  
-        }else{
-            $postTask = PostTask::all();
-        }
         
+        try { 
+            $page_num = ($request->get('page_num'))?$request->get('page_num'):1;
+            $page_size = ($request->get('page_size'))?$request->get('page_size'):20;
+            $task_status = ($request->get('task_status'))?$request->get('task_status'):'open';
+
+            $post_user_id = ($request->get('post_user_id'))?$request->get('post_user_id'):null;
+            $seeker_user_id = ($request->get('seeker_user_id'))?$request->get('seeker_user_id'):null;
+            $id = isset($id)?$id:$request->get('id');
+            $category_id = $request->get('category_id');
+
+            $postTask = PostTask::with('category')
+                    ->where(function($query) 
+                    use($category_id,$id,$task_status,$page_num,$page_size,$post_user_id,$seeker_user_id) {
+
+                    if (is_numeric($post_user_id)) {
+                        $query->Where('post_user_id',$post_user_id); 
+                    }
+                    if (is_numeric($seeker_user_id)) {
+                        $query->Where('seeker_user_id',$seeker_user_id); 
+                    }
+                    if (is_numeric($id)) {
+                        $query->Where('id',$id) ;
+                    }
+                    if ($task_status) {
+                        $query->Where('task_status',$task_status) ;
+                    } 
+                    if ($category_id) {
+                        $query->Where('category_id',$category_id) ;
+                    } 
+                         
+                });
+          
+            if($id){
+               $post_task =  $postTask->get();
+            }else{
+                if($page_num==1){
+                     $offset = 0;
+                 }else{
+                    $offset = $page_size*($page_num-1);
+                 }
+               
+               $post_task =  $postTask->offset($offset)
+                        ->limit($page_size)
+                        ->get();  
+            }
+
+        $msg = ($post_task->count())?"Post task record found.":"Post task record not found!";    
+             
+        }catch(\Exception $e){
+            $msg = $e->getMessage();
+            $post_task = [];
+        }
+
+        $total = PostTask::count();
 
         return response()->json(
                                     [ 
                                         "status"=>1,
-                                        "code"=>200,
-                                        "message"=>"Post task record." ,
-                                        'data' => $postTask
+                                        "code"=>($postTask->count())?200:404,
+                                        'total_record'=>$total,
+                                        'found_record' => $post_task->count(),
+                                        'page_num' => intval($page_num),
+                                        'page_size' => intval($page_size),
+                                        "message"=>$msg,
+                                        'data' => $post_task
                                     ]
                                 );
+
 
     }
     public function postTask(Request $request)
@@ -402,6 +456,9 @@ class ApiController extends Controller
         $postTask->time_to          =  $request->get('timeTo');
         $postTask->category_id      =  $request->get('category');
         $postTask->user_id          =  $request->get('userId');
+        $postTask->post_user_id     =  $request->get('post_user_id');
+        $postTask->seeker_user_id   =  $request->get('seeker_user_id');
+        $postTask->task_status      =  $request->get('task_status');
         $postTask->category_question      =  json_encode($request->get('category_question'));
         $photo = $request->get('inspirationPhoto'); 
         foreach ($photo  as $key => $value) {
