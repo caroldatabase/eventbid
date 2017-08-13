@@ -445,29 +445,29 @@ class ApiController extends Controller
                 $postTask->id  = $postTask->id;
                 $message = "Post task update successfully.";
             }
-        }
-       
-        $validator = Validator::make($request->all(), [
-           'eventTitle'     => "required" ,  
-           'eventType'     => 'required'
+        }else{
+            $validator = Validator::make($request->all(), [
+               'eventTitle'     => "required" ,  
+               'eventType'     => 'required'
 
-        ]);
+            ]);
 
-        if ($validator->fails()) {
-                    $error_msg  =   [];
-            foreach ( $validator->messages()->all() as $key => $value) {
-                        array_push($error_msg, $value);     
-                    }
-                            
-            return Response::json(array(
-                'status'    => 0,
-                'code'      => 500,
-                'message'   => $error_msg[0],
-                'data'      => $request->all()
-                )
-            );
-        }  
-         
+            if ($validator->fails()) {
+                        $error_msg  =   [];
+                foreach ( $validator->messages()->all() as $key => $value) {
+                            array_push($error_msg, $value);     
+                        }
+                                
+                return Response::json(array(
+                    'status'    => 0,
+                    'code'      => 500,
+                    'message'   => $error_msg[0],
+                    'data'      => $request->all()
+                    )
+                );
+            } 
+        }   
+        
 
         if($request->get('eventTitle')){
              $postTask->event_title      =  $request->get('eventTitle');
@@ -527,7 +527,10 @@ class ApiController extends Controller
                                         'data' => $postTask
                                     ]
                                 );
-        }  
+        }
+
+        $postTask = ($id)?PostTask::find($id):$postTask;
+
         unset($postTask->inspiration_photo1);
         unset($postTask->inspiration_photo2);
         unset($postTask->inspiration_photo3);
