@@ -34,10 +34,10 @@ class PostTask extends Model
     } 
     public function postUserDetail()
     {
-        return $this->belongsTo('App\User', 'post_user_id','id')->select('id','first_name');
+        return $this->belongsTo('App\User', 'post_user_id','id')->select('id','first_name','rating');
     } 
     public function seekerUserDetail()
     {
-        return $this->belongsTo('App\User', 'seeker_user_id','id')->select('id','first_name');
+        return $this->belongsTo('App\User', 'seeker_user_id','id')->select('id','first_name','rating');
     } 
 }
