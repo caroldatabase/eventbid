@@ -43,6 +43,7 @@ Route::group(['prefix' => 'api/v1'], function()
             Route::match(['post','get'],'post-task/getPostTask','ApiController@getPostTask'); 
             Route::match(['post','get'],'post-task/getPostTask/{id}','ApiController@getPostTask'); 
 
+            Route::match(['post','get'],'post-task/update/{id}','ApiController@postTask'); 
 
             Route::match(['post','get'],'post-task/delete/{id}','ApiController@postTaskDelete'); 
             

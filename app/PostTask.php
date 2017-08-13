@@ -32,4 +32,12 @@ class PostTask extends Model
     {
         return $this->belongsTo('App\Category', 'category_id','id')->select('id','name','categoryImage');
     } 
+    public function postUserDetail()
+    {
+        return $this->belongsTo('App\User', 'post_user_id','id')->select('id','first_name');
+    } 
+    public function seekerUserDetail()
+    {
+        return $this->belongsTo('App\User', 'seeker_user_id','id')->select('id','first_name');
+    } 
 }

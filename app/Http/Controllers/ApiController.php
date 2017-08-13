@@ -365,7 +365,7 @@ class ApiController extends Controller
             $id = isset($id)?$id:$request->get('id');
             $category_id = $request->get('category_id');
 
-            $postTask = PostTask::with('category')
+            $postTask = PostTask::with('category','postUserDetail','seekerUserDetail')
                     ->where(function($query) 
                     use($category_id,$id,$task_status,$page_num,$page_size,$post_user_id,$seeker_user_id) {
 
@@ -425,9 +425,28 @@ class ApiController extends Controller
 
 
     }
-    public function postTask(Request $request)
+    public function postTask(Request $request,$id=null)
     {
-        $postTask = new PostTask;
+        $postTask = new  PostTask;
+        $message = "Post task created successfully." ;
+
+        if($id){
+            $data =    PostTask::find($id);
+            if($data==null){
+                  return Response::json(array(
+                    'status'    => 0,
+                    'code'      => 500,
+                    'message'   => 'Post task id does not exist!',
+                    'data'      => ['id'=>$id]
+                    )
+                );
+            }else{
+                $postTask = PostTask::find($id);
+                $postTask->id  = $postTask->id;
+                $message = "Post task update successfully.";
+            }
+        }
+       
         $validator = Validator::make($request->all(), [
            'eventTitle'     => "required" ,  
            'eventType'     => 'required'
@@ -448,29 +467,54 @@ class ApiController extends Controller
                 )
             );
         }  
+         
 
-        $postTask->event_title      =  $request->get('eventTitle');
-        $postTask->event_type       =  $request->get('eventType');
-        $postTask->date_required    =  $request->get('dateRequired');
-        $postTask->time_from        =  $request->get('timeFrom');
-        $postTask->time_to          =  $request->get('timeTo');
-        $postTask->category_id      =  $request->get('category');
-        $postTask->user_id          =  $request->get('userId');
-        $postTask->post_user_id     =  $request->get('post_user_id');
-        $postTask->seeker_user_id   =  $request->get('seeker_user_id');
-        $postTask->task_status      =  $request->get('task_status');
-        $postTask->category_question      =  json_encode($request->get('category_question'));
+        if($request->get('eventTitle')){
+             $postTask->event_title      =  $request->get('eventTitle');
+        }
+        if($request->get('event_type')){
+            $postTask->event_type       =  $request->get('eventType');
+        }
+        if($request->get('date_required')){
+             $postTask->date_required      =  $request->get('date_required');
+        }
+        if($request->get('time_from')){
+             $postTask->time_from           =  $request->get('time_from');
+        }
+        if($request->get('time_to')){
+             $postTask->time_to             =  $request->get('time_to');
+        }
+        if($request->get('post_user_id')){
+             $postTask->post_user_id        =  $request->get('post_user_id');
+        }
+        if($request->get('category')){
+             $postTask->category_id         =  $request->get('category');
+        }
+        if($request->get('seeker_user_id')){
+             $postTask->seeker_user_id      =  $request->get('seeker_user_id');
+        }
+        if($request->get('task_status')){
+             $postTask->task_status         =  $request->get('task_status');
+        }
+        $category_question                  =   $request->get('category_question');
+        if(is_array($category_question)){ 
+             $postTask->category_question   =  json_encode($request->get('category_question'));
+        }
+       
         $photo = $request->get('inspirationPhoto'); 
-        foreach ($photo  as $key => $value) {
-            if($key==3){
-                break;
-            }
+        if(is_array($photo)){
+           foreach ($photo  as $key => $value) {
+                if($key==3){
+                    break;
+                }
 
-            $keyName= 'inspiration_photo'.++$key;
-            
-            $postTask->$keyName = $value;
-            
+                $keyName= 'inspiration_photo'.++$key;
+                
+                $postTask->$keyName = $value;
+                
+            }   
         } 
+
         try{
             $postTask->save(); 
            
@@ -484,12 +528,14 @@ class ApiController extends Controller
                                     ]
                                 );
         }  
-       
+        unset($postTask->inspiration_photo1);
+        unset($postTask->inspiration_photo2);
+        unset($postTask->inspiration_photo3);
         return response()->json(
                                     [ 
                                         "status"=>1,
                                         "code"=>200,
-                                        "message"=>"Post task created successfully." ,
+                                        "message"=>$message,
                                         'data' => $postTask
                                     ]
                                 );
