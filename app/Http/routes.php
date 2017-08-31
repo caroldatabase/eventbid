@@ -34,7 +34,9 @@ Route::group(['prefix' => 'api/v1'], function()
             Route::match(['post','get'],'contactus','ApiController@contactUs'); 
             Route::match(['post','get'],'EBManagerContactEnquiry','ApiController@EBManagerContactEnquiry');   
             Route::match(['post','get'],'user/signup','ApiController@register');  
+            
             Route::match(['post','get'],'user/update-profile/{user_id}','ApiController@updateProfile'); 
+
             Route::match(['post','get'],'user/login', 'ApiController@login'); 
             Route::match(['post','get'],'email_verification','ApiController@emailVerification');  
             Route::match(['post','get'],'user/forget-password','ApiController@forgetPassword'); 
@@ -50,8 +52,9 @@ Route::group(['prefix' => 'api/v1'], function()
             Route::match(['post','get'],'post-task/category','ApiController@category');  
             Route::match(['post','get'],'post-task/getcategory','ApiController@getCategory'); 
             
-            Route::match(['post','get'],'category/delete/{id}','ApiController@deleteCategory');  
+            Route::match(['post','get'],'category/delete/{id}','ApiController@deleteCategory'); 
 
+            Route::match(['post','get'],'user/details/{id}','ApiController@getUserDetails');  
             
             Route::match(['post','get'],'post-task/request-category','CustomCategoryController@customCategory'); 
             Route::match(['post','get'],'post-task/request-category/delete/{id}','CustomCategoryController@customCategoryDelete'); 

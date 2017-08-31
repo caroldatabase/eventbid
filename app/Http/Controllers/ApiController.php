@@ -129,6 +129,7 @@ class ApiController extends Controller
     */
     public function updateProfile(Request $request,User $user,$user_id=null)
     {       
+         
         if(!Helper::isUserExist($user_id))
         {
             return Response::json(array(
@@ -138,25 +139,17 @@ class ApiController extends Controller
                 )
             );
         } 
-        $user = User::find($user_id); 
-       
-        $user->first_name    = ($request->input('firstName'))?$request->input('firstName'):$user->first_name;
-        $user->last_name     = ($request->input('lastName'))?$request->input('lastName'):$user->last_name;  
-        $user->user_type     = ($request->input('userType'))?$request->input('userType'):$user->user_type;  
-        $user->company_url   = ($request->input('companyUrl'))?$request->input('companyUrl'):$user->company_url; 
-         
-        $user->specialization   = ($request->input('specialization'))?$request->input('specialization'):$user->specialization; 
+        $user = User::find($user_id);
 
-        $user->about_me         = ($request->input('aboutMe'))?$request->input('aboutMe'):$user->about_me; 
-
-        $user->verification_skills   = ($request->input('verificationSkills'))?$request->input('verificationSkills'):$user->verification_skills; 
-
-        $user->review_rating   = ($request->input('reviewRating'))?$request->input('reviewRating'):$user->review_rating; 
-
-        $user->portfolio        = ($request->input('portfolio'))?$request->input('portfolio'):$user->portfolio; 
-         $user->save();
-        
-        return response()->json(
+        try{
+            $columns = \Schema::getColumnListing('users');
+            foreach ($columns as $key => $value) {
+                if($request->input(lcfirst(studly_case($value)))!=null){
+                    $user->$value  =  $request->input(lcfirst(studly_case($value)));   
+                }
+            } 
+            $user->save();
+            return response()->json(
                             [ 
                             "status"=>1,
                             'code'   => 200,
@@ -164,6 +157,16 @@ class ApiController extends Controller
                             'data'=>$user
                             ]
                         );
+        }catch(\Exception $e){
+            return response()->json(
+                            [ 
+                            "status"=>0,
+                            'code'   => 500,
+                            "message"=> $e->getMessage(),
+                            'data'=>$user
+                            ]
+                        );
+        }
          
     }
     public function category(Request $request, Category $category) 
@@ -502,19 +505,24 @@ class ApiController extends Controller
         }
        
         $photo = $request->get('inspirationPhoto'); 
+         $pic = 1;
         if(is_array($photo)){
            foreach ($photo  as $key => $value) {
                 if($key==3){
                     break;
                 }
 
-                $keyName= 'inspiration_photo'.++$key;
+                $keyName = 'inspiration_photo'.++$key;
                 
                 $postTask->$keyName = $value;
-                
+                $img  = explode(',',$value);
+                $image = base64_decode($img[1]);
+                $image_name= $pic++.time().'.png';
+                $path = public_path() . "/images/" . $image_name;
+              
+                file_put_contents($path, $image); 
             }   
-        } 
-
+        }  
         try{
             $postTask->save(); 
            
@@ -528,6 +536,9 @@ class ApiController extends Controller
                                     ]
                                 );
         }
+
+        
+      
 
         $postTask = ($id)?PostTask::find($id):$postTask;
 
@@ -613,10 +624,11 @@ class ApiController extends Controller
     * Return : User details 
    */
    
-    public function getUserDetails(Request $request)
+    public function getUserDetails(Request $request, $uid)
     {
-        $user = JWTAuth::toUser($request->input('token'));
-        $data = [];
+        $user =  User::find($uid);
+        
+        /*$data = [];
         $data['userId']         =   $user->id;
         $data['firstName']      =   $user->first_name; 
         $data['email']          =   $user->email; 
@@ -630,14 +642,14 @@ class ApiController extends Controller
         $data['reviewRating']   =   $user->review_rating;
         $data['portfolio']      =   $user->portfolio;
         $data['companyUrl']     =   $user->company_url;
-        $data['token']          =   $token; 
+        $data['token']          =   $token; */
        
 
         return response()->json(
                 [ "status"=>1,
                   "code"=>200,
                   "message"=>"Record found successfully." ,
-                  "data" => $data 
+                  "data" => $user 
                 ]
             ); 
     }
@@ -1071,5 +1083,6 @@ class ApiController extends Controller
 
         
     }
-    
+
+
 } 
