@@ -60,6 +60,18 @@ Route::group(['prefix' => 'api/v1'], function()
             Route::match(['post','get'],'post-task/request-category/delete/{id}','CustomCategoryController@customCategoryDelete'); 
              
             Route::match(['post','get'],'validate_user','ApiController@validateUser');
+            // 2-sep-2017
+            Route::match(['post','get'],'customerBusinessTask/{id}','ApiController@customerBussinessTask'); 
+            Route::match(['post','get'],'bussinessDashboard/{id}','ApiController@bussinessDashboard'); 
+
+            Route::match(['post','get'],'getRecommendTask/{id}','ApiController@getRecommendTask'); 
+            
+            Route::match(['post','get'],'blog/create','ApiController@createBlog'); 
+            Route::match(['post','get'],'getEventbidHub','ApiController@getBlog'); 
+            Route::match(['post','get'],'blog/delete/{id}','ApiController@deleteBlog'); 
+            Route::match(['post','get'],'blog/update/{id}','ApiController@updateBlog'); 
+        
+
             Route::group(['middleware' => 'jwt-auth'], function () 
             { 
                Route::match(['post','get'],'get_condidate_record','APIController@getCondidateRecord'); 

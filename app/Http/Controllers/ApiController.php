@@ -24,6 +24,7 @@ use App\CustomCategory;
 use App\CategoryQuestion;
 use App\ContactUs;
 use App\CommondataFields;
+use App\Blogs;
 
 
 class ApiController extends Controller
@@ -1082,6 +1083,227 @@ class ApiController extends Controller
                                 );
 
         
+    }
+
+    public function CustomerBussinessTask($uid)
+    {
+       return $this->bussinessTask($uid,'seeker_user_id');
+    }
+    public function bussinessDashboard($uid)
+    {
+       return $this->bussinessTask($uid,'post_user_id');
+    }
+
+    public function bussinessTask($uid=null,$business_type=null)
+    {  
+        try {
+            $task = PostTask::with('category','postUserDetail','seekerUserDetail')
+                    ->where($business_type,$uid)->get();
+            $result = [];
+            foreach ($task as $key => $value) {
+                if($value->task_status=="open")
+                {
+                    $result['openTask'][] = $value;
+                }else{
+                    $result['progressTask'][] = $value;
+                }
+                
+            }
+
+            if(!empty($result)){
+                $msg = "Bussiness Task details" ;
+                $status = 1;
+                $code = 200;
+            }else{
+                $msg = "Bussiness Task details not found" ;
+                $status = 0;
+                $code = 404; 
+            }
+
+        }catch(\Exception $e){
+            $msg = $e->getMessage();
+            $status = 0;
+            $code = 500; 
+        }
+        
+        return response()->json(
+                                [ 
+                                    "status"=>$status,
+                                    "code"=>$code,
+                                    "message"=>$msg,
+                                    'data' => $result
+                                ]
+                            );
+
+
+
+    }
+
+
+    public function getRecommendTask($user_id)
+    {
+        $user =  User::find($user_id);
+        $category_id = $user->category_id;
+        $cat_id = explode(',', $category_id);
+         
+        try{
+            $result = PostTask::select('*')
+                                ->with('category','postUserDetail')
+                                ->whereIn('category_id',$cat_id)
+                                ->where('task_status','open')
+                                ->groupBy('event_title')
+                                ->limit(10)
+                                ->get(); 
+            if($result->count()>0){
+                $msg    = "Recommended Task" ;
+                $status = 1;
+                $code   = 200;
+            }else{
+                $msg    = "Recommended Task not found" ;
+                $status = 0;
+                $code   = 404; 
+            }
+
+        }catch(\Exception $e){
+            $msg    = $e->getMessage();
+            $status = 0;
+            $code   = 500;
+            $result = []; 
+        }
+        return response()->json(
+                                [ 
+                                    "status"=>$status,
+                                    "code"=>$code,
+                                    "message"=>$msg,
+                                    'data' => $result
+                                ]
+                            );
+
+    }
+    // createBlog
+    public function createBlog(Request $request, $id=null)
+    {
+        $blog = new Blogs;
+
+        $table_cname = \Schema::getColumnListing('blogs');
+
+        $validator = Validator::make($request->all(), [
+            'blog_title' => 'required' 
+        ]); 
+        
+        // Return Error Message
+        if ($validator->fails()) {
+                    $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return Response::json(array(
+                'status' => 0,
+                 'code' => 500,
+                'message' => $error_msg[0],
+                'data'  =>  []
+                )
+            );
+        }
+
+        $except = ['id','create_at','updated_at'];
+        foreach ($table_cname as $key => $value) {
+           
+           if(in_array($value, $except )){
+                continue;
+           }
+
+           $blog->$value = $request->get($value);
+        }
+
+        $blog->save();
+
+       return  response()->json([ 
+                    "status"=>1,
+                    "code"=> 200,
+                    "message"=>"Blog created successfully.",
+                    'data' => $blog
+                   ]
+                );
+    }
+    // update blog
+    public function updateBlog(Request $request, $id=null)
+    {
+        $blog = Blogs::find($id);
+
+        if($blog==null)
+        {
+            return  response()->json([ 
+                    "status"=>0,
+                    "code"=> 500,
+                    "message"=>"Blog id is invalid",
+                    'data' => ['id'=>$id]
+                   ]
+                );
+        }
+
+        $table_cname = \Schema::getColumnListing('blogs');
+
+        $except = ['id','create_at','updated_at'];
+
+        $input = $request->all();
+
+        foreach ($table_cname as $key => $value) {
+           
+           if(in_array($value, $except )){
+                continue;
+           }
+
+           if(isset($input[$value])) {
+               $blog->$value = $request->get($value); 
+           } 
+        }
+
+        $blog->save();
+
+       return  response()->json([ 
+                    "status"=>1,
+                    "code"=> 200,
+                    "message"=>"Blog updated successfully.",
+                    'data' => $blog
+                   ]
+                );
+    }
+    // get blog
+    public function getBlog(Request $request){
+
+        $blog_course_id= $request->get('blog_course_id');
+        $id= $request->get('id');
+
+        $blog = Blogs::where(function($query)use($blog_course_id,$id){
+                     if($id){
+                          $query->where('id',$id);
+                    }
+                  
+                })->get();
+
+        return  response()->json([ 
+                    "status"=>1,
+                    "code"=> 200,
+                    "message"=>"Blog list",
+                    'data' => $blog
+                   ]
+                );
+
+    }
+    // delete Blog
+    public function deleteBlog($id=null)
+    {
+        $blog = Blogs::where('id',$id)->delete();
+
+        return  response()->json([ 
+                    "status"=>1,
+                    "code"=> 200,
+                    "message"=>"Blog deleted successfully.",
+                    'data' => []
+                   ]
+                );
     }
 
 
