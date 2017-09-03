@@ -471,22 +471,21 @@ class ApiController extends Controller
                 );
             } 
         }   
-        
-
-        if($request->get('eventTitle')){
+    
+        if($request->get('eventTitle')){  
              $postTask->event_title      =  $request->get('eventTitle');
         }
-        if($request->get('event_type')){
+        if($request->get('eventType')){
             $postTask->event_type       =  $request->get('eventType');
         }
-        if($request->get('date_required')){
-             $postTask->date_required      =  $request->get('date_required');
+        if($request->get('dateRequired')){
+             $postTask->date_required      =  $request->get('dateRequired');
         }
-        if($request->get('time_from')){
-             $postTask->time_from           =  $request->get('time_from');
+        if($request->get('timeFrom')){
+             $postTask->time_from           =  $request->get('timeFrom');
         }
-        if($request->get('time_to')){
-             $postTask->time_to             =  $request->get('time_to');
+        if($request->get('timeTo')){
+             $postTask->time_to             =  $request->get('timeTo');
         }
         if($request->get('post_user_id')){
              $postTask->post_user_id        =  $request->get('post_user_id');
@@ -504,9 +503,9 @@ class ApiController extends Controller
         if(is_array($category_question)){ 
              $postTask->category_question   =  json_encode($request->get('category_question'));
         }
-       
+         
         $photo = $request->get('inspirationPhoto'); 
-         $pic = 1;
+        $pic = 1;
         if(is_array($photo)){
            foreach ($photo  as $key => $value) {
                 if($key==3){
@@ -515,15 +514,18 @@ class ApiController extends Controller
 
                 $keyName = 'inspiration_photo'.++$key;
                 
-                $postTask->$keyName = $value;
                 $img  = explode(',',$value);
                 $image = base64_decode($img[1]);
                 $image_name= $pic++.time().'.png';
                 $path = public_path() . "/images/" . $image_name;
               
                 file_put_contents($path, $image); 
+                $postTask->$keyName = url::to(asset('public/images/'.$image_name));
+
+                $arr[] = $keyName ;
             }   
-        }  
+            
+        }   
         try{
             $postTask->save(); 
            
@@ -543,9 +545,9 @@ class ApiController extends Controller
 
         $postTask = ($id)?PostTask::find($id):$postTask;
 
-        unset($postTask->inspiration_photo1);
-        unset($postTask->inspiration_photo2);
-        unset($postTask->inspiration_photo3);
+       // unset($postTask->inspiration_photo1);
+        //unset($postTask->inspiration_photo2);
+       // unset($postTask->inspiration_photo3);
         return response()->json(
                                     [ 
                                         "status"=>1,
