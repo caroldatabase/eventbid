@@ -25,6 +25,7 @@ use App\CategoryQuestion;
 use App\ContactUs;
 use App\CommondataFields;
 use App\Blogs;
+use App\Interest;
 
 
 class ApiController extends Controller
@@ -1303,6 +1304,118 @@ class ApiController extends Controller
                     "status"=>1,
                     "code"=> 200,
                     "message"=>"Blog deleted successfully.",
+                    'data' => []
+                   ]
+                );
+    }
+
+    public function interestUsersList(Request $request){
+
+        $taskId = $request->get('taskId');
+        
+        $validator = Validator::make(Input::all(), [
+            'taskId' => 'required' 
+        ]);  
+        // Return Error Message
+        if ($validator->fails()) {
+                    $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return Response::json(array(
+                'status' => 0,
+                'code' => 500,
+                'message' => $error_msg[0],
+                'data'  =>  []
+                )
+            );
+        } 
+
+        $taskPostedUserID =  $request->get('taskPostedUserID');
+        $showInterestedUserID = $request->get('showInterestedUserID');
+        $taskStatus = $request->get('taskStatus');
+
+         $interest = Interest::with('task','taskPostedUser','assignUser')
+                    ->where(function($query) 
+                    use($taskId,$taskPostedUserID,$showInterestedUserID,$taskStatus) {
+
+                    if (is_numeric($taskId)) {
+                        $query->Where('taskId',$taskId); 
+                    }
+                    if (is_numeric($taskPostedUserID)) {
+                        $query->Where('taskPostedUserID',$taskPostedUserID); 
+                    }
+                    if (is_numeric($showInterestedUserID)) {
+                        $query->Where('assignUserID',$showInterestedUserID); 
+                    }
+                    if ($taskStatus) {
+                        $query->Where('taskStatus',$taskStatus) ;
+                    }  
+                         
+                })->get();  
+        return  response()->json([ 
+                    "status"=>($interest->count())?1:0,
+                    "code"=> ($interest->count())?200:404,
+                    "message"=>($interest->count())?"interest list":"Record not found",
+                    'data' => $interest
+                   ]
+                );
+
+    }
+
+    public function assignTask(Request $request, $id=null)
+    {
+        $interest = new Interest;
+
+        $table_cname = \Schema::getColumnListing('interest');
+
+        $validator = Validator::make(Input::all(), [
+            'taskStatus' => 'required' 
+        ]);  
+        // Return Error Message
+        if ($validator->fails()) {
+                    $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return Response::json(array(
+                'status' => 0,
+                'code' => 500,
+                'message' => $error_msg[0],
+                'data'  =>  []
+                )
+            );
+        }
+
+        $except = ['id','create_at','updated_at'];
+        foreach ($table_cname as $key => $value) {
+           
+           if(in_array($value, $except )){
+                continue;
+           } 
+           $interest->$value = $request->get($value);
+        }
+         $interest->save();
+
+       return  response()->json([ 
+                    "status"=>1,
+                    "code"=> 200,
+                    "message"=>"Interest created successfully.",
+                    'data' => $interest
+                   ]
+                );
+    }
+
+    public function deleteInterest($id=null)
+    {
+        $blog = Interest::where('id',$id)->delete();
+
+        return  response()->json([ 
+                    "status"=>1,
+                    "code"=> 200,
+                    "message"=>"Interest user data successfully.",
                     'data' => []
                    ]
                 );
