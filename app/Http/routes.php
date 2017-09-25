@@ -73,6 +73,7 @@ Route::group(['prefix' => 'api/v1'], function()
 
 Route::match(['post','get'],'assignTask','ApiController@assignTask'); 
 Route::match(['post','get'],'interestUsersList','ApiController@interestUsersList'); 
+Route::match(['post','get'],'showInterestList','ApiController@interestUsersList');
 Route::match(['post','get'],'deleteInterest/{id}','ApiController@deleteInterest');   
         
 
