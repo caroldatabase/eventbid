@@ -63,24 +63,30 @@ class ApiController extends Controller
         $user->user_type     =  $request->input('userType');  
         $user->company_url   =  $request->input('companyUrl');
         $user->email         =  $request->input('email');
-        $user->password      = Hash::make($request->input('password'));
+        $user->password      =  Hash::make($request->input('password'));
+        $user->facebook_gmail_id   = $request->input('facebook_gmail_id');
+        $user->login_user_type     = $request->input('login_user_type');
 
-
-         
         if ($request->input('userId')) {
             $u = $this->updateProfile($request,$user);
             return $u;
         } 
          
          //Server side valiation
-        $validator = Validator::make($request->all(), [
-           'email'     => "required|email|unique:users,email" ,  
-           'password' => 'required',
-           'userType' => 'required'
 
-        ]);
+        $login_user_type = $request->get('login_user_type');
+
+        if($login_user_type!=="facebook" || $login_user_type!=="gmail"){
+
+             $validator = Validator::make($request->all(), [
+               'email'     => "required|email|unique:users,email" ,  
+               'password' => 'required',
+               'userType' => 'required'
+            ]);
+        }
+       
          /** Return Error Message **/
-        if ($validator->fails()) {
+        if (isset($validator) && $validator->fails()) {
                     $error_msg  =   [];
             foreach ( $validator->messages()->all() as $key => $value) {
                         array_push($error_msg, $value);     
@@ -568,51 +574,87 @@ class ApiController extends Controller
     * Return : token and user details
     * Author : kundan Roy   
     */
-    public function login(Request $request)
+    public function login(Request $request,User $user)
     {    
         
-        $validator = Validator::make($request->all(), [
-           'email'     => "required|email" ,  
-           'password' => 'required'
+        $login_user_type = $request->get('login_user_type');
+        $facebook_gmail_id = $request->get('facebook_gmail_id');
+        
+        if($login_user_type=="facebook" || $login_user_type=="gmail")
+        {
+            $user  =   User::where('login_user_type',$login_user_type)->where('facebook_gmail_id',$facebook_gmail_id)->first();
 
-        ]);
-         /** Return Error Message **/
-        if ($validator->fails()) {
-                    $error_msg  =   [];
-            foreach ( $validator->messages()->all() as $key => $value) {
-                        array_push($error_msg, $value);     
-                    }
-                            
-            return Response::json(array(
-                'status' => 0,
-                'code'   => 500,
-                'message' => $error_msg[0],
-                'data'  =>  $request->all()
-                )
-            );
-        }  
+            if($user){
+                $data['userId']         =   $user->id;
+                $data['firstName']      =   $user->first_name; 
+                $data['email']          =   $user->email; 
+                $data['lastName']       =   $user->last_name;
+                $data['userType']       =   $user->user_type;
+                $data['facebook_gmail_id']  =   $user->facebook_gmail_id;
+                $data['login_user_type']    =   $user->login_user_type; 
+                return response()->json(
+                                    [ 
+                                        "status"=>1,
+                                        "code"=>200,
+                                        "message"=>"Successfully logged in." ,
+                                        'data' => $data 
+                                    ]
+                                );
+            }else{
+                 return response()->json(
+                                    [ 
+                                        "status"=>0,
+                                        "code"=>404,
+                                        "message"=>"Record not found" ,
+                                        'data' => $request->all()
+                                    ]
+                                );
+            }
+             
+                       
 
-        $input = $request->all();
-        if (!$token = JWTAuth::attempt(['email'=>$request->input('email'),'password'=>$request->input('password')])) {
-            return response()->json(
-                                    [
-                                     "status"=>0,
-                                     'code'   => 500,
-                                     "message"=>"Invalid email or password. Try again!" ,
-                                     'data' => $request->all() 
-                                     ]
-                                 );
-        }
+        }else{
+            $validator = Validator::make($request->all(), [
+               'email'     => "required|email" ,  
+               'password' => 'required'
+            ]);
+             /** Return Error Message **/
+            if ($validator->fails()) {
+                        $error_msg  =   [];
+                foreach ( $validator->messages()->all() as $key => $value) {
+                            array_push($error_msg, $value);     
+                        }
+                                
+                return Response::json(array(
+                    'status' => 0,
+                    'code'   => 500,
+                    'message' => $error_msg[0],
+                    'data'  =>  $request->all()
+                    )
+                );
+            } 
+            $input = $request->all();
+            if (!$token = JWTAuth::attempt(['email'=>$request->input('email'),'password'=>$request->input('password')])) {
+                return response()->json(
+                                        [
+                                         "status"=>0,
+                                         'code'   => 500,
+                                         "message"=>"Invalid email or password. Try again!" ,
+                                         'data' => $request->all() 
+                                         ]
+                                     );
+            }
 
-        $user = JWTAuth::toUser($token); 
+            $user = JWTAuth::toUser($token); 
 
-        $data['userId']         =   $user->id;
-        $data['firstName']      =   $user->first_name; 
-        $data['email']          =   $user->email; 
-        $data['lastName']       =   $user->last_name;
-        $data['userType']       =   $user->user_type;
-        $data['token']          =   $token; 
- 
+            $data['userId']         =   $user->id;
+            $data['firstName']      =   $user->first_name; 
+            $data['email']          =   $user->email; 
+            $data['lastName']       =   $user->last_name;
+            $data['userType']       =   $user->user_type;
+            $data['facebook_gmail_id']  =   $user->facebook_gmail_id;
+            $data['login_user_type']    =   $user->login_user_type; 
+     
             return response()->json(
                                     [ 
                                         "status"=>1,
@@ -621,6 +663,10 @@ class ApiController extends Controller
                                         'data' => $data 
                                     ]
                                 );
+        }
+         
+
+        
 
     } 
    /* @method : get user details
@@ -1373,12 +1419,10 @@ class ApiController extends Controller
 
     }
 
-    public function assignTask(Request $request, $id=null)
-    {
+    public function showInterestList(Request $request){
+
         $interest = new Interest;
-
         $table_cname = \Schema::getColumnListing('interest');
-
         $validator = Validator::make(Input::all(), [
             'taskStatus' => 'required' 
         ]);  
@@ -1397,7 +1441,6 @@ class ApiController extends Controller
                 )
             );
         }
-
         $except = ['id','create_at','updated_at'];
         foreach ($table_cname as $key => $value) {
            
@@ -1407,11 +1450,50 @@ class ApiController extends Controller
            $interest->$value = $request->get($value);
         }
          $interest->save();
+       return  response()->json([ 
+                    "status"=>1,
+                    "code"=> 200,
+                    "message"=>"Show Interest created successfully.",
+                    'data' => $interest
+                   ]
+                );
+
+    }
+
+
+    public function assignTask(Request $request, $id=null)
+    {
+        $interest = PostTask::find($id);
+
+        $table_cname = \Schema::getColumnListing('interest');
+
+        $validator = Validator::make(Input::all(), [
+            'assignUserID' => 'required' 
+        ]);  
+        // Return Error Message
+        if ($validator->fails()) {
+                    $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return Response::json(array(
+                'status' => 0,
+                'code' => 500,
+                'message' => $error_msg[0],
+                'data'  =>  []
+                )
+            );
+        }
+
+        $interest->seeker_user_id = $request->get('assignUserID');
+        $interest->task_status = $request->get('taskStatus')
+        $interest->save();
 
        return  response()->json([ 
                     "status"=>1,
                     "code"=> 200,
-                    "message"=>"Interest created successfully.",
+                    "message"=>"Task assigned successfully.",
                     'data' => $interest
                    ]
                 );
@@ -1420,7 +1502,6 @@ class ApiController extends Controller
     public function deleteInterest($id=null)
     {
         $blog = Interest::where('id',$id)->delete();
-
         return  response()->json([ 
                     "status"=>1,
                     "code"=> 200,
