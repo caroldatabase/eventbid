@@ -1432,7 +1432,7 @@ class ApiController extends Controller
         $path = public_path() . "/images/" . $image_name;
       
         file_put_contents($path, $image); 
-        return = url::to(asset('public/images/'.$image_name));
+        return url::to(asset('public/images/'.$image_name));
     }
 
 } 
