@@ -1210,7 +1210,12 @@ class ApiController extends Controller
             );
         }
 
-        $except = ['id','create_at','updated_at'];
+
+        $blogurl = $this->createImage($request->get('blog_image'));
+
+        $except = ['id','create_at','updated_at','blog_image'];
+
+
         foreach ($table_cname as $key => $value) {
            
            if(in_array($value, $except )){
@@ -1219,7 +1224,7 @@ class ApiController extends Controller
 
            $blog->$value = $request->get($value);
         }
-
+        $blog->blog_image = isset($blogurl)?$blogurl:'';
         $blog->save();
 
        return  response()->json([ 
