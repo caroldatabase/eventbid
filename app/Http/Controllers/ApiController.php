@@ -1450,7 +1450,7 @@ class ApiController extends Controller
            $interest->$value = $request->get($value);
         }
          $interest->save();
-       return  response()->json([ 
+        return  response()->json([ 
                     "status"=>1,
                     "code"=> 200,
                     "message"=>"Show Interest created successfully.",
@@ -1487,7 +1487,7 @@ class ApiController extends Controller
         }
 
         $interest->seeker_user_id = $request->get('assignUserID');
-        $interest->task_status = $request->get('taskStatus')
+        $interest->task_status = $request->get('taskStatus');
         $interest->save();
 
        return  response()->json([ 
