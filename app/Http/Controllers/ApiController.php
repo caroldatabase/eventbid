@@ -1248,7 +1248,10 @@ class ApiController extends Controller
 
         $table_cname = \Schema::getColumnListing('blogs');
 
-        $except = ['id','create_at','updated_at'];
+        $blogurl = $this->createImage($request->get('blog_image'));
+
+        $except = ['id','create_at','updated_at','blog_image'];
+
 
         $input = $request->all();
 
@@ -1262,7 +1265,7 @@ class ApiController extends Controller
                $blog->$value = $request->get($value); 
            } 
         }
-
+        $blog->blog_image = $blogurl;
         $blog->save();
 
        return  response()->json([ 
@@ -1421,5 +1424,15 @@ class ApiController extends Controller
                 );
     }
 
+    public function createImage($base64)
+    {
+        $img  = explode(',',$base64);
+        $image = base64_decode($img[1]);
+        $image_name= $pic++.time().'.png';
+        $path = public_path() . "/images/" . $image_name;
+      
+        file_put_contents($path, $image); 
+        return = url::to(asset('public/images/'.$image_name));
+    }
 
 } 
