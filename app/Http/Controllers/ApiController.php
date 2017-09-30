@@ -246,7 +246,8 @@ class ApiController extends Controller
         $cat->slug                  =   strtolower(str_slug($request->input('categoryName')));
         $cat->parent_id             =   !empty($request->input('category_id'))?$request->input('category_id'):0; 
         $cat->level                 =   $level;
-        $cat->categoryImage         =   $request->input('categoryImage');
+        $imgurl                     =   $this->createImage($request->input('categoryImage'));
+        $cat->categoryImage         =   isset($imgurl)?$imgurl:'';
         $cat->save(); 
         $cat->id;
 
