@@ -1433,7 +1433,7 @@ class ApiController extends Controller
     {
         $img  = explode(',',$base64);
         $image = base64_decode($img[1]);
-        $image_name= $pic++.time().'.png';
+        $image_name= time().'.png';
         $path = public_path() . "/images/" . $image_name;
       
         file_put_contents($path, $image); 
