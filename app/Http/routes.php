@@ -72,7 +72,7 @@ Route::group(['prefix' => 'api/v1'], function()
             Route::match(['post','get'],'blog/update/{id}','ApiController@updateBlog'); 
 
             Route::match(['post','get'],'assignTask','ApiController@assignTask'); 
-            Route::match(['post','get'],'interestUsersList','ApiController@interestUsersList'); 
+            Route::match(['post','get'],'interestUsersList/{id}','ApiController@interestUsersList'); 
             Route::match(['post','get'],'showInterestList','ApiController@showInterestList');
             Route::match(['post','get'],'deleteInterest/{id}','ApiController@deleteInterest');   
         

@@ -28,4 +28,8 @@ class Interest extends Model
     {
     	return $this->belongsTo('App\User', 'assignUserID','id');
     }
+    public function showInterestedUserID()
+    {
+        return $this->belongsTo('App\User', 'showInterestedUserID','id');
+    }
 }

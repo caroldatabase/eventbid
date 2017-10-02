@@ -36,7 +36,7 @@ class ApiController extends Controller
     * Response : json
     * Return : token and user details
     * Author : kundan Roy
-    * Calling Method : get  
+    * Calling Method : get 
     */
 
     public function __construct(Request $request) {
@@ -1364,34 +1364,14 @@ class ApiController extends Controller
                 );
     }
 
-    public function interestUsersList(Request $request){
+    public function interestUsersList(Request $request,$id=null){
 
-        $taskId = $request->get('taskId');
-        
-        $validator = Validator::make(Input::all(), [
-            'taskId' => 'required' 
-        ]);  
-        // Return Error Message
-        if ($validator->fails()) {
-                    $error_msg  =   [];
-            foreach ( $validator->messages()->all() as $key => $value) {
-                        array_push($error_msg, $value);     
-                    }
-                            
-            return Response::json(array(
-                'status' => 0,
-                'code' => 500,
-                'message' => $error_msg[0],
-                'data'  =>  []
-                )
-            );
-        } 
+        $taskId                 =   $request->get('id');
+        $taskPostedUserID       =   $request->get('taskPostedUserID');
+        $showInterestedUserID   =   $request->get('showInterestedUserID');
+        $taskStatus             =   $request->get('taskStatus');
 
-        $taskPostedUserID =  $request->get('taskPostedUserID');
-        $showInterestedUserID = $request->get('showInterestedUserID');
-        $taskStatus = $request->get('taskStatus');
-
-         $interest = Interest::with('task','taskPostedUser','assignUser')
+        $interest  = Interest::with('task','taskPostedUser','assignUser','showInterestedUserID')
                     ->where(function($query) 
                     use($taskId,$taskPostedUserID,$showInterestedUserID,$taskStatus) {
 
@@ -1402,11 +1382,12 @@ class ApiController extends Controller
                         $query->Where('taskPostedUserID',$taskPostedUserID); 
                     }
                     if (is_numeric($showInterestedUserID)) {
-                        $query->Where('assignUserID',$showInterestedUserID); 
+                        $query->Where('showInterestedUserID',$showInterestedUserID); 
                     }
                     if ($taskStatus) {
                         $query->Where('taskStatus',$taskStatus) ;
-                    }  
+                    }
+
                          
                 })->get();  
         return  response()->json([ 
@@ -1432,7 +1413,7 @@ class ApiController extends Controller
             foreach ( $validator->messages()->all() as $key => $value) {
                         array_push($error_msg, $value);     
                     }
-                            
+            
             return Response::json(array(
                 'status' => 0,
                 'code' => 500,
@@ -1441,7 +1422,9 @@ class ApiController extends Controller
                 )
             );
         }
+                
         $except = ['id','create_at','updated_at'];
+        
         foreach ($table_cname as $key => $value) {
            
            if(in_array($value, $except )){
@@ -1449,7 +1432,7 @@ class ApiController extends Controller
            } 
            $interest->$value = $request->get($value);
         }
-         $interest->save();
+        $interest->save();
         return  response()->json([ 
                     "status"=>1,
                     "code"=> 200,
