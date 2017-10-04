@@ -1366,30 +1366,11 @@ class ApiController extends Controller
 
     public function interestUsersList(Request $request,$id=null){
 
-        $taskId                 =   $request->get('id');
-        $taskPostedUserID       =   $request->get('taskPostedUserID');
-        $showInterestedUserID   =   $request->get('showInterestedUserID');
-        $taskStatus             =   $request->get('taskStatus');
+        $taskId                 =   $id;
 
-        $interest  = Interest::with('task','taskPostedUser','assignUser','showInterestedUserID')
-                    ->where(function($query) 
-                    use($taskId,$taskPostedUserID,$showInterestedUserID,$taskStatus) {
+        $interest  = Interest::with('task','taskPostedUser','interestedUser')
+                    ->where('taskId',$taskId)->get();  
 
-                    if (is_numeric($taskId)) {
-                        $query->Where('taskId',$taskId); 
-                    }
-                    if (is_numeric($taskPostedUserID)) {
-                        $query->Where('taskPostedUserID',$taskPostedUserID); 
-                    }
-                    if (is_numeric($showInterestedUserID)) {
-                        $query->Where('showInterestedUserID',$showInterestedUserID); 
-                    }
-                    if ($taskStatus) {
-                        $query->Where('taskStatus',$taskStatus) ;
-                    }
-
-                         
-                })->get();  
         return  response()->json([ 
                     "status"=>($interest->count())?1:0,
                     "code"=> ($interest->count())?200:404,
@@ -1409,7 +1390,7 @@ class ApiController extends Controller
         ]);  
         // Return Error Message
         if ($validator->fails()) {
-                    $error_msg  =   [];
+            $error_msg  =   [];
             foreach ( $validator->messages()->all() as $key => $value) {
                         array_push($error_msg, $value);     
                     }
@@ -1445,7 +1426,7 @@ class ApiController extends Controller
 
 
     public function assignTask(Request $request, $id=null)
-    {
+    {   
         $interest = PostTask::find($id);
 
         $table_cname = \Schema::getColumnListing('interest');
@@ -1473,14 +1454,14 @@ class ApiController extends Controller
         $interest->task_status = $request->get('taskStatus');
         $interest->save();
 
-       return  response()->json([ 
+        return  response()->json([ 
                     "status"=>1,
                     "code"=> 200,
                     "message"=>"Task assigned successfully.",
                     'data' => $interest
                    ]
                 );
-    }
+    }   
 
     public function deleteInterest($id=null)
     {
