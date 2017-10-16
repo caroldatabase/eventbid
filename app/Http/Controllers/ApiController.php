@@ -905,17 +905,17 @@ class ApiController extends Controller
     * Response : json
     * Return :   getCondidateRecord
     */
-    public function contactUs(Request $request,User $user)
+    public function contactUs(Request $request,ContactUs $contact)
     {   
-        $input['firstName']    = $request->input('firstName'); 
-        $input['lastName']     = $request->input('lastName'); 
-        $input['email']        = $request->input('email');  
-        $input['comments']     = ($request->input('comments'))?$request->input('comments'):'';
+        
+        $contact->firstName    = empty($request->get('firstName'))?'':$request->get('firstName'); 
+        $contact->lastName     = $request->get('lastName'); 
+        $contact->email        = $request->get('email');  
+        $contact->comments     = ($request->get('comments'))?$request->get('comments'):'';
        
          //Server side valiation
         $validator = Validator::make($request->all(), [
-           'email' => 'required|email',
-            'firstName' => 'required'
+           'email' => 'required|email' 
 
         ]);
         /** Return Error Message **/
@@ -935,26 +935,25 @@ class ApiController extends Controller
         
         $helper = new Helper;
         /** --Create USER-- **/
-      
-        $subject = "New Contact mail!";
+        $firstName = $request->get('firstName');
+         $msg = !empty($firstName)?'contact':'notification';
+        $subject = "New ".$msg." mail!";
 
-        $reciver_email = 'eventbid@mailinator.com';
+        $reciver_email = 'hello@eventbid.com.au';
 
         $email_content = [
                 'receipent_email'=> $reciver_email,
                 'subject'=>$subject,
-                'greeting'=> 'Conatct Mail',
-                'name'=> 'Event Bid',
+                'greeting'=> 'Event Bid',
+                'name'=> $request->get('email'),
+                'sender_mail' =>$request->get('email'), 
                 'data' => $request->all()
-                ];
+                  ];
+        $templateName = !empty($firstName)?'contactus':'notify';
 
-        $verification_email = $helper->sendMailContactUs($email_content,'contactus');
+        $verification_email = $helper->sendMailContactUs($email_content,$templateName);
 
-        $contact            =   new ContactUs;
-        $contact->firstName =   $request->get('firstName');
-        $contact->lastName  =   $request->get('lastName');
-        $contact->comments  =   $request->get('comments');
-        $contact->email     =   $request->get('email');
+         
         $contact->save();
 
        

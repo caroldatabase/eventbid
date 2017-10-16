@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\RatingFeedback;
 use PHPMailerAutoload;
 use PHPMailer;
+use Illuminate\Contracts\Mail\Mailer as Mailer;
 
 class Helper {
 
@@ -68,39 +69,9 @@ class Helper {
     * Return : true or false
     */
     
-    public static function getPassword(){
-        $password = "";
-        $user = Auth::user();
-        if(isset($user)){
-            $password = Auth::user()->Password;
-        }
-        return $password;
-    }
-/* @method : check mobile number
-    * @param : mobile_number
-    * Response :  
-    * Return : true or false
-    */     
-   
+  
     
-    public static function FormatPhoneNumber($number){
-        return preg_replace('~.*(\d{3})[^\d]{0,7}(\d{3})[^\d]{0,7}(\d{4}).*~', '($1) $2-$3', $number). "\n";
-    } 
-
-   /* @method : get user details
-    * @param : userid
-    * Response : json
-    * Return : User details 
-   */
-   
-    public static function getUserDetails($user_id=null)
-    {
-        $user = User::find($user_id);
-        $data['userID'] = $user->id;
-        $data['firstName'] = $user->first_name;
-        $data['lastName'] = $user->last_name;
-       return  $data;
-    }
+ 
   /* @method : send Mail
     * @param : email
     * Response :  
@@ -113,7 +84,7 @@ class Helper {
         
         return  Mail::send('emails.'.$template, array('content' => $template_content), function($message) use($email_content)
           {
-            $name = "admin";
+            $name = $template_content['name'];
             $message->from('kundan.roy@webdunia.net',$name);  
             $message->to($email_content['receipent_email'])->subject($email_content['subject']);
             
@@ -136,9 +107,37 @@ class Helper {
           });
     }
 
+    public function notifyEmail($email_content,$template)    
+    {           
+         $email_content['email'] = isset($email_content['receipent_email'])?$email_content['receipent_email']:'hello@eventbid.com'; 
+
+        /*  Mail::send('emails.'.$template, array('content' => $email_content), function($message) use($email_content)
+          {
+            $name = $email_content['name'];
+            $message->from('notify@eventbid.com.au',$name);  
+            $message->to($email_content['receipent_email'])
+                    ->subject($email_content['subject']);
+            
+          });*/
+
+          $email_content['notify'] = 1;
+        return  Mail::send('emails.'.$template, array('content' => $email_content), function($message) use($email_content)
+          {
+            $name = 'Eventbid';
+            $message->from('hello@eventbid.com.au',$name);  
+            $message->to($email_content['sender_mail'])
+                    ->subject('Eventbid notification email registered!');
+            
+          });
+
+
+
+        return 'success';     
+    }
+
     public  function sendMailContactUs($email_content, $template)
     {        
-        $email_content['email'] = isset($email_content['receipent_email'])?$email_content['receipent_email']:'testing@mailinator.com'; 
+        $email_content['email'] = isset($email_content['receipent_email'])?$email_content['receipent_email']:'hello@eventbid.com'; 
 
         $mail = new PHPMailer;
         $html = view::make('emails.'.$template,['content' => $email_content['data']]);
@@ -148,17 +147,21 @@ class Helper {
             $mail->CharSet = "utf-8"; // set charset to utf8
              
             $mail->SMTPAuth   = true;                  // enable SMTP authentication
-            $mail->Host       = "mail.infowaynic.com"; // sets the SMTP server
+            $mail->Host       = "mail.guruhomeshops.com"; // sets the SMTP server
             $mail->Port       = 587;   
             $mail->SMTPSecure = 'false';                 // set the SMTP port for the GMAIL server
-            $mail->Username   = "no-reply@infowaynic.com"; // SMTP account username
-            $mail->Password   = "no-reply@123!"; 
-            $email = isset($email_content['data']['email'])?$email_content['data']['email']:$email_content['data']['mailId'];
-            $mail->setFrom($email, $email_content['name']);
+            $mail->Username   = "admin@guruhomeshops.com"; // SMTP account username
+            $mail->Password   = "admin@123!"; 
+
+
+            $to = isset($email_content['receipent_email'])?$email_content['receipent_email']:'hello@eventbid.com.au';
+            $from = isset($email_content['sender_mail'])?$email_content['sender_mail']:'fake@mailinator.com';
+
+            $mail->setFrom($from, $email_content['name']);
             $mail->Subject = $email_content['subject'];
             $mail->MsgHTML($html);
-            $mail->addAddress($email_content['receipent_email'], "Event Bid");
-           // $mail->addAddress("kroy.iips@gmail.com","Event Bid"); 
+            $mail->addAddress($to,"Event Bid");
+            $mail->AddReplyTo($from, 'Event Bid'); 
 
             //$mail->addAttachment(‘/home/kundan/Desktop/abc.doc’, ‘abc.doc’); // Optional name
             $mail->SMTPOptions= array(
