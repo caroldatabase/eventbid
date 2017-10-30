@@ -163,7 +163,7 @@ class ApiController extends Controller
                       
                 }
             } 
-            
+
             $user->save();
             return response()->json(
                             [ 
@@ -1241,7 +1241,7 @@ class ApiController extends Controller
     public function createBlog(Request $request, $id=null)
     {
         $blog = new Blogs;
-
+ 
         $table_cname = \Schema::getColumnListing('blogs');
 
         $validator = Validator::make($request->all(), [
