@@ -105,8 +105,8 @@ class ApiController extends Controller
 
         $user   = User::find($user->id);
 
-        $user   = User::where('id',$user->id)->first(['id as userId','first_name as firstName','last_name as lastName','email','user_type as userType']);
-
+       /* $user   = User::where('id',$user->id)->first(['id as userId','first_name as firstName','last_name as lastName','email','user_type as userType']);
+*/
         $status = 1;
         $code   = 200;
         $message = "Registration successfully done."; 
@@ -148,14 +148,22 @@ class ApiController extends Controller
             );
         } 
         $user = User::find($user_id);
+        $pass =  $request->get('newPassword');
 
         try{
             $columns = \Schema::getColumnListing('users');
             foreach ($columns as $key => $value) {
+
                 if($request->input(lcfirst(studly_case($value)))!=null){
-                    $user->$value  =  $request->input(lcfirst(studly_case($value)));   
+                    if($pass ){
+                        $user->password = Hash::make($pass);
+                    }else{
+                      $user->$value  =  $request->input(lcfirst(studly_case($value))); 
+                    }
+                      
                 }
             } 
+            
             $user->save();
             return response()->json(
                             [ 
@@ -797,7 +805,7 @@ class ApiController extends Controller
         
       // Send Mail after forget password
         $temp_password =  Hash::make($email);
- 
+        dd($user );
         $email_content = array(
                         'receipent_email'   => $request->input('email'),
                         'subject'           => 'Your Account Password',
