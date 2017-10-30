@@ -1240,8 +1240,7 @@ class ApiController extends Controller
     // createBlog
     public function createBlog(Request $request, $id=null)
     {
-        $blog = new Blogs;
- 
+        $blog = new Blogs; 
         $table_cname = \Schema::getColumnListing('blogs');
 
         $validator = Validator::make($request->all(), [
@@ -1264,9 +1263,9 @@ class ApiController extends Controller
             );
         }
 
-
-        $blogurl = $this->createImage($request->get('blog_image'));
-
+        if($request->get('blog_image')){
+             $blogurl = $this->createImage($request->get('blog_image'));  
+        } 
         $except = ['id','create_at','updated_at','blog_image'];
 
 
