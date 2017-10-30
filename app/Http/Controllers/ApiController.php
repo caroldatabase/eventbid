@@ -405,7 +405,7 @@ class ApiController extends Controller
                         $query->Where('category_id',$category_id) ;
                     } 
                          
-                });
+                })->orderBy('id','desc');
           
             if($id){
                $post_task =  $postTask->get();
@@ -1246,7 +1246,7 @@ class ApiController extends Controller
         $validator = Validator::make($request->all(), [
             'blog_title' => 'required' 
         ]); 
-        
+
         // Return Error Message
         if ($validator->fails()) {
                     $error_msg  =   [];
