@@ -1439,7 +1439,7 @@ class ApiController extends Controller
 
         $validator = Validator::make(Input::all(), [
             'assignUserID' => 'required',
-            'taskId' =>  
+            'taskId' =>  'required'
         ]);  
         // Return Error Message
         if ($validator->fails()) {
