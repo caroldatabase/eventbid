@@ -1433,22 +1433,13 @@ class ApiController extends Controller
 
     public function assignTask(Request $request, $id=null)
     {   
-        $interest = PostTask::find($id);
-
-        if(empty($interest)){
-             return Response::json(array(
-                'status' => 0,
-                'code' => 500,
-                'message' => 'Post task does not exist!',
-                'data'  =>  []
-                )
-            );   
-        }
+        
 
         $table_cname = \Schema::getColumnListing('interest');
 
         $validator = Validator::make(Input::all(), [
-            'assignUserID' => 'required' 
+            'assignUserID' => 'required',
+            'taskId' =>  
         ]);  
         // Return Error Message
         if ($validator->fails()) {
@@ -1464,6 +1455,18 @@ class ApiController extends Controller
                 'data'  =>  []
                 )
             );
+        }
+
+        $interest = PostTask::find($request->get('taskId'));
+
+        if(empty($interest)){
+             return Response::json(array(
+                'status' => 0,
+                'code' => 500,
+                'message' => 'Post task does not exist!',
+                'data'  =>  []
+                )
+            );   
         }
 
         $interest->seeker_user_id = $request->get('assignUserID');
