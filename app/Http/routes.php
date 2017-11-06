@@ -39,7 +39,7 @@ Route::group(['prefix' => 'api/v1'], function()
 
             Route::match(['post','get'],'user/login', 'ApiController@login'); 
             Route::match(['post','get'],'email_verification','ApiController@emailVerification');  
-            Route::match(['post','get'],'user/forget-password','ApiController@forgetPassword'); 
+            Route::match(['post','get'],'user/forget-paswsword','ApiController@forgetPassword'); 
             
             Route::match(['post','get'],'post-task/create','ApiController@postTask'); 
             Route::match(['post','get'],'post-task/getPostTask','ApiController@getPostTask'); 

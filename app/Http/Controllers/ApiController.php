@@ -1435,6 +1435,16 @@ class ApiController extends Controller
     {   
         $interest = PostTask::find($id);
 
+        if(empty($interest)){
+             return Response::json(array(
+                'status' => 0,
+                'code' => 500,
+                'message' => 'Post task does not exist!',
+                'data'  =>  []
+                )
+            );   
+        }
+
         $table_cname = \Schema::getColumnListing('interest');
 
         $validator = Validator::make(Input::all(), [
