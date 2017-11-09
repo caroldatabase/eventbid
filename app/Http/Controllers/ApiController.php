@@ -1158,7 +1158,7 @@ class ApiController extends Controller
                     ->where($business_type,$uid)->get();
             $result = [];
             foreach ($task as $key => $value) {
-                $data[$value->task_status][] = $value; 
+                $result[$value->task_status][] = $value; 
             }
 
             if(!empty($result)){
