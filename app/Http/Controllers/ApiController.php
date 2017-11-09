@@ -447,7 +447,7 @@ class ApiController extends Controller
     }
     public function postTask(Request $request,$id=null)
     {
-        $postTask = new  PostTask;
+        $postTask = new  PostTask; 
         $message = "Post task created successfully." ;
 
         if($id){
@@ -516,7 +516,7 @@ class ApiController extends Controller
              $postTask->task_status         =  $request->get('task_status');
         }
         $category_question                  =   $request->get('category_question');
-        if(is_array($category_question)){ 
+        if(isset($category_question) && is_array($category_question)){ 
              $postTask->category_question   =  json_encode($request->get('category_question'));
         }
          
@@ -1158,13 +1158,7 @@ class ApiController extends Controller
                     ->where($business_type,$uid)->get();
             $result = [];
             foreach ($task as $key => $value) {
-                if($value->task_status=="open")
-                {
-                    $result['openTask'][] = $value;
-                }else{
-                    $result['progressTask'][] = $value;
-                }
-                
+                $data[$value->task_status][] = $value; 
             }
 
             if(!empty($result)){
@@ -1188,7 +1182,7 @@ class ApiController extends Controller
                                     "status"=>$status,
                                     "code"=>$code,
                                     "message"=>$msg,
-                                    'data' => $result
+                                    'data' => $data
                                 ]
                             );
 
@@ -1438,8 +1432,9 @@ class ApiController extends Controller
         $table_cname = \Schema::getColumnListing('interest');
 
         $validator = Validator::make(Input::all(), [
-            'assignUserID' => 'required',
-            'taskId' =>  'required'
+            'taskId' =>  'required',
+            'assignUserID' => 'required'
+            
         ]);  
         // Return Error Message
         if ($validator->fails()) {
