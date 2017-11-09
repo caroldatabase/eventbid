@@ -1182,7 +1182,7 @@ class ApiController extends Controller
                                     "status"=>$status,
                                     "code"=>$code,
                                     "message"=>$msg,
-                                    'data' => $data
+                                    'data' => $result
                                 ]
                             );
 
