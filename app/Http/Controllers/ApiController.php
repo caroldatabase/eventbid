@@ -789,8 +789,8 @@ class ApiController extends Controller
             );
         }
 
+
         $user =   User::where('email',$email)->first();
-      
         if($user==null){
             return Response::json(array(
                 'status' => 0,
@@ -805,7 +805,6 @@ class ApiController extends Controller
         
       // Send Mail after forget password
         $temp_password =  Hash::make($email);
-        dd($user );
         $email_content = array(
                         'receipent_email'   => $request->input('email'),
                         'subject'           => 'Your Account Password',
@@ -834,12 +833,10 @@ class ApiController extends Controller
     * Response : "message"
     * Return : json response 
    */
-    public function changePassword(Request $request)
+    public function changePassword(Request $request,$user_id=null)
     {   
-        $user = JWTAuth::toUser($request->input('deviceToken'));
-        $user_id = $user->userID; 
+        $user  =User::find($user_id); 
         $old_password = $user->password;
-     
         $validator = Validator::make($request->all(), [
             'oldPassword' => 'required',
             'newPassword' => 'required|min:6'
