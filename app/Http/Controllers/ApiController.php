@@ -1200,7 +1200,7 @@ class ApiController extends Controller
         try{
             $result = PostTask::select('*')
                                 ->with('category','postUserDetail')
-                                ->whereIn('category_id',$cat_id)
+                              //  ->whereIn('category_id',$cat_id)
                                 ->where('task_status','open')
                                 ->groupBy('event_title')
                                 ->limit(10)
