@@ -76,8 +76,17 @@ Route::group(['prefix' => 'api/v1'], function()
             Route::match(['post','get'],'showInterestList','ApiController@showInterestList');
             Route::match(['post','get'],'deleteInterest/{id}','ApiController@deleteInterest');   
             Route::match(['post','get'],'user/changePassword/{id}','ApiController@changePassword');
-               
 
+            Route::match(['get','post'],'comment/post',[
+                'as' => 'commentPost',
+                'uses' => 'ApiController@comment'
+                ]
+            );
+
+               
+            //Route::match(['post','get'],'user/','ApiController@changePassword');
+            Route::match(['post','get'],'user/resetPassword','ApiController@resetPassword');
+             
             Route::group(['middleware' => 'jwt-auth'], function () 
             { 
                Route::match(['post','get'],'get_condidate_record','APIController@getCondidateRecord'); 
