@@ -1455,8 +1455,19 @@ class ApiController extends Controller
                 )
             );
         }
+
+        $offerImagesData = $request->get('offerImages');
+
+        if($offerImagesData){
+
+            foreach ($offerImagesData as $key => $base64) {
+               $offerImages['offerImagesUrl'][] =  $this->createImage($base64);
+            }   
+        }
+
+        
                 
-        $except = ['id','create_at','updated_at'];
+        $except = ['id','create_at','updated_at','offerImages'];
         
         foreach ($table_cname as $key => $value) {
            
@@ -1465,7 +1476,12 @@ class ApiController extends Controller
            } 
            $interest->$value = $request->get($value);
         }
-        $interest->save();
+
+        
+        if(isset($offerImages)){
+            $interest->offerImages = json_encode($offerImages);   
+        }
+        $interest->save(); 
         return  response()->json([ 
                     "status"=>1,
                     "code"=> 200,
