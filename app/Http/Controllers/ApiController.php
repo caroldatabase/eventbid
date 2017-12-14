@@ -1503,7 +1503,10 @@ class ApiController extends Controller
             'taskId' =>  'required',
             'assignUserID' => 'required'
             
-        ]);  
+        ]);
+
+        Comments::where('taskId',$request->get('taskId'))->delete();
+
         // Return Error Message
         if ($validator->fails()) {
                     $error_msg  =   [];
