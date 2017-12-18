@@ -76,7 +76,8 @@ Route::group(['prefix' => 'api/v1'], function()
             Route::match(['post','get'],'showInterestList','ApiController@showInterestList');
             Route::match(['post','get'],'deleteInterest/{id}','ApiController@deleteInterest');   
         
-
+            Route::match(['post','get'],'makePayment','PaymentController@makePayment');   
+        
             Route::group(['middleware' => 'jwt-auth'], function () 
             { 
                Route::match(['post','get'],'get_condidate_record','APIController@getCondidateRecord'); 

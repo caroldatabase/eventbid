@@ -15,7 +15,8 @@
         "maatwebsite/excel": "^2.0",
         "gloudemans/shoppingcart": "^2.3",
         "atayahmet/laravel-nestable": "^0.7.3",
-        "phpmailer/phpmailer": "^5.2" 
+        "phpmailer/phpmailer": "^5.2", 
+        "omnipay/paypal": "~2.0"
 
     },
     "require-dev": {
