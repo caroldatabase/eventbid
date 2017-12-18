@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Modules\Admin\Http\Requests\ProductRequest;
 use App\User;  
 use Modules\Admin\Models\ShippingBillingAddress;
-use Modules\Admin\Models\Transaction;
+use App\PostTask;
 use Input;
 use Validator;
 use Auth; 
@@ -26,6 +26,7 @@ use Modules\Admin\Models\Settings;
 use Omnipay\Omnipay;
 use Omnipay\Common\CreditCard; 
 use Omnipay\PayPal; 
+use App\Transaction;
 /**
  * Class AdminController
  */
@@ -50,10 +51,12 @@ class PaymentController extends Controller {
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|max:50',
             'last_name' => 'required|max:50',
-            'credit_card_number' => 'required|max:16',
+            'cardNumber' => 'required|max:16',
             'cvv' => 'required|numeric|min:3',
             'month' => 'required',
-            'year' => 'required|digits:4|integer|min:'.(date('Y'))
+            'year' => 'required|digits:4|integer|min:'.(date('Y')),
+            'taskId' => 'required',
+            'userId' => 'required',
         ]); 
        if (isset($validator) && $validator->fails()) {
                     $error_msg  =   [];
@@ -72,6 +75,8 @@ class PaymentController extends Controller {
  
         try{
 
+        	$task = PostTask::find($request->get('taskId'));
+
             $gateway = Omnipay::create('PayPal_Pro');
             
             $gateway->setUsername( 'kundan.r-facilitator-3_api1.cisinlabs.com' );
@@ -83,67 +88,37 @@ class PaymentController extends Controller {
             $card = new CreditCard(array(
                 'firstName'             => $request->get('first_name'),
                 'lastName'              => $request->get('lastName'),
-                'number'                => $request->get('credit_card_number'),
+                'number'                => $request->get('cardNumber'),
                 'expiryMonth'           => $request->get('month'),
                 'expiryYear'            => $request->get('year'),
                 'cvv'                   => $request->get('cvv')
             )); 
             
             $transaction_paypal = $gateway->purchase(array(
-                 'currency'         => 'USD',
-                 'description'      => 'Toys Box',
+                 'currency'         => 'AUD',
+                 'description'      => ($task->event_title)?$task->event_title:'task',
                  'card'             =>  $card,
-                 'name'             => 'newborn', 
-                 'amount'           =>  "100.00" //$sub_total 
+                 'name'             => ($task->event_title)?$task->event_title:'task', 
+                 'amount'           =>  !empty($request->get('amount'))?$request->get('amount'):0.00;
             ));
             
-            if(Auth::check()){
-                $user       = User::where('id',Auth::user()->id)->first();
-                $user_id    = $user->id;
-            }else{
-                $user = User::where('email',$request->get('email'))->first();
-                 
-            }
+           
             $response   = $transaction_paypal->send();
             $data       = $response->getData(); 
 
+
+            $transaction = new Transaction;
+            $transaction->firstName =  $request->get('firstName');
+            $transaction->lastName 	= $request->get('lastName');
+            $transaction->userId 	= $request->get('userId');
+            $transaction->taskId 	= $request->get('taskId');
+            $transaction->amount 	= $request->get('amount');
+            $transaction->cardDetails = json_encode($request->all());
+            $transaction->transactionDetails =  json_encode($data);
+            $transaction->transactionId =  $data['TRANSACTIONID'];
+            $transaction->save();
  
-
-//            $shippingBillingAddress = new ShippingBillingAddress;
-//
-//            $shippingBillingAddress->name = $request->get('first_name').' '.$request->get('last_name');
-//            $shippingBillingAddress->name       =   $request->get('first_name');
-//            $shippingBillingAddress->user_id    =   $user_id;
-//            $shippingBillingAddress->phone      =   $request->get('phone');
-//            $shippingBillingAddress->email      =   $request->get('email');
-//            $shippingBillingAddress->address1   =   $request->get('address');
-//            $shippingBillingAddress->address2   =   $request->get('apt_unit');
-//            $shippingBillingAddress->city       =   $request->get('city');
-//            $shippingBillingAddress->status     =   $request->get('status');
-//            $shippingBillingAddress->state      =   $request->get('state');
-//            $shippingBillingAddress->zip_code   =   $request->get('postal_code');
-//            $shippingBillingAddress->country    =   $request->get('country');
-//            $shippingBillingAddress->address_type=  1;
-//            $shippingBillingAddress->payment_mode = "PayPal";
-//            $shippingBillingAddress->others_detail = json_encode($request->all());
-//            $shippingBillingAddress->save();
-
-
-            if(isset($data['ACK']) && $data['ACK']=='Success'){
-
-//                $trns = Transaction::find($transaction->id);
-//                $trns->transaction_detail =  json_encode($data);
-//                $trns->paypal_transaction_id =  $data['TRANSACTIONID'];
-//                $trns->status = $data['ACK'];
-//                $trns->save();
-
-            }else{ 
-//                $trns = Transaction::find($transaction->id);
-//                $trns->transaction_detail =  json_encode($data);
-//                $trns->paypal_transaction_id =  isset($data['TRANSACTIONID'])?$data['TRANSACTIONID']:'';
-//                $trns->status = isset($data['ACK'])?$data['ACK']:'';
-//                $trns->save(); 
-            } 
+ 			
             return ['status'=>1,'code'=>200,'message'=>$data['ACK'],'data'=>$data];
         }catch (\Exception $e) {  
             
