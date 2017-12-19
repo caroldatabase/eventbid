@@ -49,14 +49,15 @@ class PaymentController extends Controller {
     public function makePayment(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'first_name' => 'required|max:50',
-            'last_name' => 'required|max:50',
+            'firstName' => 'required|max:50',
+            'lastName' => 'required|max:50',
             'cardNumber' => 'required|max:16',
             'cvv' => 'required|numeric|min:3',
             'month' => 'required',
             'year' => 'required|digits:4|integer|min:'.(date('Y')),
             'taskId' => 'required',
             'userId' => 'required',
+            'amount' => 'required'
         ]); 
        if (isset($validator) && $validator->fails()) {
                     $error_msg  =   [];
@@ -75,8 +76,8 @@ class PaymentController extends Controller {
  
         try{
 
-        	$task = PostTask::find($request->get('taskId'));
-
+            $task = PostTask::find($request->get('taskId'));
+            
             $gateway = Omnipay::create('PayPal_Pro');
             
             $gateway->setUsername( 'kundan.r-facilitator-3_api1.cisinlabs.com' );
@@ -96,16 +97,14 @@ class PaymentController extends Controller {
             
             $transaction_paypal = $gateway->purchase(array(
                  'currency'         => 'AUD',
-                 'description'      => ($task->event_title)?$task->event_title:'task',
+                 'description'      => isset($task->event_title)?$task->event_title:'paying for task',
                  'card'             =>  $card,
-                 'name'             => ($task->event_title)?$task->event_title:'task', 
-                 'amount'           =>  !empty($request->get('amount'))?$request->get('amount'):0.00;
+                 'name'             => isset($task->event_title)?$task->event_title:'task', 
+                 'amount'           =>  !empty($request->get('amount'))?$request->get('amount'):'0.00'
             ));
             
-           
             $response   = $transaction_paypal->send();
             $data       = $response->getData(); 
-
 
             $transaction = new Transaction;
             $transaction->firstName =  $request->get('firstName');
