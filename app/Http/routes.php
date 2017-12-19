@@ -39,7 +39,7 @@ Route::group(['prefix' => 'api/v1'], function()
 
             Route::match(['post','get'],'user/login', 'ApiController@login'); 
             Route::match(['post','get'],'email_verification','ApiController@emailVerification');  
-            Route::match(['post','get'],'user/forget-paswsword','ApiController@forgetPassword'); 
+            Route::match(['post','get'],'user/forget-password','ApiController@forgetPassword'); 
             
             Route::match(['post','get'],'post-task/create','ApiController@postTask'); 
             Route::match(['post','get'],'post-task/getPostTask','ApiController@getPostTask'); 
@@ -78,11 +78,23 @@ Route::group(['prefix' => 'api/v1'], function()
         
             Route::match(['post','get'],'makePayment','PaymentController@makePayment');   
         
+            Route::match(['post','get'],'user/changePassword/{id}','ApiController@changePassword');
+
+            Route::match(['get','post'],'comment/post',[
+                'as' => 'commentPost',
+                'uses' => 'ApiController@comment'
+                ]
+            );
+
+               
+            //Route::match(['post','get'],'user/','ApiController@changePassword');
+            Route::match(['post','get'],'user/resetPassword','ApiController@resetPassword');
+             
+
             Route::group(['middleware' => 'jwt-auth'], function () 
             { 
                Route::match(['post','get'],'get_condidate_record','APIController@getCondidateRecord'); 
                Route::match(['post','get'],'user/logout','ApiController@logout'); 
-               Route::match(['post','get'],'change_password','ApiController@changePassword');
                Route::match(['post','get'],'user/details','ApiController@getUserDetails'); 
                 
             }

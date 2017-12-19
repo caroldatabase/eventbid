@@ -26,6 +26,7 @@ use App\ContactUs;
 use App\CommondataFields;
 use App\Blogs;
 use App\Interest;
+use App\Models\Comments;
 
 
 class ApiController extends Controller
@@ -789,8 +790,8 @@ class ApiController extends Controller
             );
         }
 
+
         $user =   User::where('email',$email)->first();
-      
         if($user==null){
             return Response::json(array(
                 'status' => 0,
@@ -805,7 +806,6 @@ class ApiController extends Controller
         
       // Send Mail after forget password
         $temp_password =  Hash::make($email);
-        dd($user );
         $email_content = array(
                         'receipent_email'   => $request->input('email'),
                         'subject'           => 'Your Account Password',
@@ -829,17 +829,70 @@ class ApiController extends Controller
                 );
     }
 
+     public function resetPassword(Request $request)
+     {   
+        $email = Input::get('email');
+        $user  = User::where('email',$email)->first(); 
+        if (!$user) {
+            $error_msg  =   [];
+                            
+            return Response::json(array(
+                'status' => 0,
+                'message' => "Oh no! The email address you provided isn't match in our system",
+                'data'  =>  ''
+                )
+            );
+        }
+
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|min:6'
+        ]);
+        // Return Error Message
+        if ($validator->fails()) {
+            $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return Response::json(array(
+                'status' => 0,
+                'message' => $error_msg[0],
+                'data'  =>  ''
+                )
+            );
+        }
+
+         
+        if ($email) {
+
+           $user->password =  Hash::make($request->input('password'));
+           $user->save();
+           return  response()->json([ 
+                    "status"=>1,
+                    "code"=> 200,
+                    "message"=>"Password reset successfully.",
+                    'data' => ""
+                    ]
+                );
+        }else
+        {
+            return Response::json(array(
+                'status' => 0,
+                'message' => "Invalid email",
+                'data'  =>  ''
+                )
+            );
+        }         
+    }
    /* @method : change password
     * @param : token,oldpassword, newpassword
     * Response : "message"
     * Return : json response 
    */
-    public function changePassword(Request $request)
+    public function changePassword(Request $request,$user_id=null)
     {   
-        $user = JWTAuth::toUser($request->input('deviceToken'));
-        $user_id = $user->userID; 
+        $user  =User::find($user_id); 
         $old_password = $user->password;
-     
         $validator = Validator::make($request->all(), [
             'oldPassword' => 'required',
             'newPassword' => 'required|min:6'
@@ -1198,13 +1251,12 @@ class ApiController extends Controller
         $cat_id = explode(',', $category_id);
          
         try{
-            $result = PostTask::select('*')
-                                ->with('category','postUserDetail')
-                              //  ->whereIn('category_id',$cat_id)
+            $result = PostTask::with('category','postUserDetail') 
                                 ->where('task_status','open')
                                 ->groupBy('event_title')
                                 ->limit(10)
                                 ->get(); 
+                                
             if($result->count()>0){
                 $msg    = "Recommended Task" ;
                 $status = 1;
@@ -1221,7 +1273,7 @@ class ApiController extends Controller
             $code   = 500;
             $result = []; 
         }
-        return response()->json(
+        return  json_encode(
                                 [ 
                                     "status"=>$status,
                                     "code"=>$code,
@@ -1403,8 +1455,19 @@ class ApiController extends Controller
                 )
             );
         }
+
+        $offerImagesData = $request->get('offerImages');
+
+        if($offerImagesData){
+
+            foreach ($offerImagesData as $key => $base64) {
+               $offerImages['offerImagesUrl'][] =  $this->createImage($base64);
+            }   
+        }
+
+        
                 
-        $except = ['id','create_at','updated_at'];
+        $except = ['id','create_at','updated_at','offerImages'];
         
         foreach ($table_cname as $key => $value) {
            
@@ -1413,7 +1476,12 @@ class ApiController extends Controller
            } 
            $interest->$value = $request->get($value);
         }
-        $interest->save();
+
+        
+        if(isset($offerImages)){
+            $interest->offerImages = json_encode($offerImages);   
+        }
+        $interest->save(); 
         return  response()->json([ 
                     "status"=>1,
                     "code"=> 200,
@@ -1435,7 +1503,10 @@ class ApiController extends Controller
             'taskId' =>  'required',
             'assignUserID' => 'required'
             
-        ]);  
+        ]);
+
+        Comments::where('taskId',$request->get('taskId'))->delete();
+
         // Return Error Message
         if ($validator->fails()) {
                     $error_msg  =   [];
@@ -1498,6 +1569,209 @@ class ApiController extends Controller
       
         file_put_contents($path, $image); 
         return url::to(asset('public/images/'.$image_name));
+    }
+
+    public function Comment(Comments $comment, Request $request){
+
+        $post_request = $request->all(); 
+         //Server side valiation
+        $action =  $request->get('getCommentBy');
+        $taskId =  $request->get('taskId');
+        if($action == 'task'){
+             $getComment = $this->getComment($taskId); 
+              return Response::json($getComment);
+        }
+         
+
+        $validator = Validator::make($request->all(), [
+           'taskId' => 'required',
+           'userId' => 'required'
+        ]);
+        /** Return Error Message **/
+        if ($validator->fails()) {
+                    $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return Response::json(array(
+                'status' => 0,
+                'code'=>500,
+                'message' => $error_msg[0],
+                'data'  =>  $post_request
+                )
+            );
+        }   
+        $taskId = $request->get('taskId'); 
+        $task = PostTask::find($taskId);
+        if ($task==null) {
+            $task_data = PostTask::find($taskId);
+            if (empty($task_data)) {
+                return
+                    [ 
+                    "status"  => '0',
+                    'code'    => '500',
+                    "message" => 'No match found for the given task id.',
+                    'data'    => $post_request
+                    ];
+                
+            } 
+        }  
+ 
+
+        $userId = $request->get('userId'); 
+        $user = User::find($userId);
+        if ($user==null) {
+             
+            if (empty($user)) {
+                return
+                    [ 
+                    "status"  => '0',
+                    'code'    => '500',
+                    "message" => 'No match found for the given user id.',
+                    'data'    => $post_request
+                    ];
+                
+            } 
+        }
+        $action =  $request->get('commentReply');
+        if($action == 'yes'){ 
+            $validator = Validator::make($request->all(), [
+               'commentId' => 'required'
+            ]);
+            /** Return Error Message **/
+            if ($validator->fails()) {
+                        $error_msg  =   [];
+                foreach ( $validator->messages()->all() as $key => $value) {
+                            array_push($error_msg, $value);     
+                        }
+                                
+                return Response::json(array(
+                    'status' => 0,
+                    'code'=>500,
+                    'message' => $error_msg[0],
+                    'data'  =>  $post_request
+                    )
+                );
+            }   
+
+             $getComment = $this->replyComment($request->all()); 
+             
+             return Response::json(array(
+                    'status' => 1,
+                    'code'=>200,
+                    'message' => "Comment replied!",
+                    'data'  =>  $getComment
+                    )
+                );
+        }
+
+        $table_cname = \Schema::getColumnListing('comments');
+        $except = ['id','created_at','updated_at'];
+        
+        $comment = new Comments;
+        foreach ($table_cname as $key => $value) {
+           
+           if(in_array($value, $except )){
+                continue;
+           } 
+           if($request->get($value)){
+                $comment->$value = $request->get($value);
+           }
+           
+        }
+        $comment->save();
+
+        $comments = Comments::with('userDetail')->where('id',$comment->id)->get();
+        $status  = 1;
+        $code    = 200;
+        $message = 'comment posted successfully.';
+        $data    = $comments; 
+        
+        return 
+                [ 
+                "status"  =>$status,
+                'code'    => $code,
+                "message" =>$message,
+                'data'    => $data
+                ];
+    }
+
+    public function replyComment($request)
+    {
+        $table_cname = \Schema::getColumnListing('comments');
+        $except = ['id','created_at','updated_at'];
+        
+        $comment = new Comments;
+        foreach ($table_cname as $key => $value) {
+           
+           if(in_array($value, $except )){
+                continue;
+           } 
+           if(isset($request[$value]) && $request[$value]){
+                $comment->$value = $request[$value];
+           }
+           
+        }
+        $comment->save();
+
+        $comments = Comments::with('userDetail','commentReply')
+                        ->where('id',$request['commentId'])
+                        ->get();
+        return $comments;
+
+
+    }
+    public function getComment($taskId=null)
+    {
+ 
+        /** Return Error Message **/
+        if (empty($taskId)) {
+                    
+            return [
+                'status' => 0,
+                'code'=>500,
+                'message' => "Task id is required",
+                'data'  =>  []
+                ];
+        }   
+     
+       
+        $task_data = PostTask::find($taskId);
+        if (empty($task_data)) {
+            return
+                [ 
+                "status"  => '0',
+                'code'    => '500',
+                "message" => 'No match found for the given task id.',
+                'data'    => []
+                ];
+            
+        }  
+
+
+        $comment =  Comments::with('userDetail')->where('taskId',$taskId)->get();
+        
+        if($comment->count()>0){
+            return 
+                [ 
+                "status"  =>1,
+                'code'    => 200,
+                "message" =>"Comments list",
+                'data'    => $comment
+                ];
+        }else{
+
+            return 
+                [ 
+                "status"  =>0,
+                'code'    => 404,
+                "message" =>"Record not found!",
+                'data'    => []
+                ];
+
+        }
+
     }
 
 } 
