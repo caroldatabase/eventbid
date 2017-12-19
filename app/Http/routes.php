@@ -90,7 +90,6 @@ Route::group(['prefix' => 'api/v1'], function()
             //Route::match(['post','get'],'user/','ApiController@changePassword');
             Route::match(['post','get'],'user/resetPassword','ApiController@resetPassword');
              
-
             Route::group(['middleware' => 'jwt-auth'], function () 
             { 
                Route::match(['post','get'],'get_condidate_record','APIController@getCondidateRecord'); 
