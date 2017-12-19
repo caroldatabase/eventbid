@@ -57,7 +57,7 @@ class PaymentController extends Controller {
             'year' => 'required|digits:4|integer|min:'.(date('Y')),
             'taskId' => 'required',
             'userId' => 'required',
-            'amount' => 'required'
+           // 'amount' => 'required'
         ]); 
        if (isset($validator) && $validator->fails()) {
                     $error_msg  =   [];
@@ -85,9 +85,9 @@ class PaymentController extends Controller {
             $gateway->setSignature( 'AgsyRufAX1NOEGmzAg0vXIX4pkjQAEaRyKcNiHzfR5Ka0I-74umoKXhH' ); 
             $gateway->setTestMode( true );
         
-        
+      
             $card = new CreditCard(array(
-                'firstName'             => $request->get('first_name'),
+                'firstName'             => $request->get('firstName'),
                 'lastName'              => $request->get('lastName'),
                 'number'                => $request->get('cardNumber'),
                 'expiryMonth'           => $request->get('month'),
@@ -100,25 +100,48 @@ class PaymentController extends Controller {
                  'description'      => isset($task->event_title)?$task->event_title:'paying for task',
                  'card'             =>  $card,
                  'name'             => isset($task->event_title)?$task->event_title:'task', 
-                 'amount'           =>  !empty($request->get('amount'))?$request->get('amount'):'0.00'
+                 'amount'           =>  !empty($request->get('amount'))?$request->get('amount'):'1.00'
             ));
-            
+             
             $response   = $transaction_paypal->send();
             $data       = $response->getData(); 
+            
+            // L_LONGMESSAGE0
+            if(isset($data['ACK']) && $data['ACK']=="Failure")
+            {
+            	$transaction = new Transaction;
+	            $transaction->firstName =  $request->get('firstName');
+	            $transaction->lastName 	= $request->get('lastName');
+	            $transaction->userId 	= $request->get('userId');
+	            $transaction->taskId 	= $request->get('taskId');
+	            $transaction->amount 	= $request->get('amount');
+	            $transaction->cardDetails = json_encode($request->all());
+	            $transaction->transactionDetails =  json_encode($data);
+	            $transaction->transactionId =  time();
+	            $transaction->save();
+	            return ['status'=>0,'code'=>500,'message'=>$data['ACK'],'data'=>$data];
+       
 
-            $transaction = new Transaction;
-            $transaction->firstName =  $request->get('firstName');
-            $transaction->lastName 	= $request->get('lastName');
-            $transaction->userId 	= $request->get('userId');
-            $transaction->taskId 	= $request->get('taskId');
-            $transaction->amount 	= $request->get('amount');
-            $transaction->cardDetails = json_encode($request->all());
-            $transaction->transactionDetails =  json_encode($data);
-            $transaction->transactionId =  $data['TRANSACTIONID'];
-            $transaction->save();
+            }
+            if(isset($data['ACK']) && $data['ACK']=="Success")
+            {
+            	$transaction = new Transaction;
+	            $transaction->firstName =  $request->get('firstName');
+	            $transaction->lastName 	= $request->get('lastName');
+	            $transaction->userId 	= $request->get('userId');
+	            $transaction->taskId 	= $request->get('taskId');
+	            $transaction->amount 	= $request->get('amount');
+	            $transaction->cardDetails = json_encode($request->all());
+	            $transaction->transactionDetails =  json_encode($data);
+	            $transaction->transactionId =  $data['TRANSACTIONID'];
+	            $transaction->save();
+	            return ['status'=>1,'code'=>200,'message'=>$data['ACK'],'data'=>$data];
+       
+            		
+            }
+           
  
  			
-            return ['status'=>1,'code'=>200,'message'=>$data['ACK'],'data'=>$data];
         }catch (\Exception $e) {  
             
             return ['status'=>0,'code'=>500,'message'=>$e->getMessage(),'data'=>[]];
