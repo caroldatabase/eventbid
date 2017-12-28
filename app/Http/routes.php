@@ -17,10 +17,12 @@ header('Access-Control-Allow-Credentials: true');
 
 Route::get('/', function () {
 
-   // dd(Hash::make('admin'));
-    return view('welcome'); 
+   echo "Access Deny!";
 });
 
+    Route::match(['post','get'],'getToken','PaymentController@getToken'); 
+    Route::match(['post','get'],'saveCard','PaymentController@saveCard');  
+        
 /*
 * Rest API Request , auth  & Route
 */ 
@@ -76,8 +78,15 @@ Route::group(['prefix' => 'api/v1'], function()
             Route::match(['post','get'],'showInterestList','ApiController@showInterestList');
             Route::match(['post','get'],'deleteInterest/{id}','ApiController@deleteInterest');   
         
-            Route::match(['post','get'],'makePayment','PaymentController@makePayment');   
-        
+            Route::match(['post','get'],'makePayment','PaymentController@makePayment'); 
+            
+             //added by Ocean
+            Route::match(['post','get'],'addCard','PaymentController@addCard'); 
+            Route::match(['post','get'],'getCards','PaymentController@cardList'); 
+            Route::match(['post','get'],'updateCard','PaymentController@updateCard'); 
+            Route::match(['post','get'],'deleteCard','PaymentController@deleteCard'); 
+            Route::match(['post','get'],'paymentByCard','PaymentController@paymentByCard'); 
+               
             Route::group(['middleware' => 'jwt-auth'], function () 
             { 
                Route::match(['post','get'],'get_condidate_record','APIController@getCondidateRecord'); 
