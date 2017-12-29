@@ -156,13 +156,16 @@ class ApiController extends Controller {
         }
         $user = User::find($user_id);
         $pass = $request->get('newPassword');
-
+  
         try {
             $table_cname = \Schema::getColumnListing('users');
-            $photo = $this->createImage($request->get('photo'));
-            if($photo){
-                $user->photo =$photo;
+            if($request->get('photo')){
+               $photo = $this->createImage($request->get('photo'));
+                if($photo){
+                    $user->photo =$photo;
+                } 
             }
+                
             $except = ['id', 'create_at', 'updated_at', 'photo'];
             $input = $request->all();
             foreach ($table_cname as $key => $value) {
