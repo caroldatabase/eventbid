@@ -166,7 +166,12 @@ class ApiController extends Controller {
                 } 
             }
                 
-            $except = ['id', 'create_at', 'updated_at', 'photo'];
+            $except = ['id', 'create_at', 'updated_at', 'photo','portfolio'];
+            
+            if(is_array($request->get('portfolio'))){
+              $user->portfolio = json_decode($request->get('portfolio'));  
+            }
+            
             $input = $request->all();
             foreach ($table_cname as $key => $value) {
                 if (in_array($value, $except)) {
