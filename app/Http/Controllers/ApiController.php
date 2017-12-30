@@ -162,7 +162,6 @@ class ApiController extends Controller {
         );
         
     }
-    
     public function addPersonalMessage(Request $request){
         
         $rs = $request->all();
@@ -194,6 +193,148 @@ class ApiController extends Controller {
         }
         
         DB::tabel('messges')->insert($input);
+        
+         return response()->json(
+                        [
+                            "status" =>1,
+                            'code' => 200,
+                            "message" => "Message added successfully.",
+                            'data' => []
+                        ]
+        );
+        
+        
+    }
+    public function addQualification(Request $request){
+        
+        $validator = Validator::make($request->all(), [
+            'userId' => "required", 
+            'qualificationType' => "required",
+            'qualification'=> "required",
+            'status' => "required"
+        ]);
+        
+        if(!empty($request->get('doc')) && $request->get('docType')){
+             $validator = Validator::make($request->all(), [
+                'userId' => "required", 
+                'qualificationType' => "required",
+                'qualification'=> "required",
+                'status' => "required",
+                'doc'=> "required",
+                'docType' => "required"
+            ]);
+        }
+
+        if ($validator->fails()) {
+            $error_msg = [];
+            foreach ($validator->messages()->all() as $key => $value) {
+                array_push($error_msg, $value);
+            }
+
+            return Response::json(array(
+                        'status' => 0,
+                        'code' => 500,
+                        'message' => $error_msg[0],
+                        'data' => $request->all()
+                            )
+            );
+        }
+        
+      
+        
+        $except = ['id', 'create_at', 'updated_at','doc'];
+            
+        
+            
+            $input =[];
+            $table_cname = \Schema::getColumnListing('addQualification');
+            foreach ($table_cname as $key => $value) {
+                if (in_array($value, $except)) {
+                    continue;
+                }
+                if ($request->input($value) != null) {
+                     $input[$value] = $request->get($value);
+                }
+        }
+            
+        
+        DB::tabel('addQualification')->insert($input);
+        
+         return response()->json(
+                        [
+                            "status" =>1,
+                            'code' => 200,
+                            "message" => "addQualification added",
+                            'data' => []
+                        ]
+        );
+        
+        
+    }
+    public function addInsurance(Request $request){
+        
+        $validator = Validator::make($request->all(), [
+            'userId' => "required", 
+            'insuranceType' => "required",
+            'insurer'=> "required",
+            'status' => "required"
+        ]);
+        
+        if(!empty($request->get('doc')) && $request->get('docType')){
+             $validator = Validator::make($request->all(), [
+                'userId' => "required", 
+                'insuranceType' => "required",
+                'insurer'=> "required",
+                'status' => "required",
+                'doc'=> "required",
+                'docType' => "required"
+            ]);
+        }
+
+        if ($validator->fails()) {
+            $error_msg = [];
+            foreach ($validator->messages()->all() as $key => $value) {
+                array_push($error_msg, $value);
+            }
+
+            return Response::json(array(
+                        'status' => 0,
+                        'code' => 500,
+                        'message' => $error_msg[0],
+                        'data' => $request->all()
+                            )
+            );
+        }
+        
+      
+        
+        $except = ['id', 'create_at', 'updated_at','doc'];
+            
+        
+            
+            $input =[];
+            $table_cname = \Schema::getColumnListing('addInsurance');
+            foreach ($table_cname as $key => $value) {
+                if (in_array($value, $except)) {
+                    continue;
+                }
+                if ($request->input($value) != null) {
+                     $input[$value] = $request->get($value);
+                }
+        }
+            
+        
+        DB::tabel('addInsurance')->insert($input);
+        
+         return response()->json(
+                        [
+                            "status" =>1,
+                            'code' => 200,
+                            "message" => "Insurance added!",
+                            'data' => []
+                        ]
+        );
+        
         
     }
 
