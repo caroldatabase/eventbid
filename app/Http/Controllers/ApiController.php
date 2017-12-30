@@ -388,7 +388,7 @@ class ApiController extends Controller {
             $post_user_id = ($request->get('post_user_id')) ? $request->get('post_user_id') : null;
             $seeker_user_id = ($request->get('seeker_user_id')) ? $request->get('seeker_user_id') : null;
             $id = isset($id) ? $id : $request->get('id');
-            $$idcategory_id = $request->get('category_id');
+            $category_id = $request->get('category_id');
 
             $postTask = PostTask::with('category', 'postUserDetail', 'seekerUserDetail')
                             ->where(function($query)
@@ -409,19 +409,17 @@ class ApiController extends Controller {
                                 if ($category_id) {
                                     $query->Where('category_id', $category_id);
                                 } 
-                                if ($id) {
-                                    $query->Where('id', $id);
-                                } 
                             })->orderBy('id', 'desc');
 
             if ($id) {
-                $post_task = $postTask->where('id',$id)->get();
+                $post_task = $postTask->get();
             } else {
                 if ($page_num == 1) {
                     $offset = 0;
                 } else {
                     $offset = $page_size * ($page_num - 1);
                 }
+
                 $post_task = $postTask->offset($offset)
                         ->limit($page_size)
                         ->get();
