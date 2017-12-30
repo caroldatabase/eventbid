@@ -41,6 +41,8 @@ Route::group(['prefix' => 'api/v1'], function()
             
             Route::match(['post','get'],'user/deactivate/{userId}', 'ApiController@deactivateUser'); 
             
+            Route::match(['post','get'],'addPersonalMessage', 'ApiController@addPersonalMessage'); 
+            
             
             Route::match(['post','get'],'user/login', 'ApiController@login'); 
             Route::match(['post','get'],'email_verification','ApiController@emailVerification');  

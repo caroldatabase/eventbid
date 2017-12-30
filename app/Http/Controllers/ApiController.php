@@ -162,6 +162,41 @@ class ApiController extends Controller {
         );
         
     }
+    
+    public function addPersonalMessage(Request $request){
+        
+        $rs = $request->all();
+        
+        $validator = Validator::make($request->all(), [
+                    'taskid ' => "required",
+            'userId ' => "required",
+            'comment'=> "required"
+        ]);
+
+        if ($validator->fails()) {
+            $error_msg = [];
+            foreach ($validator->messages()->all() as $key => $value) {
+                array_push($error_msg, $value);
+            }
+
+            return Response::json(array(
+                        'status' => 0,
+                        'code' => 500,
+                        'message' => $error_msg[0],
+                        'data' => $request->all()
+                            )
+            );
+        }
+        
+        
+        $input=[];
+        foreach ($rs as $key => $val){
+            $input[$key] = $val;
+        }
+        
+        DB::tabel('messges')->insert($input);
+        
+    }
 
 
     /* @method : update User Profile
