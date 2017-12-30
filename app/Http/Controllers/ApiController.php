@@ -145,7 +145,7 @@ class ApiController extends Controller {
      * Calling Method : get  
      */
 
-    public function updateProfile(Request $request, User $user, $user_id = null) {
+    public function updateProfile(Request $request, $user_id = null) {
         if (!Helper::isUserExist($user_id)) {
             return Response::json(array(
                         'status' => 0,
@@ -181,13 +181,13 @@ class ApiController extends Controller {
                 }
             }
             $user->save();
-            $user = User::find($user_id);
+            $users = User::find($user->id);
             return response()->json(
                             [
                                 "status" => 1,
                                 'code' => 200,
                                 "message" => "Profile updated successfully",
-                                'data' => $user
+                                'data' => $users
                             ]
             );
         } catch (\Exception $e) {
@@ -388,7 +388,7 @@ class ApiController extends Controller {
             $post_user_id = ($request->get('post_user_id')) ? $request->get('post_user_id') : null;
             $seeker_user_id = ($request->get('seeker_user_id')) ? $request->get('seeker_user_id') : null;
             $id = isset($id) ? $id : $request->get('id');
-            $category_id = $request->get('category_id');
+            $$idcategory_id = $request->get('category_id');
 
             $postTask = PostTask::with('category', 'postUserDetail', 'seekerUserDetail')
                             ->where(function($query)
@@ -408,18 +408,20 @@ class ApiController extends Controller {
                                 }
                                 if ($category_id) {
                                     $query->Where('category_id', $category_id);
-                                }
+                                } 
+                                if ($id) {
+                                    $query->Where('id', $id);
+                                } 
                             })->orderBy('id', 'desc');
 
             if ($id) {
-                $post_task = $postTask->get();
+                $post_task = $postTask->where('id',$id)->get();
             } else {
                 if ($page_num == 1) {
                     $offset = 0;
                 } else {
                     $offset = $page_size * ($page_num - 1);
                 }
-
                 $post_task = $postTask->offset($offset)
                         ->limit($page_size)
                         ->get();
