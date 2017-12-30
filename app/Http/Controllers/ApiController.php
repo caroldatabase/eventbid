@@ -378,8 +378,8 @@ class ApiController extends Controller {
         );
     }
 
-    public function getPostTask(Request $request, $id = null) {
-
+    public function getPostTask(Request $request, $id=null) {
+        
         try {
             $page_num = ($request->get('page_num')) ? $request->get('page_num') : 1;
             $page_size = ($request->get('page_size')) ? $request->get('page_size') : 20;
@@ -387,9 +387,8 @@ class ApiController extends Controller {
 
             $post_user_id = ($request->get('post_user_id')) ? $request->get('post_user_id') : null;
             $seeker_user_id = ($request->get('seeker_user_id')) ? $request->get('seeker_user_id') : null;
-            $id = isset($id) ? $id : $request->get('id');
+            $id = $request->get('id');
             $category_id = $request->get('category_id');
-
             $postTask = PostTask::with('category', 'postUserDetail', 'seekerUserDetail')
                             ->where(function($query)
                                     use($category_id, $id, $task_status, $page_num, $page_size, $post_user_id, $seeker_user_id) {
