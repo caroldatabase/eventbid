@@ -167,8 +167,8 @@ class ApiController extends Controller {
         
         $rs = $request->all();
         $validator = Validator::make($request->all(), [
-            'taskId ' => "required", 
-            'userId ' => "required",
+            'taskId' => "required", 
+            'userId' => "required",
             'comment'=> "required"
         ]);
 
