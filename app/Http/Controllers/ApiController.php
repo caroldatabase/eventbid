@@ -166,9 +166,8 @@ class ApiController extends Controller {
     public function addPersonalMessage(Request $request){
         
         $rs = $request->all();
-        
         $validator = Validator::make($request->all(), [
-                    'taskid ' => "required",
+            'taskId ' => "required", 
             'userId ' => "required",
             'comment'=> "required"
         ]);
