@@ -136,6 +136,33 @@ class ApiController extends Controller {
                         ]
         );
     }
+    
+    public function deactivateUser(Request $request, $userId = null) {
+        $user = User::find($userId);
+        if(!$user){
+             return response()->json(
+                        [
+                            "status" =>0,
+                            'code' => 500,
+                            "message" => "Invalid User ID",
+                            'data' => []
+                        ]
+        );
+        }
+        $user->status  = 0;
+        $user->save();
+        
+         return response()->json(
+                        [
+                            "status" =>1,
+                            'code' => 200,
+                            "message" => "User deactivated!",
+                            'data' => []
+                        ]
+        );
+        
+    }
+
 
     /* @method : update User Profile
      * @param : email,password,deviceID,firstName,lastName
@@ -165,12 +192,15 @@ class ApiController extends Controller {
                     $user->photo =$photo;
                 } 
             }
+             if($request->get('portfolio')){
+               $portfolio = $this->createImage($request->get('portfolio'));
+                if($portfolio){
+                    $user->portfolio =$portfolio;
+                } 
+            }
                 
             $except = ['id', 'create_at', 'updated_at', 'photo','portfolio'];
             
-            if(is_array($request->get('portfolio'))){
-              $user->portfolio = json_decode($request->get('portfolio'));  
-            }
             
             $input = $request->all();
             foreach ($table_cname as $key => $value) {

@@ -38,7 +38,10 @@ Route::group(['prefix' => 'api/v1'], function()
             Route::match(['post','get'],'user/signup','ApiController@register');  
             
             Route::match(['post','get'],'user/update-profile/{user_id}','ApiController@updateProfile'); 
-
+            
+            Route::match(['post','get'],'user/deactivate/{userId}', 'ApiController@deactivateUser'); 
+            
+            
             Route::match(['post','get'],'user/login', 'ApiController@login'); 
             Route::match(['post','get'],'email_verification','ApiController@emailVerification');  
             Route::match(['post','get'],'user/forget-password','ApiController@forgetPassword'); 
