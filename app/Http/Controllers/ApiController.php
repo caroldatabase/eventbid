@@ -378,7 +378,7 @@ class ApiController extends Controller {
         );
     }
 
-    public function getPostTask(Request $request, $id=null) {
+    public function getPostTask(Request $request, $id = null) {
         
         try {
             $page_num = ($request->get('page_num')) ? $request->get('page_num') : 1;
