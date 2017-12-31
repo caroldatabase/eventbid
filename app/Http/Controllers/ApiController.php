@@ -367,25 +367,19 @@ class ApiController extends Controller {
                     $user->photo =$photo;
                 } 
             }
-            if($request->get('portfolio')){
-               $portfolio = $this->createImage($request->get('portfolio'));
-                if($portfolio){
-                    $user->portfolio =$portfolio;
-                } 
-            }
-         
+           
+          
             if(is_array($request->get('portfolio'))){
                 foreach ($request->get('portfolio') as $key => $val){
                    $portfolio[] = $this->createImage($val); 
                 }
-               $portfolio = $this->createImage($request->get('portfolio'));
-                if($portfolio){
-                    $user->portfolio = json_decode($portfolio);
+                if(isset($portfolio)){
+                    $user->portfolio = json_encode($portfolio);
                 } 
             }
-                
-            $except = ['id', 'create_at', 'updated_at', 'photo','portfolio'];
             
+            $except = ['id', 'create_at', 'updated_at', 'photo','portfolio'];
+           
             
             $input = $request->all();
             foreach ($table_cname as $key => $value) {
