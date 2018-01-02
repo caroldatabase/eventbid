@@ -1044,18 +1044,23 @@ class ApiController extends Controller {
      */
 
     public function getUserDetails(Request $request, $uid) {
-        $user = User::find($uid);
-        
-                
-//            
-//            $users = DB::table('users')
-//                ->select("*")
-//                ->leftJoin('categories', 'users.category_id', '=', 'categories.id')
-//                ->whereRaw("find_in_set(category_id.users,categories.id)")
-//                ->get();
-//            dd($users);
-//            
             
+        $user = \DB::table("users")
+        ->select("users.*","categories.id as category_id","categories.name as categoryName","categories.categoryImage")
+        ->leftjoin("categories",\DB::raw("FIND_IN_SET(categories.id,users.category_id)"),">",\DB::raw("'0'"))
+        ->where('users.id',$uid)
+        ->get();
+            $cat=[];
+            foreach ($user as $key => $value){
+                if(!empty($value->categoryName)){
+                    $cat[] = ['category_id'=>$value->category_id,'categoryName'=>$value->categoryName,'categoryImage'=>$value->categoryImage];
+                }
+            }
+        $user = User::find($uid);
+        $user->category = $cat;
+          
+            
+        //    dd($data);
             
         /* $data = [];
           $data['userId']         =   $user->id;
@@ -1073,6 +1078,7 @@ class ApiController extends Controller {
           $data['companyUrl']     =   $user->company_url;
           $data['token']          =   $token; */
 
+        
 
         return response()->json(
                         ["status" => 1,
