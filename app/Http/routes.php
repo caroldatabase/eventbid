@@ -116,7 +116,7 @@ Route::group(['prefix' => 'api/v1'], function()
             { 
                Route::match(['post','get'],'get_condidate_record','APIController@getCondidateRecord'); 
                Route::match(['post','get'],'user/logout','ApiController@logout'); 
-               Route::match(['post','get'],'user/details','ApiController@getUserDetails'); 
+             //  Route::match(['post','get'],'user/details','ApiController@getUserDetails'); 
                 
             }
         );

@@ -526,9 +526,19 @@ class ApiController extends Controller {
                     $user->portfolio = json_encode($portfolio);
                 } 
             }
-            $except = ['id', 'create_at', 'updated_at', 'photo','portfolio','email'];
-           
             
+            $category_id = "";
+            if(is_array($request->get('category_id'))){
+                foreach ($request->get('category_id') as $key => $category){
+                   
+                   $category_id = $category.','.$category_id; 
+                }
+                if(isset($category)){
+                    $user->category_id = rtrim($category_id,',');
+                } 
+            }
+            
+            $except = ['id', 'create_at', 'updated_at', 'photo','portfolio','email','category_id'];
             $input = $request->all();
             foreach ($table_cname as $key => $value) {
                 if (in_array($value, $except)) {
@@ -1035,7 +1045,18 @@ class ApiController extends Controller {
 
     public function getUserDetails(Request $request, $uid) {
         $user = User::find($uid);
-
+        
+                
+            
+            $users = DB::table('users')
+                ->select("*")
+                ->leftJoin('categories', 'users.category_id', '=', 'categories.id')
+                ->whereRaw("find_in_set(category_id.users,categories.id)")
+                ->get();
+            dd($users);
+            
+            
+            
         /* $data = [];
           $data['userId']         =   $user->id;
           $data['firstName']      =   $user->first_name;
