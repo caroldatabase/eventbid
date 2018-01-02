@@ -54,8 +54,6 @@ class PaymentController extends Controller {
         if ($request->header('Content-Type') != "application/json")  {
             $request->headers->set('Content-Type', 'application/json');
         }
-        $user_id =  $request->input('userId'); 
-       
     }
     
     public function getToken(){
