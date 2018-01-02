@@ -3,8 +3,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Http\Requests;
+
 use Modules\Admin\Http\Requests\ProductRequest;
 use App\User;  
 use Modules\Admin\Models\ShippingBillingAddress;
@@ -54,7 +55,7 @@ class PaymentController extends Controller {
         if ($request->header('Content-Type') != "application/json")  {
             $request->headers->set('Content-Type', 'application/json');
         }
-        $user_id =  $request->input('userId'); 
+        $user_id =  $_POST['userId']; 
        
     }
     
@@ -126,7 +127,7 @@ class PaymentController extends Controller {
         if(!$token){
            return ['error'=>'invalid token'];
         }else{
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($_REQUEST, [
             'first_name' => 'required|max:50',
             'last_name' => 'required|max:50',
             'number' => 'required|max:16',
@@ -147,12 +148,12 @@ class PaymentController extends Controller {
                 'status' => 0,
                 'code'   => 500,
                 'message' => $error_msg,
-                'data'  =>  $request->all()
+                'data'  =>  $_REQUEST
                 )
             );
         }
         
-        $this->saveCardDetail($token,$request->all());
+        $this->saveCardDetail($token,$_REQUEST);
           
        }
     }
@@ -160,7 +161,7 @@ class PaymentController extends Controller {
     // make payment 
     public function makePayment(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($_REQUEST, [
             'firstName' => 'required|max:50',
             'lastName' => 'required|max:50',
             'cardNumber' => 'required|max:16',
@@ -181,14 +182,14 @@ class PaymentController extends Controller {
                 'status' => 0,
                 'code'   => 500,
                 'message' => $error_msg,
-                'data'  =>  $request->all()
+                'data'  =>  $_REQUEST
                 )
             );
         } 
  
         try{
 
-            $task = PostTask::find($request->get('taskId'));
+            $task = PostTask::find($_REQUEST['taskId']);
             
             $gateway = Omnipay::create('PayPal_Pro');
             
@@ -199,12 +200,12 @@ class PaymentController extends Controller {
         
       
             $card = new CreditCard(array(
-                'firstName'             => $request->get('firstName'),
-                'lastName'              => $request->get('lastName'),
-                'number'                => $request->get('cardNumber'),
-                'expiryMonth'           => $request->get('month'),
-                'expiryYear'            => $request->get('year'),
-                'cvv'                   => $request->get('cvv')
+                'firstName'             =>$_REQUEST['firstName'],
+                'lastName'              => $_REQUEST['lastName'],
+                'number'                => $_REQUEST['cardNumber'],
+                'expiryMonth'           => $_REQUEST['month'],
+                'expiryYear'            => $_REQUEST['year'],
+                'cvv'                   => $_REQUEST['cvv']
             )); 
             
             $transaction_paypal = $gateway->purchase(array(
@@ -212,7 +213,7 @@ class PaymentController extends Controller {
                  'description'      => isset($task->event_title)?$task->event_title:'paying for task',
                  'card'             =>  $card,
                  'name'             => isset($task->event_title)?$task->event_title:'task', 
-                 'amount'           =>  !empty($request->get('amount'))?$request->get('amount'):'1.00'
+                 'amount'           =>  !empty($_REQUEST['amount'])?$_REQUEST['amount']:'1.00'
             ));
              
             $response   = $transaction_paypal->send();
@@ -222,12 +223,12 @@ class PaymentController extends Controller {
             if(isset($data['ACK']) && $data['ACK']=="Failure")
             {
             	$transaction = new Transaction;
-	            $transaction->firstName =  $request->get('firstName');
-	            $transaction->lastName 	= $request->get('lastName');
-	            $transaction->userId 	= $request->get('userId');
-	            $transaction->taskId 	= $request->get('taskId');
-	            $transaction->amount 	= $request->get('amount');
-	            $transaction->cardDetails = json_encode($request->all());
+	            $transaction->firstName =  $_REQUEST['firstName'];
+	            $transaction->lastName 	= $_REQUEST['lastName'];
+	            $transaction->userId 	= $_REQUEST['userId'];
+	            $transaction->taskId 	= $_REQUEST['taskId'];
+	            $transaction->amount 	= $_REQUEST['amount'];
+	            $transaction->cardDetails = json_encode($_REQUEST);
 	            $transaction->transactionDetails =  json_encode($data);
 	            $transaction->transactionId =  time();
 	            $transaction->save();
@@ -238,12 +239,12 @@ class PaymentController extends Controller {
             if(isset($data['ACK']) && $data['ACK']=="Success")
             {
             	$transaction = new Transaction;
-	            $transaction->firstName =  $request->get('firstName');
-	            $transaction->lastName 	= $request->get('lastName');
-	            $transaction->userId 	= $request->get('userId');
-	            $transaction->taskId 	= $request->get('taskId');
-	            $transaction->amount 	= $request->get('amount');
-	            $transaction->cardDetails = json_encode($request->all());
+	            $transaction->firstName =  $_REQUEST['firstName'];
+	            $transaction->lastName 	= $_REQUEST['lastName'];
+	            $transaction->userId 	= $_REQUEST['userId'];
+	            $transaction->taskId 	= $_REQUEST['taskId'];
+	            $transaction->amount 	= $_REQUEST['amount'];
+	            $transaction->cardDetails = json_encode($_REQUEST);
 	            $transaction->transactionDetails =  json_encode($data);
 	            $transaction->transactionId =  $data['TRANSACTIONID'];
 	            $transaction->save();
@@ -307,9 +308,12 @@ class PaymentController extends Controller {
         $response_array['code']    = 406;
         $response_array['message'] = "Due to some reason card is not added!";
         $response_array['success'] = false;
-
-        $requests = $request->only('card_number','card_type','expire_month','expire_year','cvv','first_name','last_name', 'userId');
-
+       /* echo "Hello Ocean";
+        print_r($_POST);
+		var_dump($_POST);*/
+        $requests = $_POST;
+       /* print_r($_POST); 
+        var_dump($requests); */
         $validator = validator::make($requests, [
 
         	'card_number' 	=> 'required',        	
@@ -321,6 +325,7 @@ class PaymentController extends Controller {
         	'last_name'     => 'required',
                 'userId'        => 'required',
         ]);
+        echo "Hello";
 
         if ($validator->fails()) {
         
@@ -332,24 +337,26 @@ class PaymentController extends Controller {
         } else {
 
         	try{
+        		//echo "Hello";
 
         		/*// get id from token with JWT Auth
                 $user = JWTAuth::parseToken()->authenticate();*/
                 
         		//Variables
-        		$cardNumber 	= $request->input('card_number'); 
-        		$cardType	    = $request->input('card_type');
-        		$expireMonth 	= $request->input('expire_month');
-        		$expireYear 	= $request->input('expire_year');
-        		$cvv2 			= $request->input('cvv');
-        		$firstName 		= $request->input('first_name');
-                        $lastName       = $request->input('last_name');
-        		$userId 		= $request->input('userId');
+        		$cardNumber 	= $_REQUEST['card_number']; 
+        		$cardType	    = $_REQUEST['card_type'];
+        		$expireMonth 	= $_REQUEST['expire_month'];
+        		$expireYear 	= $_REQUEST['expire_year'];
+        		$cvv2 			= $_REQUEST['cvv'];
+        		$firstName 		= $_REQUEST['first_name'];
+                        $lastName       = $_REQUEST['last_name'];
+        		$userId 		= $_REQUEST['userId'];
         		
                 //Check Card exists
                 $checkCardNum = 'xxxxxxxxxxxx'.substr($cardNumber, -4);
 
                 $checkCardExists = Cards::where(array('card_number' => $checkCardNum, 'customer_id' => $userId))->first();
+                //var_dump($checkCardExists);
 
                 if (count($checkCardExists) > 0) {
                     
@@ -454,6 +461,7 @@ class PaymentController extends Controller {
                 $response_array['success'] = false;
             }
         }
+      //  var_dump($response_array);
         $response = Response::json($response_array);
 		return $response;
     }
@@ -476,7 +484,7 @@ class PaymentController extends Controller {
 			   	
         ]);
 
-        if ($validator->fails()) {
+        if ($validator->fails() && false ) {
         
             $response_array['code'] = 406;
             $response_array['result'] = $validator->errors();
@@ -489,7 +497,7 @@ class PaymentController extends Controller {
 
                 // get id from token with JWT Auth
                // $user = JWTAuth::parseToken()->authenticate();
-                $userId = $request->input('userId');
+                $userId = $_REQUEST['userId'];
                 //print_r($user->id);die;
                 //Conditions
                 $where = array('customer_id' => $userId);
@@ -545,7 +553,7 @@ class PaymentController extends Controller {
         $response_array['message'] = "No card added yet!";
         $response_array['success'] = false;
 
-        $requests = $request->only('card_id','card_type','expire_month','expire_year','first_name','last_name');
+        $requests = $_POST;
 
         $validator = validator::make($requests, [
 			
@@ -569,14 +577,14 @@ class PaymentController extends Controller {
         	try{	
         		// get id from token with JWT Auth
                 //$user = JWTAuth::parseToken()->authenticate();
-                $userId = $request->input('userId');
+                $userId = $_REQUEST['userId'];
                 //Variables
-                $cardId 		= $request->input('card_id');
-        		$cardType	    = $request->input('card_type');
-        		$expireMonth 	= $request->input('expire_month');
-        		$expireYear 	= $request->input('expire_year');
-        		$firstName 		= $request->input('first_name');
-        		$lastName 		= $request->input('last_name');
+                $cardId 		= $_REQUEST['card_id'];
+        		$cardType	    = $_REQUEST['card_type'];
+        		$expireMonth 	= $_REQUEST['expire_month'];
+        		$expireYear 	= $_REQUEST['expire_year'];
+        		$firstName 		= $_REQUEST['first_name'];
+        		$lastName 		= $_REQUEST['last_name'];
         		
         		  //Get access token
         		$checkAccessToken = $this->getAccessToken();
@@ -682,7 +690,7 @@ class PaymentController extends Controller {
 
         $requests = $request->only('card_id');
         
-        $validator = validator::make($requests, [
+        $validator = validator::make($_REQUEST, [
      	    'card_id' 		=> 'required', 			   	
         ]);
 
@@ -695,9 +703,9 @@ class PaymentController extends Controller {
         	try{	
                  // get id from token with JWT Auth
                 //$user = JWTAuth::parseToken()->authenticate();
-                $userId = $request->input('userId');
+                $userId = $_REQUEST['userId'];
                 //Variables
-                $cardId = $request->input('card_id');
+                $cardId = $_REQUEST['card_id'];
         		  //Get access token
                     $checkAccessToken = $this->getAccessToken();
                     if ($checkAccessToken != "") {
@@ -768,7 +776,7 @@ class PaymentController extends Controller {
 
         $requests = $request->all();
 
-        $validator = validator::make($requests, [ 
+        $validator = validator::make($_REQUEST, [ 
             'card_id'       => 'required',
             'amount'        => 'required', 
             'userId'        => 'required'
@@ -785,10 +793,10 @@ class PaymentController extends Controller {
             try{
                 // get id from token with JWT Auth
                // $user = JWTAuth::parseToken()->authenticate();
-                $userId = $request->input('userId');
+                $userId = $_REQUEST['userId'];
                 //Variables
-                $cardId = $request->input('card_id');
-                $amount = $request->input('amount');
+                $cardId = $_REQUEST['card_id'];
+                $amount = $_REQUEST['amount'];
                 //Get access token
                 $checkAccessToken = $this->getAccessToken();
                 if ($checkAccessToken != "") {
