@@ -325,7 +325,7 @@ class PaymentController extends Controller {
         	'last_name'     => 'required',
                 'userId'        => 'required',
         ]);
-        echo "Hello";
+      //  echo "Hello";
 
         if ($validator->fails()) {
         
