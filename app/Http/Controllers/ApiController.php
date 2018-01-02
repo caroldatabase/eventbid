@@ -448,7 +448,7 @@ class ApiController extends Controller {
        
         $rs = $request->all();
         $validator = Validator::make($request->all(), [
-            'approveType' => "required"
+                'approveType' => "required"
         ]);
         
          if ($validator->fails()) {
@@ -508,27 +508,25 @@ class ApiController extends Controller {
         }
         $user = User::find($user_id);
         $pass = $request->get('newPassword');
-  
+        
         try {
             $table_cname = \Schema::getColumnListing('users');
             if($request->get('photo')){
-               $photo = $this->createImage($request->get('photo'));
+                $photo = $this->createImage($request->get('photo'));
                 if($photo){
                     $user->photo =$photo;
                 } 
             }
-           
-          
             if(is_array($request->get('portfolio'))){
                 foreach ($request->get('portfolio') as $key => $val){
+                   
                    $portfolio[] = $this->createImage($val); 
                 }
                 if(isset($portfolio)){
                     $user->portfolio = json_encode($portfolio);
                 } 
             }
-            
-            $except = ['id', 'create_at', 'updated_at', 'photo','portfolio'];
+            $except = ['id', 'create_at', 'updated_at', 'photo','portfolio','email'];
            
             
             $input = $request->all();
@@ -1880,12 +1878,16 @@ class ApiController extends Controller {
 
     public function createImage($base64) {
         $img = explode(',', $base64);
-        $image = base64_decode($img[1]);
-        $image_name = time() . '.png';
-        $path = public_path() . "/images/" . $image_name;
-
-        file_put_contents($path, $image);
-        return url::to(asset('public/images/' . $image_name));
+        if(isset($img[1])&& base64_encode(base64_decode($img[1], true))===$img[1]){
+             $image = base64_decode($img[1]);
+            $image_name = time() . '.png';
+            $path = public_path() . "/images/" . $image_name;
+            file_put_contents($path, $image);
+            return url::to(asset('public/images/' . $image_name));
+        }else{
+            return false;
+        }
+       
     }
 
     public function Comment(Comments $comment, Request $request) {
