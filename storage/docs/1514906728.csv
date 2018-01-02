@@ -1,0 +1,668 @@
+MID,GID_FK,Name,ImgURL,TransImgUrl,PostDate,PostUser
+1,2,Unbranded,,NULL,"2015-12-07 13:31:53",1
+2,2,KitchenAid,http://www.thehomesourceapp.com/images/ManufLogos/APP/KITCHENAID.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/KITCHENAID.png,"2015-12-07 13:31:53",1
+3,2,Jenn-Air,http://www.thehomesourceapp.com/images/ManufLogos/APP/jennair.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Jennair.png,"2015-12-07 13:31:53",1
+4,2,Amana,http://www.thehomesourceapp.com/images/ManufLogos/APP/Amana.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Amana.png,"2015-12-07 13:31:53",1
+5,2,Electrolux,http://www.thehomesourceapp.com/images/ManufLogos/APP/Electrolux.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Electrolux.png,"2015-12-07 13:31:53",1
+6,2,Samsung,http://www.thehomesourceapp.com/images/ManufLogos/APP/Samsung.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Samsung.png,"2015-12-07 13:31:53",1
+7,2,Dacor,http://www.thehomesourceapp.com/images/ManufLogos/APP/dacor.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/dacor.png,"2015-12-07 13:31:53",1
+8,2,"Magic Chef",http://www.thehomesourceapp.com/images/ManufLogos/APP/MagicChef.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/MagicChef.png,"2015-12-07 13:31:53",1
+9,2,Maytag,http://www.thehomesourceapp.com/images/ManufLogos/APP/maytag.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Maytag.png,"2015-12-07 13:31:53",1
+10,2,Whirlpool,http://www.thehomesourceapp.com/images/ManufLogos/APP/whirlpool.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/whirlpool.png,"2015-12-07 13:31:53",1
+11,2,Gladiator,http://www.thehomesourceapp.com/images/ManufLogos/APP/Gladiator.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Gladiator.png,"2015-12-07 13:31:53",1
+12,2,Estate,http://www.thehomesourceapp.com/images/ManufLogos/APP/Estate.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Estate.png,"2015-12-07 13:31:53",1
+13,2,Roper,http://www.thehomesourceapp.com/images/ManufLogos/APP/Roper.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Roper.png,"2015-12-07 13:31:53",1
+14,2,"Marvel ",http://www.thehomesourceapp.com/images/ManufLogos/APP/Marvel.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Marvel.png,"2015-12-07 13:31:53",1
+15,2,Profile,http://www.thehomesourceapp.com/images/ManufLogos/APP/GEPROFILE.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/GEPROFILE.png,"2015-12-07 13:31:53",1
+16,2,Monogram,http://www.thehomesourceapp.com/images/ManufLogos/APP/GEmonogram.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/GEmonogram.png,"2015-12-07 13:31:53",1
+17,2,Friedrich,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Friedrich-2017-07-2418-29-14.png,NULL,"2017-07-24 18:29:14",2
+18,2,Affresh,http://www.thehomesourceapp.com/images/ManufLogos/APP/Affresh.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Affresh.png,"2015-12-07 13:31:53",1
+19,2,Faber,http://www.thehomesourceapp.com/images/ManufLogos/APP/Faber.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Faber.png,"2015-12-07 13:31:53",1
+20,2,"Laundry 123",,NULL,"2015-12-07 13:31:53",1
+21,2,Bosch,http://www.thehomesourceapp.com/images/ManufLogos/APP/bosch.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/bosch.png,"2015-12-07 13:31:53",1
+22,2,"Electrolux ICON",http://www.thehomesourceapp.com/images/ManufLogos/APP/electroluxicon.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Electroluxicon.png,"2015-12-07 13:31:53",1
+23,2,Frigidaire,http://www.thehomesourceapp.com/images/ManufLogos/APP/Frigidaire.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Frigidaire.png,"2015-12-07 13:31:53",1
+24,2,"Waste King",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/WasteKing-2017-07-2419-52-58.png,NULL,"2017-07-24 19:52:58",2
+25,2,GE,http://www.thehomesourceapp.com/images/ManufLogos/APP/GE.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/GEapp.png,"2015-12-07 13:31:53",1
+26,2,Hotpoint,http://www.thehomesourceapp.com/images/ManufLogos/APP/Hotpoint.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Hotpoint.png,"2015-12-07 13:31:53",1
+27,2,Abbaka,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/abbaka-2017-07-2417-53-33.png,NULL,"2017-07-24 17:53:33",2
+28,2,"GE Cafe",http://www.thehomesourceapp.com/images/ManufLogos/APP/gecafe.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/GEcafe.png,"2015-12-07 13:31:53",1
+29,2,Eterna,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Eterna-2017-07-2418-22-04.png,NULL,"2017-07-24 18:22:04",2
+30,2,Wolf,http://www.thehomesourceapp.com/images/ManufLogos/APP/Wolf.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Wolf.png,"2015-12-07 13:31:53",1
+31,2,Zephyr,http://www.thehomesourceapp.com/images/ManufLogos/APP/Zephyr.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Zephyr.png,"2015-12-07 13:31:53",1
+32,2,Liebherr,http://www.thehomesourceapp.com/images/ManufLogos/APP/Liebherr.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Liebherr.png,"2015-12-07 13:31:53",1
+33,2,Bertazzoni,http://www.thehomesourceapp.com/images/ManufLogos/APP/bertazzoni.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Bertazzoni.png,"2015-12-07 13:31:53",1
+34,2,Vent-A-Hood,http://www.thehomesourceapp.com/images/ManufLogos/APP/VentAHood.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/VentAHood.png,"2015-12-07 13:31:53",1
+35,2,Asko,http://www.thehomesourceapp.com/images/ManufLogos/APP/ASKO.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Asko.png,"2015-12-07 13:31:53",1
+36,2,"Capital Cooking",http://www.thehomesourceapp.com/images/ManufLogos/APP/capital.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Capital.png,"2015-12-07 13:31:53",1
+37,2,U-Line,http://www.thehomesourceapp.com/images/ManufLogos/APP/uline.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/uline.png,"2015-12-07 13:31:53",1
+38,2,Admiral,http://www.thehomesourceapp.com/images/ManufLogos/APP/Admiral.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Admiral.png,"2015-12-07 13:31:53",1
+39,2,Viking,http://www.thehomesourceapp.com/images/ManufLogos/APP/VIKING.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/VIKING.png,"2015-12-07 13:31:53",1
+40,2,Summit,http://www.thehomesourceapp.com/images/ManufLogos/APP/SummitAppliances.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/SummitAppliances.png,"2015-12-07 13:31:53",1
+41,2,Avanti,http://www.thehomesourceapp.com/images/ManufLogos/APP/Avanti.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Avanti.png,"2015-12-07 13:31:53",1
+42,2,Thermador,http://www.thehomesourceapp.com/images/ManufLogos/APP/Thermador.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Thermador.png,"2015-12-07 13:31:53",1
+43,2,LG,http://www.thehomesourceapp.com/images/ManufLogos/APP/LG.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Lg.png,"2015-12-07 13:31:53",1
+44,2,"Fisher and Paykel",http://www.thehomesourceapp.com/images/ManufLogos/APP/FisherPaykel.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/FisherPaykel.png,"2015-12-07 13:31:53",1
+45,2,DCS,http://www.thehomesourceapp.com/images/ManufLogos/APP/dcs.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/DCS.png,"2015-12-07 13:31:53",1
+46,2,"GE Artistry Series",http://www.thehomesourceapp.com/images/ManufLogos/APP/GE.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/GEArtistry.png,"2015-12-07 13:31:53",1
+47,2,Haier,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Haier-2017-07-2418-53-42.png,NULL,"2017-07-24 18:53:42",2
+48,2,Miele,http://www.thehomesourceapp.com/images/ManufLogos/APP/Miele.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Miele.png,"2015-12-07 13:31:53",1
+49,2,Broan,http://www.thehomesourceapp.com/images/ManufLogos/APP/Broan.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Broan.png,"2015-12-07 13:31:53",1
+50,2,Danby,http://www.thehomesourceapp.com/images/ManufLogos/APP/danby.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Danby.png,"2015-12-07 13:31:53",1
+51,2,"XO Ventilation",http://www.thehomesourceapp.com/images/ManufLogos/APP/XOVentilation.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/XOVentilation.png,"2015-12-07 13:31:53",1
+52,2,Sub-Zero,http://www.thehomesourceapp.com/images/ManufLogos/APP/subzero.jpg,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/subzero.png,"2015-12-07 13:31:53",1
+53,2,Lynx,http://www.thehomesourceapp.com/images/ManufLogos/APP/lynx.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Lynx.png,"2015-12-07 13:31:53",1
+54,2,Weber,http://www.thehomesourceapp.com/images/ManufLogos/APP/Weber.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Weber.png,"2015-12-07 13:31:53",1
+55,2,"Sub Zero",,NULL,"2015-12-07 13:31:53",1
+56,2,"Speed Queen",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/SpeedQueen-2017-07-2419-42-28.png,NULL,"2017-07-24 19:42:28",2
+57,2,Silhouette,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Silhouette-2017-07-2419-40-45.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Silhouette.png,"2017-07-24 19:40:46",2
+58,2,InSinkerator,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/InSinkerator-2017-07-2419-02-20.png,NULL,"2017-07-24 19:02:20",2
+59,2,"Sharp Appliances",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/SHARP-2017-07-2419-38-34.png,NULL,"2017-07-24 19:38:35",2
+60,2,Napoleon,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Napoleon-2017-07-2419-26-29.png,NULL,"2017-07-24 19:26:29",2
+61,2,ELBA,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/ELBA-2017-07-2418-12-39.png,NULL,"2017-07-24 18:12:39",2
+62,2,Scotsman,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Scotsman-2017-07-2419-39-22.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Scotsman.png,"2017-07-24 19:39:22",2
+63,2,"Chef's Design",,NULL,"2017-06-27 02:47:52",2
+64,2,"Smart Choice",,NULL,"2015-12-07 13:31:53",1
+65,2,Gaggenau,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Gaggenau.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/Gaggenau.png,"2015-12-07 13:31:53",1
+66,2,"American Range",http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/AmericanRange.png,http://www.thehomesourceapp.com/images/ManufLogos/APP/Transparent/AmericanRange.png,"2015-12-07 13:31:53",1
+67,2,Best,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/best-2017-07-2418-00-42.png,NULL,"2017-07-24 18:00:43",2
+68,2,"Designer Series",,NULL,"2015-12-07 13:31:53",1
+69,2,EveryDrop,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/EveryDrop-2017-07-2418-23-37.png,NULL,"2017-07-24 18:23:37",2
+70,2,SWASH,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/SWASH-2017-07-2419-43-38.png,NULL,"2017-07-24 19:43:38",2
+71,2,Blomberg,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Blomberg-2017-07-2418-03-10.png,NULL,"2017-07-24 18:03:10",2
+72,2,White-Westinghouse,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/White-Westinghouse-2017-07-2419-54-40.png,NULL,"2017-07-24 19:54:40",2
+73,2,"True Manufacturing",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/TRUE-2017-07-2419-47-32.png,NULL,"2017-07-24 19:47:33",2
+128,4,Hansgrohe,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Hansgrohe-2017-07-2814-07-56.png,,"2017-07-28 14:07:57",2
+129,4,Axor,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/axor-logo-2017-07-2720-34-46.png,,"2017-07-27 20:34:47",2
+131,1,Panamax,http://www.thehomesourceapp.com/images/ManufLogos/CE/Panamax.png,http://www.thehomesourceapp.com/images/ManufLogos/CE/Transparent/Panamax.png,"2015-12-07 13:31:53",1
+132,1,"Sharp Electronics",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/SHARP-2017-07-2616-36-18.png,NULL,"2017-07-26 16:36:18",2
+133,1,"Epson Corporation",http://www.thehomesourceapp.com/images/ManufLogos/CE/Epson.png,http://www.thehomesourceapp.com/images/ManufLogos/CE/Transparent/Epson.png,"2015-12-07 13:31:53",1
+134,1,"Bose Corporation",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/BoseCorporation-2017-07-2614-23-30.png,NULL,"2017-07-26 14:23:30",2
+135,1,"Sony Corporation",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/SonyCorporation-2017-07-2618-08-52.png,NULL,"2017-07-26 18:08:53",2
+136,1,"Monster Cable Products, Inc","https://dzrf1tezfwb3j.cloudfront.net/uploads/images/MonsterCableProducts,Inc-2017-07-2616-07-56.png",NULL,"2017-07-26 16:07:57",2
+137,1,"Samsung Electronics",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/SamsungElectronics-2017-07-2616-25-45.png,NULL,"2017-07-26 16:25:45",2
+138,1,"Pioneer Corporation",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/PioneerCorporation-2017-07-2616-18-54.png,NULL,"2017-07-26 16:18:55",2
+139,1,"LG Electronics",http://www.thehomesourceapp.com/images/ManufLogos/CE/LG.png,http://www.thehomesourceapp.com/images/ManufLogos/CE/Transparent/lg.png,"2015-12-07 13:31:53",1
+140,1,"Boston Acoustics, Inc","https://dzrf1tezfwb3j.cloudfront.net/uploads/images/BostonAcoustics,Inc-2017-07-2614-24-05.png",NULL,"2017-07-26 14:24:05",2
+141,1,"Da-Lite Screen Company",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Da-LiteScreenCompany-2017-07-2614-36-05.png,NULL,"2017-07-26 14:36:06",2
+142,1,"Sennheiser Electronic Corporation",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/SennheiserElectronicCorporation-2017-07-2616-34-13.png,NULL,"2017-07-26 16:34:13",2
+143,1,Toshiba,http://www.thehomesourceapp.com/images/ManufLogos/CE/Toshiba.png,http://www.thehomesourceapp.com/images/ManufLogos/CE/Transparent/Toshiba.png,"2015-12-07 13:31:53",1
+144,1,"Sanus Systems",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/SanusSystems-2017-07-2616-26-29.png,NULL,"2017-07-26 16:26:30",2
+145,1,"Denon Electronics (USA), LLC","https://dzrf1tezfwb3j.cloudfront.net/uploads/images/DenonElectronics(USA),LLC-2017-07-2614-35-13.png",NULL,"2017-07-26 14:35:14",2
+146,1,"Klipsch Audio Technologies",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Klipsch-2017-07-2615-57-57.png,NULL,"2017-07-26 15:57:57",2
+147,1,"Chief Manufacturing",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/ChiefManufacturing-2017-07-2614-30-10.png,NULL,"2017-07-26 14:30:10",2
+148,1,"Alpine Electronics, Inc","https://dzrf1tezfwb3j.cloudfront.net/uploads/images/AlpineElectronics,Inc-2017-07-2613-56-08.png",NULL,"2017-07-26 13:56:08",2
+149,1,"Furman Sound, Inc","https://dzrf1tezfwb3j.cloudfront.net/uploads/images/FurmanSound,Inc-2017-07-2614-59-14.png",NULL,"2017-07-26 14:59:15",2
+150,1,"Harman International Industries, Inc","https://dzrf1tezfwb3j.cloudfront.net/uploads/images/HarmanInternationalIndustries,Inc-2017-07-2615-16-56.png",NULL,"2017-07-26 15:16:56",2
+151,1,"Sonos, Inc","https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Sonos,Inc-2017-07-2618-08-15.png",NULL,"2017-07-26 18:08:16",2
+152,1,"Paradigm Electronics, Inc","https://dzrf1tezfwb3j.cloudfront.net/uploads/images/ParadigmElectronics,Inc-2017-07-2616-16-04.png",NULL,"2017-07-26 16:16:04",2
+153,1,"Universal Remote Control, Inc",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/UniversalRemoteControl-2017-07-2618-23-08.png,NULL,"2017-07-26 18:23:08",2
+154,1,"Polk Audio",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/PolkAudio-2017-07-2616-20-37.png,NULL,"2017-07-26 16:20:37",2
+155,1,SpeakerCraft,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/SpeakerCraft-2017-07-2618-15-09.png,NULL,"2017-07-26 18:15:09",2
+156,1,"Bell'O International, Corp","https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Bell'OInternational,Corp-2017-07-2614-20-54.png",NULL,"2017-07-26 14:20:54",2
+157,1,"Thorens Services Ltd, Switzerland.","https://dzrf1tezfwb3j.cloudfront.net/uploads/images/ThorensServicesLtd,Switzerland-2017-07-2618-18-54.png",NULL,"2017-07-26 18:18:54",2
+158,1,"Monitor Audio",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/MonitorAudio-2017-07-2616-07-19.png,NULL,"2017-07-26 16:07:20",2
+159,1,"Onkyo Corporation",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Onkyo-2017-07-2616-12-07.png,NULL,"2017-07-26 16:12:07",2
+160,1,"Vutec Corporation",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/VutecCorporation-2017-07-2618-26-48.png,NULL,"2017-07-26 18:26:48",2
+162,1,Integra,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Integra-2017-07-2615-51-43.png,NULL,"2017-07-26 15:51:43",2
+163,1,"Soundcast Systems",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/SoundcastSystems-2017-07-2618-09-40.png,NULL,"2017-07-26 18:09:40",2
+164,1,Marantz,http://www.thehomesourceapp.com/images/ManufLogos/CE/Marantz.png,http://www.thehomesourceapp.com/images/ManufLogos/CE/Transparent/Marantz.png,"2015-12-07 13:31:53",1
+165,1,"SunBriteTV, LLC","https://dzrf1tezfwb3j.cloudfront.net/uploads/images/SunBriteTV,LLC-2017-07-2618-17-43.png",NULL,"2017-07-26 18:17:44",2
+166,1,"BDI USA",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/BDIUSA-2017-07-2614-20-24.png,NULL,"2017-07-26 14:20:24",2
+167,1,"Salamander Designs Ltd",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/SalamanderDesignsLtd-2017-07-2616-24-45.png,NULL,"2017-07-26 16:24:46",2
+168,1,"Definitive Technology",http://www.thehomesourceapp.com/images/ManufLogos/CE/Definitive.png,http://www.thehomesourceapp.com/images/ManufLogos/CE/Transparent/Definitive.png,"2015-12-07 13:31:53",1
+169,1,Control4,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Control4-2017-07-2614-32-22.png,NULL,"2017-07-26 14:32:23",2
+170,1,"Luxul Wireless",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/LuxulWireless-2017-07-2616-01-00.png,NULL,"2017-07-26 16:01:00",2
+171,1,"McIntosh Laboratory, Inc","https://dzrf1tezfwb3j.cloudfront.net/uploads/images/McIntoshLaboratory,Inc-2017-07-2616-02-18.png",NULL,"2017-07-26 16:02:18",2
+172,1,"Atlona Technologies",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/AtlonaTechnologies-2017-07-2614-09-32.png,NULL,"2017-07-26 14:09:33",2
+173,1,"Libratone A/S",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Libratone-2017-07-2615-58-47.png,NULL,"2017-07-26 15:58:48",2
+174,1,"Pro-Ject Audio Systems",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Pro-JectAudioSystems-2017-07-2616-21-18.png,NULL,"2017-07-26 16:21:19",2
+175,1,"Mohu, Inc",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/mohu-2017-07-2616-06-40.png,NULL,"2017-07-26 16:06:41",2
+176,1,"Cambridge Audio",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/CambridgeAudio-2017-07-2614-27-16.png,NULL,"2017-07-26 14:27:16",2
+177,1,"Core Brands",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/CoreBrands-2017-07-2614-33-11.png,NULL,"2017-07-26 14:33:11",2
+178,1,"IC Realtime",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/ICRealtime-2017-07-2615-23-00.png,NULL,"2017-07-26 15:23:01",2
+181,4,Americh,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Americh-2017-07-2720-27-52.png,NULL,"2017-07-27 20:27:52",2
+182,4,Mirolin,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/mirolin_logo-2017-07-2814-15-27.png,NULL,"2017-07-28 14:15:28",2
+183,4,Delta,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/DeltaLogo-2017-07-2813-58-27.png,NULL,"2017-07-28 13:58:28",2
+184,4,"Delta Commercial",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/DeltaLogo-2017-07-2813-59-14.png,NULL,"2017-07-28 13:59:14",2
+185,4,Brizo,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Brizo_logo-2017-07-2720-51-20.png,NULL,"2017-07-27 20:51:20",2
+186,4,Peerless,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/peerless-logo-2017-07-2814-16-05.png,NULL,"2017-07-28 14:16:05",2
+187,4,Danze,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/danzelogo-2017-07-2813-57-46.png,NULL,"2017-07-28 13:57:47",2
+189,4,Ronbow,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/ronbow-logo-2017-07-2814-16-46.png,NULL,"2017-07-28 14:16:46",2
+190,4,Kallista,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Kallista-2017-07-2814-13-40.png,NULL,"2017-07-28 14:13:40",2
+191,4,Rubinet,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/rubinetlogo-2017-07-2814-17-23.png,NULL,"2017-07-28 14:17:23",2
+192,3,A-American,,NULL,"2016-06-29 12:26:26",9
+193,3,"AC Pacific",,NULL,"2016-06-29 13:25:14",9
+194,1,Acer,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/acer-2017-07-2613-55-31.png,NULL,"2017-07-26 13:55:31",2
+195,3,"Acme Furniture",,NULL,"2016-06-29 13:27:01",9
+196,3,"Acoustic Smart",,NULL,"2016-06-29 13:28:53",9
+198,2,Aga,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/aga-logo-2017-07-2417-54-30.png,NULL,"2017-07-24 17:54:31",2
+199,2,"Air King",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/AirKing-2017-07-2417-56-28.png,NULL,"2017-07-24 17:56:29",2
+201,3,"Alco Furniture",,NULL,"2016-06-29 13:42:06",9
+202,2,Alfresco,,NULL,"2017-08-25 18:04:05",9
+204,9,"American Olean",,NULL,"2016-06-29 13:48:48",9
+205,1,AMX,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/AMX-2017-07-2613-57-22.png,NULL,"2017-07-26 13:57:23",2
+206,3,"Anatomic Global",,NULL,"2016-06-29 13:50:28",9
+207,9,Anderson,,NULL,"2016-06-29 13:51:14",9
+210,2,AOG,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/AOG-2017-07-2417-58-53.png,NULL,"2017-07-24 17:58:54",2
+211,3,"APA Marketing, INC",,NULL,"2016-06-29 13:54:57",9
+212,1,APC,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/APC-2017-07-2613-58-08.png,NULL,"2017-07-26 13:58:08",2
+213,9,"Appalacian Hardwood",,NULL,"2016-06-29 13:56:02",9
+215,1,Arcam,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Arcam-2017-07-2614-08-22.png,NULL,"2017-07-26 14:08:22",2
+216,2,Ariston,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Ariston-2017-07-2417-59-50.png,NULL,"2017-07-24 17:59:50",2
+217,9,Armstrong,,NULL,"2016-06-29 13:59:51",9
+218,4,Artisan,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/artisan-logo-2017-07-2720-33-25.png,NULL,"2017-07-27 20:33:26",2
+219,3,Ashley,,NULL,"2016-06-29 18:59:02",9
+220,3,"Ashley Express",,NULL,"2016-06-29 19:00:05",9
+221,3,aspenhome,,NULL,"2016-06-29 19:01:11",9
+223,1,"Audio Authority",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/AudioAuthority-2017-07-2614-11-14.png,NULL,"2017-07-26 14:11:14",2
+225,1,Audio-Technica,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Audio-Technica-2017-07-2614-13-31.png,NULL,"2017-07-26 14:13:32",2
+226,1,Audioengine,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Audioengine-2017-07-2614-19-10.png,NULL,"2017-07-26 14:19:10",2
+230,3,AYCA,,NULL,"2016-06-29 19:15:27",9
+231,9,Azuvi,,NULL,"2016-06-29 19:17:57",9
+232,NULL,Abyss,,NULL,"2016-06-29 19:36:50",9
+233,3,"Adrian Lifestyles Furnishings",,NULL,"2016-06-30 17:11:06",9
+234,NULL,"AI Industries",,NULL,"2016-06-29 19:37:18",9
+235,NULL,Artech,,NULL,"2016-06-29 19:38:06",9
+236,NULL,"ATI Industries",,NULL,"2016-06-29 19:38:32",9
+238,NULL,ATON,,NULL,"2016-06-29 19:39:15",9
+239,NULL,AURALiC,,NULL,"2016-06-29 19:39:27",9
+240,NULL,Award,,NULL,"2016-06-29 19:39:38",9
+241,NULL,B.E.S.,,NULL,"2016-06-29 19:41:07",9
+242,3,Bassett,,NULL,"2016-06-29 19:41:31",9
+243,3,"Bassett Bedding",,NULL,"2016-06-29 19:42:07",9
+244,1,"Bayan Audio",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/BayanAudio-2017-07-2614-19-51.png,NULL,"2017-07-26 14:19:52",2
+245,3,BDi,,NULL,"2016-06-29 19:44:48",9
+246,9,Beaulieu,,NULL,"2016-06-29 19:45:49",9
+248,3,Bell'O,,NULL,"2017-10-27 10:44:25",2
+249,9,"Bella Cera",,NULL,"2016-06-29 19:48:48",9
+250,3,Benchcraft,,NULL,"2016-06-29 19:49:35",9
+251,3,"Benchley Furniture Co.",,NULL,"2016-06-29 19:49:55",9
+252,4,Berkeley,,NULL,"2016-06-30 17:11:39",9
+253,3,"Best Chair",,NULL,"2016-06-29 19:51:43",9
+254,3,"Best Home Furnishings",,NULL,"2016-06-29 19:52:11",9
+255,1,Beyerdynamic,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Beyerdynamic-2017-07-2614-22-25.png,NULL,"2017-07-26 14:22:25",2
+256,2,"Big Green Egg",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/BigGreenEgg-2017-07-2418-01-28.png,NULL,"2017-07-24 18:01:28",2
+258,2,BlueStar,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/BlueStar-2017-07-2418-03-46.png,NULL,"2017-07-24 18:03:47",2
+259,2,"Bosch Benchmark",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/bosch-2017-07-2419-27-36.png,NULL,"2017-07-24 19:27:36",2
+262,1,"Bowers & Wilkins",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/BowersWilkins-2017-07-2614-26-41.png,NULL,"2017-07-26 14:26:41",2
+263,9,"BR 111",,NULL,"2016-06-29 20:01:49",9
+264,NULL,BrandSource,,NULL,"2016-06-29 20:05:49",9
+265,NULL,"BrandSource Home Gallery",,NULL,"2016-06-29 20:06:00",9
+266,NULL,"BrandSource Marketing",,NULL,"2016-06-29 20:06:10",9
+267,9,Bretlin,,NULL,"2016-06-29 20:07:37",9
+268,2,"Broil King",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/BroilKing-2017-07-2418-06-27.png,NULL,"2017-07-24 18:06:27",2
+269,3,Brown,,NULL,"2016-06-30 17:12:00",9
+270,3,Broyhill,,NULL,"2016-06-29 20:10:22",9
+271,9,Bruce,,NULL,"2016-06-29 20:11:04",9
+273,2,Bull,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Bull-2017-07-2418-07-01.png,NULL,"2017-07-24 18:07:01",2
+275,3,"Bush Furniture",,NULL,"2016-06-29 20:13:48",9
+277,NULL,Caesar,,NULL,"2016-06-29 20:20:22",9
+278,10,Cal-lighting,,NULL,"2016-06-30 17:12:26",9
+279,2,Caliber,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Caliber-2017-07-2418-07-42.png,NULL,"2017-07-24 18:07:43",2
+281,1,Canton,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Canton-2017-07-2614-28-25.png,NULL,"2017-07-26 14:28:25",2
+282,4,Capella,,NULL,"2017-08-25 14:21:41",9
+283,NULL,Capital,,NULL,"2016-06-29 20:30:51",9
+284,3,"Carolina Furniture",,NULL,"2016-06-29 20:31:03",9
+285,NULL,Carpendar,,NULL,"2016-06-29 20:37:54",9
+286,9,"Carpenter Cushion",,NULL,"2016-06-29 20:38:47",9
+287,3,Catnapper,,NULL,"2016-06-29 20:39:14",9
+288,NULL,CBK,,NULL,"2016-06-29 20:40:03",9
+290,NULL,"CE Programs",,NULL,"2016-06-29 20:41:21",9
+292,1,"Channel Vision",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/ChannelVision-2017-07-2614-29-23.png,NULL,"2017-07-26 14:29:24",2
+293,3,"Charles Schneider",,NULL,"2016-06-29 20:54:11",9
+294,3,Cheers,,NULL,"2016-06-29 20:54:56",9
+295,NULL,"Chris & Chris",,NULL,"2016-06-29 20:56:21",9
+296,3,Chromcraft/Revington,,NULL,"2016-06-29 20:56:49",9
+298,3,CinemaTech,,NULL,"2016-06-29 20:58:22",9
+299,NULL,Clarus,,NULL,"2016-06-29 21:01:15",9
+301,3,"Classic Flame",,NULL,"2016-06-29 21:03:02",9
+302,3,"Classic Home Furnishings",,NULL,"2016-06-29 21:03:40",9
+303,NULL,"Classy Art",,NULL,"2016-06-29 21:04:30",9
+305,3,Coaster,,NULL,"2016-06-29 21:07:42",9
+306,NULL,"Color Vision",,NULL,"2016-06-29 21:08:21",9
+307,2,CornuFe,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/lacornue-logo-2012_cornufe-2017-07-2419-24-45.png,NULL,"2017-07-24 19:24:45",2
+308,3,"Corsicana Bedding",,NULL,"2016-06-29 21:10:13",9
+309,2,Coyote,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Coyote-2017-07-2418-09-23.png,NULL,"2017-07-24 18:09:23",2
+310,3,Craftmaster,,NULL,"2016-06-29 21:11:21",9
+311,1,Crestron,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Crestron-2017-07-2614-34-12.png,NULL,"2017-07-26 14:34:13",2
+314,3,"Crown Mark",,NULL,"2016-06-29 21:14:22",9
+315,1,Coby,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Coby-2017-07-2614-31-49.png,NULL,"2017-07-26 14:31:49",2
+318,2,Dancook,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Dancook-2017-07-2418-10-02.png,NULL,"2017-07-24 18:10:03",2
+319,2,De'Longhi,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/DeLonghi-2017-07-2418-10-45.png,NULL,"2017-07-24 18:10:46",2
+320,2,"Delta Heat",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/DeltaHeat-2017-07-2418-11-48.png,NULL,"2017-07-24 18:11:48",2
+326,NULL,Douglas,,NULL,"2016-06-30 17:45:36",9
+327,1,Draper,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/draperlogo_us-2017-07-2614-39-12.png,NULL,"2017-07-26 14:39:13",2
+328,3,Dreamseat,,NULL,"2016-06-30 17:47:04",9
+329,9,DriTac,,NULL,"2016-06-30 17:47:32",9
+330,9,"Durock Cement Board",,NULL,"2016-06-30 17:48:06",9
+331,1,DVDO,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/DVDO-2017-07-2614-42-47.png,NULL,"2017-07-26 14:42:48",2
+334,3,Dynasty,,NULL,"2016-06-30 17:52:09",9
+336,NULL,"Eagle Industries",,NULL,"2016-06-30 18:07:57",9
+337,NULL,Edge,,NULL,"2016-06-30 18:08:49",9
+338,1,ELAN,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Elan-2017-07-2614-46-54.png,NULL,"2017-07-26 14:46:54",2
+342,1,Elite,,NULL,"2016-06-30 18:12:56",9
+343,2,"Elmira Stove Works",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/ElmiraStoveWorks-2017-07-2418-13-50.png,NULL,"2017-07-24 18:13:50",2
+344,3,"Emerald Home",,NULL,"2016-06-30 18:15:41",9
+345,1,Encore,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Encore-2017-07-2614-53-49.png,NULL,"2017-07-26 14:53:50",2
+346,NULL,Endura,,NULL,"2016-06-30 18:21:25",9
+348,3,England,,NULL,"2016-06-30 18:24:31",9
+349,3,"England Furniture",,NULL,"2016-06-30 18:25:30",9
+350,2,Englander,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Englander-2017-07-2418-14-59.png,NULL,"2017-07-24 18:15:00",2
+352,NULL,Equator,,NULL,"2016-06-30 18:31:37",9
+354,10,Eureka,,NULL,"2016-06-30 18:35:09",9
+355,2,EuroChef,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/EuroChef-2017-07-2418-22-56.png,NULL,"2017-07-24 18:22:56",2
+357,NULL,Evo,,NULL,"2016-06-30 18:38:53",9
+358,NULL,"Expert Custom Warehouse",,NULL,"2016-06-30 18:39:44",9
+360,2,Fagor,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Fagor-2017-07-2418-25-41.png,NULL,"2017-07-24 18:25:41",2
+362,3,"Fashion Bed",,NULL,"2016-06-30 18:42:21",9
+363,2,Fedders,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Fedders-2017-07-2418-26-24.png,NULL,"2017-07-24 18:26:25",2
+365,2,"Fire Magic Grills",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/FireMagicGrills-2017-07-2418-27-18.png,NULL,"2017-07-24 18:27:18",2
+366,1,"Firestone Audio",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/FirestoneAudio-2017-07-2614-55-19.png,NULL,"2017-07-26 14:55:20",2
+368,NULL,FiveStar,,NULL,"2016-06-30 19:43:14",9
+369,3,Fjords,,NULL,"2016-06-30 19:43:46",9
+370,NULL,"Flexible Foam Pad",,NULL,"2016-06-30 19:46:18",9
+371,10,"Energy Squad",,NULL,"2016-06-30 19:46:26",9
+372,1,Flexson,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Flexson-2017-07-2614-58-30.png,NULL,"2017-07-26 14:58:30",2
+373,3,Flexsteel,,NULL,"2016-06-30 19:48:28",9
+375,NULL,Formica,,NULL,"2016-06-30 20:27:32",9
+377,3,Fraenkel,,NULL,"2016-06-30 20:29:49",9
+378,4,Franke,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/frankelogo-2017-07-2814-04-19.png,NULL,"2017-07-28 14:04:20",2
+379,3,Franklin,,NULL,"2016-06-30 20:34:20",9
+380,2,"Frigidaire Commercial",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Frigidaire-2017-07-2419-19-59.png,NULL,"2017-07-24 19:20:00",2
+381,2,"Frigidaire Gallery",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/FrigidaireGallery-2017-07-2418-30-44.png,NULL,"2017-07-24 18:30:44",2
+382,2,"Frigidaire Professional",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/FrigidaireProfessional-2017-07-2418-32-11.png,NULL,"2017-07-24 18:32:11",2
+383,2,Fuego,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Fuego-2017-07-2418-33-57.png,NULL,"2017-07-24 18:33:57",2
+384,2,Fujitsu,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Fujitsu-2017-07-2418-39-58.png,NULL,"2017-07-24 18:39:59",2
+385,2,"Fuller Brush Vacuum",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/FullerBrushVacuum-2017-07-2418-43-34.png,NULL,"2017-07-24 18:43:35",2
+387,3,"Furniture of America",,NULL,"2016-06-30 20:44:53",9
+389,NULL,"Furniture Programs",,NULL,"2016-06-30 20:46:38",9
+390,1,"Fusion Electronics",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/FusionElectronics-2017-07-2615-00-19.png,NULL,"2017-07-26 15:00:19",2
+391,3,"Fusion Furniture",,NULL,"2016-06-30 20:47:20",9
+392,NULL,Gaurdsman,,NULL,"2016-06-30 20:49:20",9
+393,2,"GE Eterna",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/GE-2017-07-2419-21-25.png,NULL,"2017-07-24 19:21:25",2
+394,2,"GE Monogram",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/GEMonogram-2017-07-2418-45-12.png,NULL,"2017-07-24 18:45:13",2
+395,2,"GE Profile",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/GEProfile-2017-07-2418-46-05.png,NULL,"2017-07-24 18:46:06",2
+396,1,Genelec,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Genelec-2017-07-2615-01-14.png,NULL,"2017-07-26 15:01:14",2
+397,2,Generac,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Generac-2017-07-2418-46-40.png,NULL,"2017-07-24 18:46:40",2
+400,NULL,"Gourmet Source",,NULL,"2016-06-30 21:27:03",9
+401,1,Grado,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Grado-2017-07-2615-02-22.png,NULL,"2017-07-26 15:02:23",2
+402,2,"Grill Dome",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/GrillDome-2017-07-2418-52-24.png,NULL,"2017-07-24 18:52:24",2
+403,3,Guardsman,,NULL,"2016-06-30 21:29:15",9
+404,NULL,HAI,,NULL,"2016-06-30 21:30:42",9
+405,9,"Halex Underlayment",,NULL,"2016-06-30 21:31:59",9
+410,2,Heartland,,NULL,"2017-08-25 14:11:05",9
+412,NULL,Heise,,NULL,"2016-06-30 21:50:07",9
+413,9,"Henry Adhesives",,NULL,"2016-06-30 21:50:33",9
+415,NULL,Hertz,,NULL,"2016-06-30 21:52:16",9
+416,NULL,HES,,NULL,"2016-06-30 21:52:20",9
+417,1,HiFiMAN,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/HiFiMAN-2017-07-2615-17-28.png,NULL,"2017-07-26 15:17:29",2
+418,3,"Hillsdale Furniture",,NULL,"2016-06-30 21:53:27",9
+419,1,Hisense,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Hisense-2017-07-2615-21-16.png,NULL,"2017-07-26 15:21:17",2
+420,NULL,Hitachi,,NULL,"2016-06-30 21:54:56",9
+422,2,"Holland Grill",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/HollandGrill-2017-07-2418-54-51.png,NULL,"2017-07-24 18:54:51",2
+423,3,"Homelegance, Inc. (AGA)",,NULL,"2016-06-30 21:56:41",9
+424,1,"Honeywell Cable",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Honeywell-2017-07-2615-22-29.png,NULL,"2017-07-26 15:22:29",2
+425,2,"Hoover Central Vac",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/HooverCentralVac-2017-07-2418-57-31.png,NULL,"2017-07-24 18:57:31",2
+426,3,"Hooker Furniture Corporation",,NULL,"2016-06-30 21:58:26",9
+427,NULL,"Howard Miller",,NULL,"2016-06-30 21:59:27",9
+428,3,"Human Touch",,NULL,"2016-06-30 21:59:55",9
+429,NULL,Husqvarna,,NULL,"2016-06-30 22:00:38",9
+430,NULL,Ideal,,NULL,"2016-07-01 13:50:21",9
+431,2,Ilve,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Ilve-2017-07-2418-58-29.png,NULL,"2017-07-24 18:58:30",2
+432,NULL,"Image Crafters",,NULL,"2016-07-01 13:51:42",9
+433,3,IMAX,,NULL,"2016-07-01 13:52:53",9
+434,NULL,Imperial,,NULL,"2016-07-01 13:55:38",9
+435,3,Inada,,NULL,"2016-07-01 13:56:07",9
+436,NULL,Independent,,NULL,"2016-07-01 14:10:21",9
+437,1,InFocus,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/InFocus-2017-07-2615-23-38.png,NULL,"2017-07-26 15:23:38",2
+438,9,Interceramic,,NULL,"2016-07-01 14:11:47",9
+439,3,Intercon,,NULL,"2016-07-01 14:12:29",9
+440,3,Intermountain,,NULL,"2016-07-01 14:13:18",9
+441,3,"International Furniture",,NULL,"2016-07-01 14:13:49",9
+442,NULL,"Invigorate Marketing",,NULL,"2016-07-01 14:14:21",9
+444,3,"Irwin Seating",,NULL,"2016-07-01 14:16:03",9
+446,3,"Jackson Furniture",,NULL,"2016-07-01 14:38:21",9
+447,NULL,Jade,,NULL,"2016-07-01 14:39:01",9
+451,NULL,JetAir,,NULL,"2016-07-01 14:41:58",9
+452,1,"JL Audio",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/JLAudio-2017-07-2615-52-41.png,NULL,"2017-07-26 15:52:41",2
+453,3,Jofran,,NULL,"2016-07-01 14:42:51",9
+454,3,"John Thomas",,NULL,"2016-07-01 14:43:15",9
+455,1,Jolida,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Jolida-2017-07-2615-53-48.png,NULL,"2017-07-26 15:53:48",2
+457,NULL,JSP,,NULL,"2016-07-01 14:51:27",9
+459,2,Kalamazoo,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Kalamazoo-2017-07-2419-06-16.png,NULL,"2017-07-24 19:06:16",2
+460,9,Karhs,,NULL,"2016-07-01 14:54:20",9
+461,1,KEF,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/KEF-2017-07-2615-54-32.png,NULL,"2017-07-26 15:54:33",2
+462,9,Kenecto,,NULL,"2016-07-01 14:56:22",9
+463,1,Kenwood,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Kenwood-2017-07-2615-55-13.png,NULL,"2017-07-26 15:55:13",2
+464,1,"Key Digital",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/KeyDigital-2017-07-2615-57-23.png,NULL,"2017-07-26 15:57:23",2
+465,3,"Kidz World Furniture",,NULL,"2016-07-01 14:57:40",9
+467,3,Kincaid,,NULL,"2016-07-01 14:58:42",9
+469,2,"KitchenAid Black",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/KITCHENAID-2017-07-2419-22-02.png,NULL,"2017-07-24 19:22:02",2
+470,3,"Kith Furniture",,NULL,"2016-07-01 15:00:01",9
+471,3,Klaussner,,NULL,"2016-07-01 15:00:28",9
+473,NULL,Kobe,,NULL,"2016-07-01 15:01:35",9
+475,2,Krushr,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Krushr-2017-07-2419-07-03.png,NULL,"2017-07-24 19:07:03",2
+476,2,Kuppersbusch,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Kuppersbusch-2017-07-2419-07-45.png,NULL,"2017-07-24 19:07:45",2
+477,2,"La Cornue",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/LaCornue-2017-07-2419-11-41.png,NULL,"2017-07-24 19:11:41",2
+478,3,La-Z-Boy,,NULL,"2016-07-01 16:08:42",9
+479,3,Lane,,NULL,"2016-07-01 16:09:21",9
+480,3,"Lang Furniture",,NULL,"2016-07-01 16:09:34",9
+481,NULL,"Latacrete (selected)",,NULL,"2016-07-01 16:10:13",9
+482,9,Lauzon,,NULL,"2016-07-01 16:10:38",9
+483,3,"Legends Furniture, Inc.",,NULL,"2016-07-01 16:15:57",9
+484,3,"Leggett & Platt",,NULL,"2016-07-01 16:17:14",9
+485,9,"Leggett & Platt Flooring",,NULL,"2016-07-01 16:17:32",9
+487,3,"Leslie Dame",,NULL,"2016-07-01 16:18:54",9
+488,3,"Leslie Dame Furniture",,NULL,"2016-07-01 16:19:05",9
+489,NULL,Leviton,,NULL,"2016-07-01 16:20:13",9
+492,3,Liberty,,NULL,"2017-10-13 07:34:56",2
+493,3,Ligo,,NULL,"2016-07-01 16:22:50",9
+494,9,"LM Hardwood",,NULL,"2016-07-01 16:23:20",9
+495,2,"Louisiana Grills",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/LouisianaGrills-2017-07-2419-13-13.png,NULL,"2017-07-24 19:13:14",2
+496,NULL,Lowepro,,NULL,"2016-07-01 16:24:06",9
+497,3,Luraco,,NULL,"2016-07-01 16:24:21",9
+498,NULL,"Lutron Caseta",,NULL,"2016-07-01 16:27:23",9
+500,NULL,M&S,,NULL,"2016-07-01 16:54:38",9
+501,3,"Mac Motion Chairs",,NULL,"2016-07-01 16:59:14",9
+502,3,MacMotion,,NULL,"2016-07-01 18:17:30",9
+506,3,Magnussen,,NULL,"2016-07-01 18:54:30",9
+507,3,"Majestic Home",,NULL,"2016-07-01 18:55:51",9
+508,3,Mantua,,NULL,"2016-07-01 18:56:33",9
+509,9,Marazzi,,NULL,"2016-07-01 18:58:29",9
+510,NULL,Marcone,,NULL,"2016-07-01 19:01:41",9
+513,3,"Martin Furniture",,NULL,"2016-07-01 19:17:39",9
+515,3,Mayo,,NULL,"2016-07-01 19:21:15",9
+516,2,"Maytag Commercial",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/MaytagCommercial-2017-07-2419-16-01.png,NULL,"2017-07-24 19:16:02",2
+517,2,"Maytag Heritage",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/maytag-2017-07-2419-30-09.png,NULL,"2017-07-24 19:30:09",2
+519,3,"McFerran Furniture",,NULL,"2016-07-01 19:23:13",9
+521,3,Med-Lift,,NULL,"2016-07-03 15:20:02",9
+522,3,MediLift,,NULL,"2016-07-03 15:20:08",9
+524,2,"Memphis Wood Fire Grills",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/MemphisWoodFireGrills-2017-07-2419-25-46.png,NULL,"2017-07-24 19:25:47",2
+526,9,Metrofloor,,NULL,"2016-07-03 15:22:29",9
+528,2,"Miele Vacuum",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Miele-2017-07-2419-31-34.png,NULL,"2017-07-24 19:31:35",2
+529,1,Milestone,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Milestone-2017-07-2616-03-02.png,NULL,"2017-07-26 16:03:02",2
+531,9,Milliken,,NULL,"2016-07-03 15:25:39",9
+532,3,"Million Dollar Rustic",,NULL,"2016-07-03 15:26:05",9
+533,3,"Milton Green Stars",,NULL,"2016-07-03 15:26:49",9
+534,9,Mirage,,NULL,"2016-07-03 15:27:40",9
+535,1,Mitsubishi,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Mitsubishi-2017-07-2616-06-00.png,NULL,"2017-07-26 16:06:00",2
+536,3,"Moe's Home Collections",,NULL,"2016-07-03 15:28:38",9
+537,9,Mohawk,,NULL,"2016-07-03 15:29:12",9
+540,9,"Moren Rugs",,NULL,"2016-07-03 15:30:30",9
+541,NULL,Multiply,,NULL,"2016-07-03 15:31:14",9
+542,1,"Music Hall",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/MusicHall-2017-07-2616-08-29.png,NULL,"2017-07-26 16:08:29",2
+544,3,Natura,,NULL,"2016-07-03 15:33:12",9
+545,NULL,"Natures Select Bamboo",,NULL,"2016-07-03 15:33:54",9
+546,3,"Natuzzi Editions",,NULL,"2016-07-03 15:34:20",9
+547,2,NESPRESSO,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/NESPRESSO-2017-07-2419-32-20.png,NULL,"2017-07-24 19:32:20",2
+548,3,"New Classic Home Furnishings",,NULL,"2016-07-03 15:34:58",9
+549,1,NHT,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/NHT-2017-07-2616-09-37.png,NULL,"2017-07-26 16:09:38",2
+550,1,Niles,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Niles-2017-07-2616-10-27.png,NULL,"2017-07-26 16:10:27",2
+551,9,"No-Muv Padding",,NULL,"2016-07-03 15:36:13",9
+552,2,NuTone,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/NuTone-2017-07-2419-33-08.png,NULL,"2017-07-24 19:33:08",2
+553,1,OmniMount,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/OmniMount_Logo-2017-07-2616-11-30.png,NULL,"2017-07-26 16:11:31",2
+557,1,Optoma,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Optoma-2017-07-2616-12-49.png,NULL,"2017-07-26 16:12:49",2
+558,2,Oreck,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Oreck-2017-07-2419-33-50.png,NULL,"2017-07-24 19:33:50",2
+560,1,Ortofon,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Ortofon-2017-07-2616-15-34.png,NULL,"2017-07-26 16:15:35",2
+561,NULL,"Outdoor Source",,NULL,"2016-07-03 15:45:17",9
+563,3,Palliser,,NULL,"2016-07-03 16:56:23",9
+564,3,"Palliser Furniture",,NULL,"2016-07-03 16:56:40",9
+565,1,"Panasonic Electronics",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Panasonic-2017-07-2616-14-16.png,NULL,"2017-07-26 16:14:16",2
+567,2,Panasonic,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Panasonic-2017-07-2419-34-27.png,NULL,"2017-07-24 19:34:28",2
+569,1,Parasound,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Parasound-2017-07-2616-16-34.png,NULL,"2017-07-26 16:16:34",2
+570,3,"Parker House",,NULL,"2016-07-03 17:00:36",9
+571,3,"Paula Deen",,NULL,"2016-07-03 17:01:13",9
+572,1,"Peachtree Audio",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/PeachtreeAudio-2017-07-2616-17-14.png,NULL,"2017-07-26 16:17:14",2
+573,3,"Pelican Reef - Panama Jack",,NULL,"2016-07-03 17:02:15",9
+574,NULL,Pennwood,,NULL,"2016-07-03 17:02:46",9
+575,2,Perlick,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/perlick-2017-07-2419-35-22.png,NULL,"2017-07-24 19:35:22",2
+577,1,Philips,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Philips-2017-07-2616-17-50.png,NULL,"2017-07-26 16:17:50",2
+578,1,Pinnacle,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Pinnacle-2017-07-2616-18-24.png,NULL,"2017-07-26 16:18:24",2
+581,1,Planar,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Planar-2017-07-2616-19-27.png,NULL,"2017-07-26 16:19:27",2
+582,NULL,Plateau,,NULL,"2016-07-03 17:09:39",9
+583,1,"Platinum Tools",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/PlatinumTools-2017-07-2616-20-05.png,NULL,"2017-07-26 16:20:05",2
+584,NULL,Porter,,NULL,"2016-07-03 17:10:44",9
+585,NULL,Powell,,NULL,"2016-07-03 17:11:28",9
+586,2,Premier,,NULL,"2017-08-29 13:51:01",15
+587,NULL,"Premier Mount",,NULL,"2016-07-03 17:12:22",9
+588,NULL,"Premier Pro-Series",,NULL,"2016-07-03 17:12:28",9
+591,2,"Primo Grills",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/PrimoGrills-2017-07-2419-35-55.png,NULL,"2017-07-24 19:35:56",2
+592,3,"Primo International",,NULL,"2016-07-03 17:13:56",9
+594,1,Proficient,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Proficient-2017-07-2616-21-54.png,NULL,"2017-07-26 16:21:54",2
+595,2,ProFire,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/ProFire-2017-07-2419-36-37.png,NULL,"2017-07-24 19:36:38",2
+596,3,Protect-A-Bed,,NULL,"2016-07-03 17:16:23",9
+599,1,"PSB Speakers",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/PSBSpeakers-2017-07-2616-22-26.png,NULL,"2017-07-26 16:22:27",2
+600,3,Pulaski,,NULL,"2016-07-03 17:18:20",9
+601,3,"Pure LatexBLISS",,NULL,"2016-07-03 17:18:47",9
+602,NULL,"Pure Wash",,NULL,"2016-07-03 17:19:43",9
+603,NULL,pureWash,,NULL,"2016-07-03 17:19:48",9
+604,NULL,Quad,,NULL,"2016-07-03 17:25:33",9
+605,NULL,Quadraspire,,NULL,"2016-07-03 17:26:18",9
+606,9,"Quick Step",,NULL,"2016-07-03 17:26:37",9
+607,NULL,Quietline,,NULL,"2016-07-03 17:27:24",9
+608,NULL,"Race Sport Lighting",,NULL,"2016-07-03 17:28:20",9
+612,3,Restonic,,NULL,"2016-07-03 17:29:40",9
+613,NULL,Revel,,NULL,"2016-07-03 17:30:23",9
+614,3,Reverie,,NULL,"2016-07-03 17:30:52",9
+615,NULL,"Richard Gray's Power Company",,NULL,"2016-07-03 17:31:27",9
+616,3,Riverside,,NULL,"2016-07-03 17:31:43",9
+617,NULL,"Rizzy Home",,NULL,"2016-07-03 17:32:44",9
+618,9,Robina,,NULL,"2016-07-03 17:33:18",9
+619,9,Rocersa,,NULL,"2016-07-03 17:33:39",9
+620,1,"Rockford Fosgate",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/RockfordFosgate-2017-07-2616-22-58.png,NULL,"2017-07-26 16:22:58",2
+621,8,Rockwood,,NULL,"2016-07-03 17:35:07",9
+623,9,Roppe,,NULL,"2016-07-03 17:36:36",9
+624,1,Rosen,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Rosen-2017-07-2616-23-39.png,NULL,"2017-07-26 16:23:40",2
+625,NULL,Rotel,,NULL,"2016-07-03 17:37:35",9
+626,3,"Row One",,NULL,"2016-07-03 17:38:05",9
+627,NULL,RPG,,NULL,"2016-07-03 17:39:05",9
+630,1,Russound,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Russound-2017-07-2616-24-11.png,NULL,"2017-07-26 16:24:11",2
+631,2,Saber,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/saber-logo-2017-07-2419-37-52.png,NULL,"2017-07-24 19:37:52",2
+632,3,"Salamander Designs",,NULL,"2016-07-03 17:58:29",9
+634,3,Sanus,,NULL,"2016-07-03 17:59:53",9
+635,1,Sanyo,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/sanyo-2017-07-2616-27-00.png,NULL,"2017-07-26 16:27:00",2
+636,3,Sauder,,NULL,"2016-07-03 18:00:47",9
+637,NULL,Saunder,,NULL,"2016-07-03 18:01:07",9
+640,9,"Schluter Products",,NULL,"2016-07-03 18:03:11",9
+641,NULL,"Scottdale Pad",,NULL,"2016-07-03 18:04:13",9
+642,NULL,"Screen Dreams",,NULL,"2016-07-03 18:06:18",9
+643,1,"Screen Innovations",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/ScreenInnovations-2017-07-2616-29-07.png,NULL,"2017-07-26 16:29:07",2
+645,3,"Sealy Optimum",,NULL,"2016-07-03 18:07:29",9
+646,3,"Sealy Posturpedic",,NULL,"2016-07-03 18:07:43",9
+647,3,Sealy-Embody,,NULL,"2016-07-03 18:08:11",9
+648,3,Seatcraft,,NULL,"2016-07-03 18:08:36",9
+649,1,Seiki,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Seiki-2017-07-2616-29-49.png,NULL,"2017-07-26 16:29:49",2
+651,3,Serta,,NULL,"2016-07-03 18:10:58",9
+652,3,"Serta Green Home",,NULL,"2016-07-03 18:11:41",9
+653,3,"Serta iComfort",,NULL,"2016-07-03 18:11:54",9
+654,3,"Serta iComfort Directions",,NULL,"2016-07-03 18:12:03",9
+655,3,"Serta iComfort Hybrid",,NULL,"2016-07-03 18:12:56",9
+656,3,"Serta iSeries",,NULL,"2016-07-03 18:13:14",9
+657,3,"Serta iSeries Profiles",,NULL,"2016-07-03 18:13:23",9
+658,3,"Serta Majestic Crown Perfect Sleeper",,NULL,"2016-07-03 18:13:32",9
+659,3,"Serta Majestic Sleep",,NULL,"2016-07-03 18:13:41",9
+660,3,"Serta Perfect Day",,NULL,"2016-07-03 18:13:50",9
+661,3,"Serta Perfect Sleeper",,NULL,"2016-07-03 18:14:07",9
+662,3,"Serta Perfect Sleeper 85th Anniversary",,NULL,"2016-07-03 18:14:21",9
+663,3,"Serta Perfect Sleeper Essentials",,NULL,"2016-07-03 18:14:31",9
+664,3,"Serta Perfect Sleeper Hybrid",,NULL,"2016-07-03 18:14:47",9
+665,3,"Serta Perfect Sleeper SmartSurface",,NULL,"2016-07-03 18:14:56",9
+666,3,"Serta Perfect Sleeper SmartSurface Elite",,NULL,"2016-07-03 18:15:05",9
+667,3,"Serta Trump Home iSeries",,NULL,"2016-07-03 18:15:15",9
+668,3,"Serta Trump Home iSeries Profiles",,NULL,"2016-07-03 18:15:25",9
+669,3,Sertapedic,,NULL,"2016-07-03 18:15:37",9
+670,NULL,Seura,,NULL,"2016-07-03 18:17:56",9
+672,9,Shaw,,NULL,"2016-07-03 18:18:53",9
+673,9,ShawMark,,NULL,"2016-07-03 18:19:18",9
+674,NULL,Shelfsource,,NULL,"2016-07-03 18:20:06",9
+675,2,Siemens,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Siemens-2017-07-2419-40-07.png,NULL,"2017-07-24 19:40:08",2
+677,3,Simmons,,NULL,"2016-07-03 18:21:56",9
+678,3,"Simmons Beautyrest",,NULL,"2016-07-03 18:22:14",9
+679,3,"Simmons Beautyrest Black",,NULL,"2016-07-03 18:22:25",9
+680,3,"Simmons Beautyrest ComforPedic",,NULL,"2016-07-03 18:22:33",9
+681,3,"Simmons Beautyrest Recharge",,NULL,"2016-07-03 18:22:45",9
+682,3,"Simmons Beautyrest Recharge World Class",,NULL,"2016-07-03 18:22:57",9
+683,3,"Simmons Beautyrest TruEnergy",,NULL,"2016-07-03 18:23:06",9
+684,3,"Simmons BeautySleep",,NULL,"2016-07-03 18:23:18",9
+685,3,"Simmons ComforPedic",,NULL,"2016-07-03 18:23:29",9
+686,3,"Simmons Kids",,NULL,"2016-07-03 18:23:38",9
+687,3,"Simmons Natural Care",,NULL,"2016-07-03 18:23:47",9
+688,1,Skullcandy,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Skullcandy-2017-07-2616-38-03.png,NULL,"2017-07-26 16:38:03",2
+691,2,Smeg,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Smeg-2017-07-2419-41-47.png,NULL,"2017-07-24 19:41:48",2
+692,NULL,SMS,,NULL,"2016-07-03 18:45:38",9
+694,1,Sonance,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Sonance-2017-07-2618-07-24.png,NULL,"2017-07-26 18:07:25",2
+702,3,"Southern Motion",,NULL,"2016-07-03 18:51:40",9
+703,1,"Speco Technologies",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/SpecoTechnologies-2017-07-2618-15-41.png,NULL,"2017-07-26 18:15:42",2
+705,NULL,Spectrum,,NULL,"2016-07-03 18:53:22",9
+706,3,"Spring Air",,NULL,"2016-07-03 18:53:50",9
+707,3,"Standard Furniture",,NULL,"2016-07-03 18:54:10",9
+708,3,Stanley,,NULL,"2016-07-03 18:54:34",9
+709,3,"Stearns & Foster",,NULL,"2016-07-03 19:00:34",9
+710,3,"Steve Silver Co.",,NULL,"2016-07-03 19:01:06",9
+711,3,"Steve Silver Furniture",,NULL,"2016-07-03 19:01:30",9
+712,1,Sumiko,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Sumiko-2017-07-2618-16-15.png,NULL,"2017-07-26 18:16:15",2
+714,NULL,Sunfire,,NULL,"2016-07-03 19:03:58",9
+715,3,"Sunny Designs",,NULL,"2016-07-03 19:04:19",9
+716,NULL,"Supply Stream",,NULL,"2016-07-03 19:04:57",9
+718,3,Surya,,NULL,"2016-07-03 19:05:50",9
+719,NULL,Suzuki,,NULL,"2016-07-03 19:06:19",9
+721,10,Sylvania,,NULL,"2016-07-03 19:07:38",9
+722,3,"Symbol Mattress",,NULL,"2016-07-03 19:07:48",9
+724,NULL,Syura,,NULL,"2016-07-03 19:08:33",9
+725,2,"W.C. Woods",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/W.C-2017-07-2419-51-52.png,NULL,"2017-07-24 19:51:53",2
+726,9,W.F.Taylor,,NULL,"2016-07-03 19:18:24",9
+728,2,Wascomat,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Wascomat-2017-07-2419-52-26.png,NULL,"2017-07-24 19:52:27",2
+729,NULL,Welton,,NULL,"2016-07-03 19:20:15",9
+730,2,"Whirlpool Commercial",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/whirlpool-2017-07-2419-54-10.png,NULL,"2017-07-24 19:54:11",2
+731,9,Wilsonart,,NULL,"2016-07-03 19:21:00",9
+732,2,"Wind Crest Induction",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/WindCrestInduction-2017-07-2419-55-12.png,NULL,"2017-07-24 19:55:12",2
+733,3,"Windermere Motion",,NULL,"2016-07-03 19:21:54",9
+734,2,Windster,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Windster-2017-07-2419-55-43.png,NULL,"2017-07-24 19:55:43",2
+735,3,"Winners Only",,NULL,"2016-07-03 19:23:32",9
+736,2,"Wolf Gourmet",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/WolfGourmet-2017-07-2419-56-16.png,NULL,"2017-07-24 19:56:16",2
+737,3,Woodcrest,,NULL,"2016-07-03 19:24:24",9
+739,3,Wynwood,,NULL,"2016-07-03 19:25:15",9
+740,NULL,Xantech,,NULL,"2016-07-03 19:25:44",9
+741,NULL,Yamaha,,NULL,"2016-07-03 19:26:25",9
+742,1,Zvox,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Zvox-2017-07-2618-27-18.png,NULL,"2017-07-26 18:27:19",2
+743,2,Tappan,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Tappan-2017-07-2419-44-10.png,NULL,"2017-07-24 19:44:10",2
+744,9,Tarkett,,NULL,"2016-07-04 13:23:30",9
+745,9,"Tayse Rugs",,NULL,"2016-07-04 13:23:56",9
+746,1,TEAC,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/TEAC-2017-07-2618-18-16.png,NULL,"2017-07-26 18:18:16",2
+747,2,TEC,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/TEC-2017-07-2419-44-48.png,NULL,"2017-07-24 19:44:48",2
+749,3,Tempur-pedic,,NULL,"2016-07-04 13:27:19",9
+750,3,"Tennessee Enterprises Inc",,NULL,"2016-07-04 13:28:01",9
+752,NULL,Test,,NULL,"2016-07-04 13:29:45",9
+754,NULL,THEIL,,NULL,"2016-07-04 13:31:36",9
+755,3,Therapedic,,NULL,"2016-07-04 13:31:50",9
+757,NULL,Timbercreek,,NULL,"2016-07-04 13:40:07",9
+758,1,Tivoli,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Tivoli-2017-07-2618-19-39.png,NULL,"2017-07-26 18:19:39",2
+759,NULL,"TK Living",,NULL,"2016-07-04 13:41:17",9
+760,2,TMIO,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/TMIO-2017-07-2419-45-41.png,NULL,"2017-07-24 19:45:41",2
+761,2,"Top Brewer",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/TopBrewer-2017-07-2419-46-21.png,NULL,"2017-07-24 19:46:21",2
+763,NULL,Trade-Wind,,NULL,"2016-07-04 13:46:08",9
+764,NULL,Transparent,,NULL,"2016-07-04 13:47:19",9
+765,3,Tresanti,,NULL,"2016-07-04 13:47:45",9
+768,NULL,Triode,,NULL,"2016-07-04 13:51:46",9
+769,1,"Tripp Lite",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/TrippLite-2017-07-2618-21-50.png,NULL,"2017-07-26 18:21:50",2
+770,2,TRUE,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/TRUE-2017-07-2419-46-53.png,NULL,"2017-07-24 19:46:54",2
+771,2,"Twin Eagles",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/TwinEagles-2017-07-2419-49-28.png,NULL,"2017-07-24 19:49:29",2
+772,3,"Ultra Comfort",,NULL,"2016-07-04 13:57:51",9
+773,9,"United Weavers",,NULL,"2016-07-04 13:58:53",9
+774,3,"Universal Furniture Int, Inc.",,NULL,"2016-07-04 13:59:45",9
+776,3,"Urban Collections by Yutzy Woodworking",,NULL,"2016-07-04 14:00:39",9
+777,10,Vantage,,NULL,"2016-07-04 14:01:28",9
+779,3,Vaughan-Bassett,,NULL,"2016-07-04 14:03:50",9
+780,1,Velodyne,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Velodyne-2017-07-2618-26-18.png,NULL,"2017-07-26 18:26:18",2
+786,1,"Musical Fidelity",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/MusicalFidelity-2017-07-2616-09-07.png,NULL,"2017-07-26 16:09:07",2
+787,3,"Signature Design by Ashley",,NULL,"2016-07-04 14:28:56",9
+788,NULL,Citi,,NULL,"2016-09-06 15:52:23",2
+789,NULL,"Original Programming",,NULL,"2016-09-08 14:24:34",2
+790,NULL,"Generic HD Content",,NULL,"2016-09-23 16:51:17",2
+791,3,"Sierra Sleep",,NULL,"2016-10-17 20:27:00",2
+792,NULL,RTO,,NULL,"2016-11-01 15:08:03",2
+793,NULL,Excelsior,,NULL,"2017-02-23 14:39:54",2
+795,3,Rem-Fit,,NULL,"2017-04-26 15:33:22",2
+796,3,"Enso Sleep Systems",,NULL,"2017-04-19 16:03:52",2
+797,3,"Twin Star",,NULL,"2017-04-26 15:33:44",2
+798,3,Cordaroys,,NULL,"2017-05-04 14:27:29",2
+806,1,Apple,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Apple-2017-07-2614-06-02.png,NULL,"2017-07-26 14:06:02",2
+807,1,"Canon Inc",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/CanonInc-2017-07-2614-27-50.png,NULL,"2017-07-26 14:27:50",2
+808,1,GoPro,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/GoPro-2017-07-2615-01-50.png,NULL,"2017-07-26 15:01:50",2
+809,1,"Hitachi Ltd",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/hitachi-2017-07-2615-21-53.png,NULL,"2017-07-26 15:21:54",2
+810,1,iPort,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/iPort-2017-07-2615-49-14.png,NULL,"2017-07-26 15:49:14",2
+811,1,Logitech,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Logitech-2017-07-2616-01-36.png,NULL,"2017-07-26 16:01:36",2
+812,4,TotoUsa,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Toto-2017-04-2518-35-17.jpeg,NULL,"2017-07-13 08:27:53",2
+813,2,RCA,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/RCA-2017-07-2419-37-14.png,NULL,"2017-07-24 19:37:14",2
+814,4,DornBracht,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Dornbracht-2017-04-2518-35-56.jpeg,NULL,"2017-07-13 10:27:05",2
+815,4,Alape,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/alape-logo-2017-07-2720-27-05.png,NULL,"2017-07-27 20:27:07",2
+816,4,Baci,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Baci-2017-07-2720-39-09.png,NULL,"2017-07-27 20:39:10",2
+817,4,"Bain Ultra",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/bainultralogo-2017-07-2720-41-40.png,NULL,"2017-07-27 20:41:41",2
+818,4,"Blu Bathworks",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Blubathworks-2017-07-2720-47-29.png,NULL,"2017-07-27 20:47:29",2
+819,4,Bobrick,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Bobricklogo-2017-07-2720-49-54.png,NULL,"2017-07-27 20:49:54",2
+821,2,"Primary Oven Dimensions: 27 W x 14 H x 21 D",null,NULL,"2017-07-27 08:27:58",1
+822,2,"Cutout Dimension: 48-1/8 W X 24 D (std)",null,NULL,"2017-07-27 08:27:58",1
+823,4,Catalano,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/catalanologo-2017-07-2720-54-18.png,NULL,"2017-07-27 20:54:24",2
+824,4,Cheviot,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/cheviot-logo-2017-07-2813-54-10.png,NULL,"2017-07-28 13:54:11",2
+825,4,"Commercial Enameling",null,NULL,"2017-07-27 09:35:04",1
+826,4,Cecosinks,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/cecologo-2017-07-2720-55-34.png,NULL,"2017-07-27 20:55:34",2
+827,4,DXV,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/DXV-2017-07-2814-02-27.png,NULL,"2017-07-28 14:02:27",2
+828,4,Geberit,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Geberit-2017-07-2814-04-58.png,NULL,"2017-07-28 14:04:59",2
+829,4,"Gingers USA",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/ginger-logo-2017-07-2814-07-04.png,NULL,"2017-07-28 14:07:05",2
+830,4,Julien,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Julien-2017-07-2814-09-04.png,NULL,"2017-07-28 14:09:05",2
+831,4,"Lefroy Brooks",https://dzrf1tezfwb3j.cloudfront.net/uploads/images/LefroyBrooks-2017-07-2814-14-45.png,NULL,"2017-07-28 14:14:46",2
+832,4,Wetstyle,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Wetstyle-2017-07-2814-19-58.png,NULL,"2017-07-28 14:19:58",2
+833,4,Zucchetti,https://dzrf1tezfwb3j.cloudfront.net/uploads/images/Zucchetti-2017-07-2814-24-04.png,NULL,"2017-07-28 14:24:05",2
+834,2,ADC,,NULL,"2017-07-31 18:37:33",2
+835,2,Multi-Brand,-,NULL,"2017-08-10 14:33:15",1
+836,2,SmartChoice,-,NULL,"2017-08-10 14:42:20",1
+837,2,ASC,,NULL,"2017-08-17 19:52:56",15
+838,2,"Artic King",,NULL,"2017-08-17 20:02:36",15
+839,2,"Safe & Sound",,NULL,"2017-08-17 20:10:21",15
+840,2,Elica,,NULL,"2017-08-17 20:11:06",15
+841,2,"Eden Pure",,NULL,"2017-08-17 20:11:36",15
+842,4,Aquabrass,null,NULL,"2017-08-18 07:24:17",1
+843,4,Decolav,null,NULL,"2017-08-18 08:26:41",1
+844,2,Duraflame,null,NULL,"2017-08-18 08:32:10",1
+845,4,Icera,null,NULL,"2017-08-18 09:42:09",1
+846,2,"Imperial Hoods",null,NULL,"2017-08-18 09:55:15",1
+847,4,Robern,null,NULL,"2017-08-18 11:30:01",1
+848,2,BoneCrusher,null,NULL,"2017-08-18 15:29:29",1
+849,2,"Bull BBQ",null,NULL,"2017-08-18 15:30:03",1
+850,2,EcoWasher,null,NULL,"2017-08-18 15:39:08",1
+851,2,EdenPure,null,NULL,"2017-08-18 15:39:29",1
+852,2,"Pure Air",null,NULL,"2017-08-18 16:56:50",1
+853,2,"Pure Flow",null,NULL,"2017-08-18 16:57:49",1
+854,2,"Pure Heat",null,NULL,"2017-08-18 16:57:56",1
+855,2,"Pure Power",null,NULL,"2017-08-18 16:58:32",1
+856,2,"Pure Water",null,NULL,"2017-08-18 16:58:56",1
+858,2,"Appliance Dolly",,NULL,"2017-08-28 19:38:02",15
+859,2,"Snow Joe",,NULL,"2017-08-28 20:13:23",15
+861,2,"LG Studio",null,NULL,"2017-08-29 08:30:57",1
+863,2,Hestan,null,NULL,"2017-08-29 15:07:23",1
+864,2,Wilmington,,NULL,"2017-08-30 14:58:33",15
+865,4,"American Standard",,NULL,"2017-09-04 14:52:59",1
+866,4,"Aquatic Bath",http://aquaticbath.com/wp-content/themes/aquaticbath/_lib/img/header_logo.png,NULL,"2017-09-04 14:56:50",1
+867,3,Lexington,null,NULL,"2017-09-25 11:05:33",1
+868,3,"Material: Fabric",null,NULL,"2017-09-25 15:48:10",1
+869,3,"Millennium by Ashley",,NULL,"2017-09-26 11:16:26",1
+870,3,Ashley-Sleep,,NULL,"2017-09-26 11:20:44",1
+871,3,"Sierra Sleep by Ashley",,NULL,"2017-09-26 11:20:52",1
+872,3,Kingswere,,NULL,"2017-09-26 11:50:04",1
+873,3,Century,null,NULL,"2017-09-26 18:52:29",2
+874,3,"Stearns And Foster",null,NULL,"2017-09-27 10:12:35",1
+875,3,"Hooker Furniture",null,NULL,"2017-09-27 11:13:29",1
+876,4,"Victoria & Albert",null,NULL,"2017-09-28 12:06:34",1
+877,3,"Universal Explore Home",null,NULL,"2017-10-16 08:34:08",1
+878,2,Bello,null,NULL,"2017-10-27 10:38:51",1
+879,3,"Aspen Home",null,NULL,"2017-10-30 07:05:58",1
+880,3,A-America,null,NULL,"2017-11-04 11:57:35",1
+881,3,"Vaughan Designs",null,NULL,"2017-11-08 02:24:33",1
+882,3,"Legends Furniture",null,NULL,"2017-11-09 09:57:34",1
+883,3,Hooker,null,NULL,"2017-11-09 14:09:29",9
+884,3,"Jackson ",null,NULL,"2017-11-10 13:57:30",1
+885,3,"Cynthia Rowley for Hooker Furniture",,NULL,"2017-11-13 12:10:11",1
+886,2,Moen,null,NULL,"2017-11-20 06:17:12",1
+887,4,"Elkay Products",null,NULL,"2017-11-20 12:08:08",1
+892,3,Sealy,null,NULL,"2017-12-15 14:00:33",1

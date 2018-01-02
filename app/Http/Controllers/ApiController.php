@@ -40,6 +40,11 @@ use App\CommondataFields;
 use App\Blogs;
 use App\Interest;
 use App\Models\Comments;
+use App\Messges;
+use DB;
+use App\Addinsurance;
+use App\Addqualification;
+
 
 class ApiController extends Controller {
     /* @method : validateUser
@@ -168,7 +173,7 @@ class ApiController extends Controller {
         $validator = Validator::make($request->all(), [
             'taskId' => "required", 
             'userId' => "required",
-            'comment'=> "required"
+            'comments'=> "required"
         ]);
 
         if ($validator->fails()) {
@@ -184,22 +189,19 @@ class ApiController extends Controller {
                         'data' => $request->all()
                             )
             );
-        }
-        
-        
+        } 
         $input=[];
         foreach ($rs as $key => $val){
             $input[$key] = $val;
         }
         
-        DB::tabel('messges')->insert($input);
-        
-         return response()->json(
+        DB::table('messges')->insert($input); 
+            return response()->json(
                         [
                             "status" =>1,
                             'code' => 200,
                             "message" => "Message added successfully.",
-                            'data' => []
+                            'data' => $input
                         ]
         );
         
@@ -214,14 +216,13 @@ class ApiController extends Controller {
             'status' => "required"
         ]);
         
-        if(!empty($request->get('doc')) && $request->get('docType')){
+        if(!empty($request->get('doc'))){
              $validator = Validator::make($request->all(), [
                 'userId' => "required", 
                 'qualificationType' => "required",
                 'qualification'=> "required",
                 'status' => "required",
-                'doc'=> "required",
-                'docType' => "required"
+                'doc'=> "required"
             ]);
         }
 
@@ -240,25 +241,25 @@ class ApiController extends Controller {
             );
         }
         
-      
+        $input =[];
+        if($request->get('doc')){
+            $doc = $this->createDocFromBase64($request->get('doc'));
+            $input['doc'] = $doc;
+        }
         
-        $except = ['id', 'create_at', 'updated_at','doc'];
-            
-        
-            
-            $input =[];
-            $table_cname = \Schema::getColumnListing('addQualification');
-            foreach ($table_cname as $key => $value) {
-                if (in_array($value, $except)) {
-                    continue;
-                }
-                if ($request->input($value) != null) {
-                     $input[$value] = $request->get($value);
-                }
+        $except = ['id', 'create_at', 'updated_at','doc']; 
+        $table_cname = \Schema::getColumnListing('addQualification');
+        foreach ($table_cname as $key => $value) {
+            if (in_array($value, $except)) {
+                continue;
+            }
+            if ($request->input($value) != null) {
+                 $input[$value] = $request->get($value);
+            }
         }
             
         
-        DB::tabel('addQualification')->insert($input);
+        DB::table('addQualification')->insert($input);
         
          return response()->json(
                         [
@@ -280,14 +281,13 @@ class ApiController extends Controller {
             'status' => "required"
         ]);
         
-        if(!empty($request->get('doc')) && $request->get('docType')){
+        if(!empty($request->get('doc'))){
              $validator = Validator::make($request->all(), [
                 'userId' => "required", 
                 'insuranceType' => "required",
                 'insurer'=> "required",
                 'status' => "required",
-                'doc'=> "required",
-                'docType' => "required"
+                'doc'=> "required" 
             ]);
         }
 
@@ -305,14 +305,14 @@ class ApiController extends Controller {
                             )
             );
         }
-        
-      
-        
-        $except = ['id', 'create_at', 'updated_at','doc'];
-            
-        
-            
-            $input =[];
+        $input =[];
+        if($request->get('doc')){
+            $doc = $this->createDocFromBase64($request->get('doc'));
+            $input['doc'] = $doc;
+        }
+         
+        $except = ['id', 'create_at', 'updated_at','doc']; 
+           
             $table_cname = \Schema::getColumnListing('addInsurance');
             foreach ($table_cname as $key => $value) {
                 if (in_array($value, $except)) {
@@ -321,23 +321,173 @@ class ApiController extends Controller {
                 if ($request->input($value) != null) {
                      $input[$value] = $request->get($value);
                 }
-        }
-            
+        }  
         
-        DB::tabel('addInsurance')->insert($input);
-        
+        $data = DB::table('addInsurance')->insert($input);
+      
          return response()->json(
                         [
                             "status" =>1,
                             'code' => 200,
                             "message" => "Insurance added!",
-                            'data' => []
+                            'data' => $input
                         ]
         );
         
         
     }
+    
+    public function getPersonalMessage(Request $request){
+        
+        $rs = $request->all();
+        $validator = Validator::make($request->all(), [
+            'taskId' => "required", 
+            'poster_userid' => "required"
+        ]);
+        
+         if ($validator->fails()) {
+            $error_msg = [];
+            foreach ($validator->messages()->all() as $key => $value) {
+                array_push($error_msg, $value);
+            }
 
+            return Response::json(array(
+                        'status' => 0,
+                        'code' => 500,
+                        'message' => $error_msg[0],
+                        'data' => $request->all()
+                            )
+            );
+        }
+
+        $data = Messges::with('user','task')
+                    ->where('taskId',$request->get('taskId'))
+                    ->where('userId',$request->get('poster_userid'))
+                    ->get();  
+        return response()->json(
+                        [
+                            "status" =>1,
+                            'code' => 200,
+                            "message" => "Success",
+                            'data' => $data
+                        ]
+        );
+        
+        
+    }
+    public function getQualification(Request $request){
+            $userId  =$request->get('userId');
+            $query = Addqualification::with('user')
+                            ->where(function($query)
+                                    use($userId) {
+
+                                if (is_numeric($userId)) {
+                                    $query->Where('userId', $userId);
+                                }
+                                 
+                            })->orderBy('id', 'desc');
+
+             
+            if ($page_num == 1) {
+                $offset = 0;
+            } else {
+                $offset = $page_size * ($page_num - 1);
+            }
+
+            $data = $query->offset($offset)
+                    ->limit($page_size)
+                    ->get(); 
+         
+        
+        return response()->json(
+                        [
+                            "status" =>1,
+                            'code' => 200,
+                            "message" => "Success",
+                            'data' => $data
+                        ]
+        );
+     }
+    public function getInsurance(Request $request){
+         
+        $page_num = ($request->get('page_num')) ? $request->get('page_num') : 1;
+        $page_size = ($request->get('page_size')) ? $request->get('page_size') : 50; 
+
+        $userId  =$request->get('userId');
+        $query = Addinsurance::with('user')
+                        ->where(function($query)
+                                use($userId) { 
+                            if (is_numeric($userId)) {
+                                $query->Where('userId', $userId);
+                            }
+
+                        })->orderBy('id', 'desc');
+
+
+        if ($page_num == 1) {
+            $offset = 0;
+        } else {
+            $offset = $page_size * ($page_num - 1);
+        }
+
+            $data = $query->offset($offset)
+                    ->limit($page_size)
+                    ->get();
+         
+        
+        return response()->json(
+                        [
+                            "status" =>1,
+                            'code' => 200,
+                            "message" => "Success",
+                            'data' => $data
+                        ]
+        );
+     }
+    public function aprroveQorI(Request $request,$id=null){
+       
+        $rs = $request->all();
+        $validator = Validator::make($request->all(), [
+            'approveType' => "required"
+        ]);
+        
+         if ($validator->fails()) {
+            $error_msg = [];
+            foreach ($validator->messages()->all() as $key => $value) {
+                array_push($error_msg, $value);
+            }
+
+            return Response::json(array(
+                        'status' => 0,
+                        'code' => 500,
+                        'message' => $error_msg[0],
+                        'data' => $request->all()
+                            )
+            );
+        }
+        
+        if($request->get('approveType')=="qualification"){
+             $data = Addqualification::find($id);
+             $data->status = "approved";
+             $data->save();
+             
+        }elseif($request->get('approveType')=="insurance"){
+             $data = Addinsurance::find($id);
+             $data->status = "approved";
+             $data->save();
+        }
+        
+        
+        return response()->json(
+                        [
+                            "status" =>1,
+                            'code' => 200,
+                            "message" => "Status Approved successfully",
+                            'data' => $data
+                        ]
+        );
+        
+    }
 
     /* @method : update User Profile
      * @param : email,password,deviceID,firstName,lastName
@@ -1924,4 +2074,52 @@ class ApiController extends Controller {
             ];
         }
     } 
+    
+    public function createDocFromBase64($base64)
+    {  
+        $dtype = ['spreadsheetml',
+                    'excel',
+                    'pdf',
+                    'msword',
+                    'jpeg',
+                    'png',
+                    'gif',
+                    'officedocument',
+                    'wordprocessingml'
+                    ];
+        
+        $file = explode(',', $base64);
+        
+        if(isset($file[0]) && str_contains($file[0], 'spreadsheetml')){
+            $file_name = time() . '.xlsx'; 
+        }
+        if(isset($file[0]) && str_contains($file[0], 'excel')){
+            $file_name = time() . '.csv'; 
+        }
+        if(isset($file[0]) && str_contains($file[0], 'pdf')){
+            $file_name = time() . '.pdf'; 
+        }
+        if(isset($file[0]) && str_contains($file[0], 'msword')){
+            $file_name = time() . '.doc'; 
+        }
+        if(isset($file[0]) && (str_contains($file[0], 'jpeg') || str_contains($file[0], 'jpg'))){
+            $file_name = time() . '.jpeg'; 
+        }
+        if(isset($file[0]) && (str_contains($file[0], 'png') || str_contains($file[0], 'PNG'))){
+            $file_name = time() . '.png'; 
+        }
+        if(isset($file[0]) && str_contains($file[0], 'gif')){
+            $file_name = time() . '.gif'; 
+        }
+        
+        if(isset($file[0]) && str_contains($file[0], 'wordprocessingml')){
+            $file_name = time() . '.docx'; 
+        } 
+        
+        $final_file = base64_decode($file[1]); 
+        $path = storage_path() . "/docs/" . $file_name;
+
+        file_put_contents($path, $final_file);
+        return url::to(asset('storage/docs/' . $file_name)); 
+    }
 }

@@ -38,13 +38,18 @@ Route::group(['prefix' => 'api/v1'], function()
             Route::match(['post','get'],'user/signup','ApiController@register');  
             
             Route::match(['post','get'],'user/update-profile/{user_id}','ApiController@updateProfile'); 
-            
+            // new api
             Route::match(['post','get'],'user/deactivate/{userId}', 'ApiController@deactivateUser'); 
-            
             Route::match(['post','get'],'addPersonalMessage', 'ApiController@addPersonalMessage'); 
             Route::match(['post','get'],'addQualification', 'ApiController@addQualification'); 
             Route::match(['post','get'],'addInsurance', 'ApiController@addInsurance'); 
+            Route::match(['post','get'],'getPersonalMessage', 'ApiController@getPersonalMessage'); 
+            Route::match(['post','get'],'getInsurance', 'ApiController@getInsurance'); 
+            Route::match(['post','get'],'getQualification', 'ApiController@getQualification');
+            Route::match(['post','get'],'approveQualification/{id}', 'ApiController@aprroveQorI');
+            Route::match(['post','get'],'approveInsurance/{id}', 'ApiController@aprroveQorI'); 
             
+            //=======================
             
             
             Route::match(['post','get'],'user/login', 'ApiController@login'); 
