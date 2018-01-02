@@ -1047,14 +1047,14 @@ class ApiController extends Controller {
         $user = User::find($uid);
         
                 
-            
-            $users = DB::table('users')
-                ->select("*")
-                ->leftJoin('categories', 'users.category_id', '=', 'categories.id')
-                ->whereRaw("find_in_set(category_id.users,categories.id)")
-                ->get();
-            dd($users);
-            
+//            
+//            $users = DB::table('users')
+//                ->select("*")
+//                ->leftJoin('categories', 'users.category_id', '=', 'categories.id')
+//                ->whereRaw("find_in_set(category_id.users,categories.id)")
+//                ->get();
+//            dd($users);
+//            
             
             
         /* $data = [];
