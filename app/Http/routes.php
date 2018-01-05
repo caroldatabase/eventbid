@@ -94,7 +94,7 @@ Route::group(['prefix' => 'api/v1'], function()
             Route::match(['post','get'],'makePayment','PaymentController@makePayment'); 
             
              //added by Ocean
-            Route::match(['post','get'],'addCard','PaymentController@addCard'); 
+            Route::match(['post','get'],'addCard','PaymentController@saveCardOnPayment'); 
             Route::match(['post','get'],'getCard','PaymentController@cardList'); 
             Route::match(['post','get'],'updateCard','PaymentController@updateCard'); 
             Route::match(['post','get'],'deleteCard','PaymentController@deleteCard'); 

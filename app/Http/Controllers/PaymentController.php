@@ -88,114 +88,216 @@ class PaymentController extends Controller {
         
         if($request->get('saveCard')=="yes"){
             $addCard = $this->addCard($request);
+           
             if($addCard['success']==false && ($addCard['code']!=201)){
                 return Response::json($addCard); 
-            } else{
-                 // 
-            }
-        }
-         
-       
-       if (isset($validator) && $validator->fails()) {
-                    $error_msg  =   [];
-            foreach ( $validator->messages()->all() as $key => $value) {
-                        array_push($error_msg, $value);     
+            } else
+                {
+                try{
+                    $userId = $request->get('userId');
+                    //Variables
+                   
+                    $cardN = substr($request->get('card_number'),-4);
+                   
+                    if($addCard['message']=="This card already added!"){
+                        $allCard = Cards::where('customer_id',$userId)
+                                            ->where('card_number','LIKE',"%$cardN%")->first();
+                        $cardId = $allCard->card_id;
+                    }else{
+                         $cardId = $addCard['data']['card_id'];
                     }
-                            
-            return Response::json(array(
-                'status' => 0,
-                'code'   => 500,
-                'message' => $error_msg,
-                'data'  =>  $request->all()
-                )
-            );
-        } 
-        $amount = sprintf("%.2f", $request->get('amount'));
-         
-        if($amount<1){
-           return Response::json(array(
-                'status' => 0,
-                'code'   => 500,
-                'message' => "Amount is invalid, It must be greater than 1.00!",
-                'data'  =>  $request->all()
-                )
-            );
-        }
-        
-        try{ 
-            $task = PostTask::find($request->get('taskId'));
-            if(!$task){
-                 return Response::json(array(
-                    'status' => 0,
-                    'code'   => 500,
-                    'message' => "Task ID is invalid!",
-                    'data'  =>  $request->all()
-                    )
-                );
-            }
-            $gateway = Omnipay::create('PayPal_Pro'); 
-            $gateway->setUsername($this->setUsername);
-            $gateway->setPassword($this->setPassword);
-            $gateway->setSignature($this->setSignature); 
-            $gateway->setTestMode( true ); 
-      
-            $card = new CreditCard(array(
-                'firstName'             => $request->get('first_name'),
-                'lastName'              => $request->get('last_name'),
-                'number'                => $request->get('card_number'),
-                'expiryMonth'           => $request->get('expire_month'),
-                'expiryYear'            => $request->get('expire_year'),
-                'cvv'                   => $request->get('cvv')
-            )); 
-            
-            $transaction_paypal = $gateway->purchase(array(
-                 'currency'         => 'AUD',
-                 'description'      => isset($task->event_title)?$task->event_title:'paying for task',
-                 'card'             =>  $card,
-                 'name'             => isset($task->event_title)?$task->event_title:'task', 
-                 'amount'           =>  !empty($request->get('amount'))?$amount:'1.00'
-            ));
-             
-            $response   = $transaction_paypal->send();
-            $data       = $response->getData(); 
-             
-            // L_LONGMESSAGE0
-            if(isset($data['ACK']) && $data['ACK']=="Failure")
-            {
-                    $transaction = new Transaction;
-                    $transaction->firstName     = $request->get('first_name');
-	            $transaction->lastName 	= $request->get('last_name');
-	            $transaction->userId 	= $request->get('userId');
-	            $transaction->taskId 	= $request->get('taskId');
-	            $transaction->amount 	= $request->get('amount');
-                    
-	            $transaction->cardDetails = json_encode($request->all());
-	            $transaction->transactionDetails =  json_encode($data);
-	            $transaction->transactionId =  time();
-	            $transaction->save();
-	            return ['status'=>0,'code'=>500,'message'=>$data['ACK'],'data'=>$data];
-       
+                   
+                    $amount = sprintf("%.2f", $request->get('amount'));
 
+                    if($amount<1){
+                       return Response::json(array(
+                            'status' => 0,
+                            'code'   => 500,
+                            'message' => "Amount is invalid, It must be greater than 1.00!",
+                            'data'  =>  $request->all()
+                            )
+                        );
+                    }
+                    //Get access token
+                    $checkAccessToken = $this->getAccessToken(); 
+                    if ($checkAccessToken != "") {
+                        $url                = $this->paymentUrl;
+                        $headr              = array();
+                        $postField          = array(); 
+                        $creditCardToken    = array('credit_card_id' => $cardId,
+                                                    'payer_id'       => "payer_".$userId);
+
+                        $amountDetail       = array(
+                                                'total'   => $amount,
+                                                'currency' => "USD"
+                                            );
+                        $postField['intent']    = 'sale';
+                        $postField['payer']['payment_method'] =  'credit_card';
+                        $postField['payer']['funding_instruments'] = array(
+                                                            array(
+                                                                'credit_card_token' => $creditCardToken
+                                                            )
+                                                    );
+
+                        $postField['transactions'] = array(
+                                                        array(
+                                                            'amount'      => $amountDetail,
+                                                            'description' => "Task"
+                                                        )
+                                                    );
+                       
+                        $dataString  = json_encode( $postField );    
+
+                        $headr[]     = 'Content-length: '.strlen( $dataString );
+                        $headr[]     = 'Content-type: application/json';
+                        $headr[]     = "Authorization: Bearer $checkAccessToken"; 
+                        $ch = curl_init( $url ); 
+                        curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, true );
+                        curl_setopt( $ch, CURLOPT_VERBOSE, 1 );
+                        curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
+                        curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, "POST" );
+                        curl_setopt( $ch, CURLOPT_POSTFIELDS, $dataString );
+                        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+                        curl_setopt( $ch, CURLOPT_HTTPHEADER, $headr );
+
+                        $resp    = curl_exec( $ch ); 
+                       
+                        $resp    = json_decode($resp);  // || $resp==""
+                        if( (isset($resp->state) && $resp->state == "approved")) { 
+                            $response_array['code']     = 200;
+                            $response_array['status']   = 1;
+                            $response_array['message']  = "Payment has been successfully done!";
+                            $response_array['success']  = true;                         
+                            
+                            $this->saveTransaction($request, $resp);
+                            
+                        }else{
+                            $err = isset($resp->message)?$resp->message:'';
+                            $response_array['code']     = 406;
+                            $response_array['status']   = 1;
+                            $response_array['message']  = "Payment Failed!".$err;
+                            $response_array['success']  = false;                        
+                        } 
+                    }
+                    else{
+                        $response_array['code']     = 406;
+                        $response_array['status'] 	= 0;
+                        $response_array['message']  = "Authentication Failed!";
+                        $response_array['success']  = false;
+                    }
+
+                }catch (\Illuminate\Database\QueryException $e) {
+
+                    $response_array['code']    = 406;
+                    $response_array['status']  = 0;
+                    $response_array['message'] = $e->getMessage();
+                    $response_array['success'] = false;
+                } 
+                return $response_array;  
             }
-            if(isset($data['ACK']) && $data['ACK']=="Success")
-            {
-                $transaction = new Transaction;
-                $transaction->firstName     = $request->get('first_name');
-                $transaction->lastName 	= $request->get('last_name');
-                $transaction->userId 	= $request->get('userId');
-                $transaction->taskId 	= $request->get('taskId');
-                $transaction->amount 	= $request->get('amount');
-                $transaction->cardDetails = json_encode($request->except('card_number','cvv'));
-                $transaction->transactionDetails =  json_encode($data);
-                $transaction->transactionId =  $data['TRANSACTIONID'];
-                $transaction->save();
-                return ['status'=>1,'code'=>200,'message'=>$data['ACK'],'data'=>$data];
-            } 
- 			
-        }catch (\Exception $e) {  
-            
-            return ['status'=>0,'code'=>500,'message'=>$e->getMessage(),'data'=>[]];
-        } 
+        }else{  
+       
+            if (isset($validator) && $validator->fails()) {
+                         $error_msg  =   [];
+                 foreach ( $validator->messages()->all() as $key => $value) {
+                             array_push($error_msg, $value);     
+                         }
+
+                 return Response::json(array(
+                     'status' => 0,
+                     'code'   => 500,
+                     'message' => $error_msg,
+                     'data'  =>  $request->all()
+                     )
+                 );
+             } 
+             $amount = sprintf("%.2f", $request->get('amount'));
+
+             if($amount<1){
+                return Response::json(array(
+                     'status' => 0,
+                     'code'   => 500,
+                     'message' => "Amount is invalid, It must be greater than 1.00!",
+                     'data'  =>  $request->all()
+                     )
+                 );
+             }
+
+             try{ 
+                 $task = PostTask::find($request->get('taskId'));
+                 if(!$task){
+                      return Response::json(array(
+                         'status' => 0,
+                         'code'   => 500,
+                         'message' => "Task ID is invalid!",
+                         'data'  =>  $request->all()
+                         )
+                     );
+                 }
+                 $gateway = Omnipay::create('PayPal_Pro'); 
+                 $gateway->setUsername($this->setUsername);
+                 $gateway->setPassword($this->setPassword);
+                 $gateway->setSignature($this->setSignature); 
+                 $gateway->setTestMode( true ); 
+
+                 $card = new CreditCard(array(
+                     'firstName'             => $request->get('first_name'),
+                     'lastName'              => $request->get('last_name'),
+                     'number'                => $request->get('card_number'),
+                     'expiryMonth'           => $request->get('expire_month'),
+                     'expiryYear'            => $request->get('expire_year'),
+                     'cvv'                   => $request->get('cvv')
+                 )); 
+
+                 $transaction_paypal = $gateway->purchase(array(
+                      'currency'         => 'USD',
+                      'description'      => isset($task->event_title)?$task->event_title:'paying for task',
+                      'card'             =>  $card,
+                      'name'             => isset($task->event_title)?$task->event_title:'task', 
+                      'amount'           =>  !empty($request->get('amount'))?$amount:'1.00'
+                 ));
+
+                 $response   = $transaction_paypal->send();
+                 $data       = $response->getData(); 
+
+                 // L_LONGMESSAGE0
+                 if(isset($data['ACK']) && $data['ACK']=="Failure")
+                 {
+                         $transaction = new Transaction;
+                         $transaction->firstName     = $request->get('first_name');
+                         $transaction->lastName 	= $request->get('last_name');
+                         $transaction->userId 	= $request->get('userId');
+                         $transaction->taskId 	= $request->get('taskId');
+                         $transaction->amount 	= $request->get('amount');
+
+                         $transaction->cardDetails = json_encode($request->all());
+                         $transaction->transactionDetails =  json_encode($data);
+                         $transaction->transactionId =  time();
+                         $transaction->save();
+                         return ['status'=>0,'code'=>500,'message'=>$data['ACK'],'data'=>$data];
+
+
+                 }
+                 if(isset($data['ACK']) && $data['ACK']=="Success")
+                 {
+                     $transaction = new Transaction;
+                     $transaction->firstName     = $request->get('first_name');
+                     $transaction->lastName 	= $request->get('last_name');
+                     $transaction->userId 	= $request->get('userId');
+                     $transaction->taskId 	= $request->get('taskId');
+                     $transaction->amount 	= $request->get('amount');
+                     $transaction->cardDetails = json_encode($request->except('card_number','cvv'));
+                     $transaction->transactionDetails =  json_encode($data);
+                     $transaction->transactionId =  $data['TRANSACTIONID'];
+                     $transaction->save();
+                     return ['status'=>1,'code'=>200,'message'=>$data['ACK'],'data'=>$data];
+                 } 
+
+             }catch (\Exception $e) {  
+
+                 return ['status'=>0,'code'=>500,'message'=>$e->getMessage(),'data'=>[]];
+            }
+        }
     }  
     
     // ========================= 
@@ -324,7 +426,8 @@ class PaymentController extends Controller {
                                     $response_array['code'] 	= 200;
                                     $response_array['status'] 	= 1;
                                     $response_array['message'] 	= "Card inserted successfully!";
-                                    $response_array['success'] 	= true;			        		
+                                    $response_array['success'] 	= true;	
+                                    $response_array['data'] = $customerCard;
 
                                 }
                             }else{ 
@@ -388,8 +491,7 @@ class PaymentController extends Controller {
                             )
             );
         
-        } else {
-
+        } else { 
         	try{
                 
                 $userId = $request->get('userId');
@@ -593,7 +695,7 @@ class PaymentController extends Controller {
                     $checkAccessToken = $this->getAccessToken();
                     if ($checkAccessToken != "") {
 
-                            $url = $saveCard.'/'.$cardId;
+                            $url = $this->saveCard.'/'.$cardId;
                             $headr[]  = 'Content-type: application/json';
                             $headr[]  = "Authorization: Bearer $checkAccessToken";
                             $ch = curl_init( $url );
@@ -723,14 +825,17 @@ class PaymentController extends Controller {
                     curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
                     curl_setopt( $ch, CURLOPT_HTTPHEADER, $headr );
 
-                    $resp    = curl_exec( $ch );  
-                    $resp    = json_decode($resp); 
-                    if( isset($resp->state) && $resp->state == "approved") { 
+                    $resp    = curl_exec( $ch ); 
+                    $resp    = json_decode($resp);  // || $resp==""
+                    if( (isset($resp->state) && $resp->state == "approved")) { 
                         $response_array['code']     = 200;
                         $response_array['status']   = 1;
                         $response_array['message']  = "Payment has been successfully done!";
                         $response_array['success']  = true;                        
-                        $this->saveTransaction($request, $resp);
+                       if($resp!=""){
+                           $this->saveTransaction($request, $resp);
+                       }
+                        
                     }else{
                         $err = isset($resp->message)?$resp->message:'';
                         $response_array['code']     = 406;
@@ -774,5 +879,156 @@ class PaymentController extends Controller {
         $transaction->save();
         return true;
     }
+    
+     public function saveCardOnPayment(Request $request){
+         
+        $response_array['code']    = 406;
+        $response_array['message'] = "Due to some reason card is not added!";
+        $response_array['success'] = false;
+        
+         $validator = Validator::make($request->all(), [
+            
+            'card_number' 	=> 'required|max:16',        	
+            'card_type' 	=> 'required',        	
+            'expire_month' 	=> 'required',
+            'expire_year' 	=> 'required|digits:4|integer|min:'.(date('Y')),
+            'cvv' 		=> 'required|numeric|min:3',
+            'first_name'	=> 'required',
+            'last_name'     => 'required',
+            'userId'        => 'required',
+           
+        ]); 
+       
+       if (isset($validator) && $validator->fails()) {
+                    $error_msg  =   [];
+            foreach ( $validator->messages()->all() as $key => $value) {
+                        array_push($error_msg, $value);     
+                    }
+                            
+            return Response::json(array(
+                'status' => 0,
+                'code'   => 500,
+                'message' => $error_msg,
+                'data'  =>  $request->all()
+                )
+            );
+        }  
+       
+        $requests = $request->all(); 
+        try{
+            $cardNumber 	= $request->get('card_number'); 
+            $cardType           = $request->get('card_type');
+            $expireMonth 	= $request->get('expire_month');
+            $expireYear 	= $request->get('expire_year');
+            $cvv2 		= $request->get('cvv');
+            $firstName 		= $request->get('first_name');
+            $lastName           = $request->get('last_name');
+            $userId 		= $request->get('userId'); 
+          
+            //Check Card exists
+            $checkCardNum = 'xxxxxxxxxxxx'.substr($cardNumber, -4);
+            $checkCardExists = Cards::where(array('card_number' => $checkCardNum, 'customer_id' => $userId))->first();
+            if (count($checkCardExists) > 0) {
+                    $response_array['code']     = 201;
+                    $response_array['message']  = "This card already added!";
+                    $response_array['success']  = false;
+            }else{
+                //Get access token
+                    $checkAccessToken = $this->getAccessToken();
+                    if ($checkAccessToken != "") {
+                            $url = $this->addCard;
+                            $headr                                  = array();
+                            $postField                              = array();
+                            $postField['type']           		= $cardType;
+                            $postField['number']         		= $cardNumber;
+                            $postField['expire_month']   		= $expireMonth;
+                            $postField['expire_year']    		= $expireYear;
+                            $postField['first_name']     		= $firstName;
+                            $postField['last_name']      		= $lastName;
+                            $postField['cvv2']      	 	=  $cvv2;
+                            $postField['payer_id']    	 	= 'payer_'.$userId;
+                            $postField['merchant_id'] 	 	= 'merchant_'.$userId;
+                            $postField['external_card_id'] 		= 'external_card_id_'.rand(11111, 99999);
+                            $postField['external_customer_id'] 	= 'external_customer_'.$userId;
+
+                            $dataString  = json_encode( $postField );
+                            
+                            $headr[]  = 'Content-length: '.strlen( $dataString );
+                            $headr[]  = 'Content-type: application/json';
+                            $headr[]  = "Authorization: Bearer $checkAccessToken";
+
+                            $ch = curl_init( $url );
+
+                            curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, true );
+                            curl_setopt( $ch, CURLOPT_VERBOSE, 1 );
+                            curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
+                            curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, "POST" );
+                            curl_setopt( $ch, CURLOPT_POSTFIELDS, $dataString );
+                            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+                            curl_setopt( $ch, CURLOPT_HTTPHEADER, $headr );
+
+                            $storeCreditCard    = curl_exec( $ch );			      
+
+                            $storeCreditCard    = json_decode($storeCreditCard);
+                            
+                            if(isset($storeCreditCard->state) && $storeCreditCard->state == "ok" ){
+
+                                $creditCardId       = $storeCreditCard->id;
+
+                                $customerCard = array(
+
+                                        "card_id" 			=> $creditCardId,
+                                        "external_card_id"	=> $storeCreditCard->external_card_id,
+                                        "customer_id" 		=> $userId,
+                                        "first_name"		=> $storeCreditCard->first_name,
+                                        "last_name"			=> $storeCreditCard->last_name,
+                                        "card_number" 		=> $storeCreditCard->number,
+                                        "expire_month" 		=> $storeCreditCard->expire_month,
+                                        "expire_year" 		=> $storeCreditCard->expire_year,
+                                        "type" 				=> $storeCreditCard->type,
+                                        "created_at"    	=> date('Y-m-d H:i:s')
+                                );
+
+
+                                $checkInsertCardId = Cards::insertGetId($customerCard);
+
+                                if ($checkInsertCardId) {
+
+                                    $response_array['code'] 	= 200;
+                                    $response_array['status'] 	= 1;
+                                    $response_array['message'] 	= "Card inserted successfully!";
+                                    $response_array['success'] 	= true;			        		
+
+                                }
+                            }else{ 
+                                $response_array['code'] 	= 406;
+                                $response_array['status'] 	= 0;
+                                $response_array['message'] 	= isset($storeCreditCard->details) ? $storeCreditCard->details : "Due to some reason card is not added!";
+                                $response_array['success'] 	= false;
+                            } 
+                        }else{
+
+                            $response_array['code'] 	= 406;
+                            $response_array['status'] 	= 0;
+                            $response_array['message'] 	= "Authentication Failed!";
+                            $response_array['success'] 	= false;
+
+                        }
+                }
+
+                } catch (\Illuminate\Database\QueryException $e) {
+             
+                $response_array['code'] = 406;
+                $response_array['status'] 	= 0;
+                $response_array['message'] = $e->getMessage();
+                $response_array['success'] = false;
+        }
+       
+        //  var_dump($response_array);
+        //$response = Response::json($response_array);
+        return $response_array;
+     }
+ 
+    
 }   
 
