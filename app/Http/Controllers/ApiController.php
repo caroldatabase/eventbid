@@ -342,7 +342,7 @@ class ApiController extends Controller {
         $rs = $request->all();
         $validator = Validator::make($request->all(), [
             'taskId' => "required", 
-            'poster_userid' => "required"
+           // 'poster_userid' => "required"
         ]);
         
          if ($validator->fails()) {
@@ -362,8 +362,9 @@ class ApiController extends Controller {
 
         $data = Messges::with('user','task')
                     ->where('taskId',$request->get('taskId'))
-                    ->where('userId',$request->get('poster_userid'))
+                 //   ->where('userId',$request->get('poster_userid'))
                     ->get();  
+
         return response()->json(
                         [
                             "status" =>1,
