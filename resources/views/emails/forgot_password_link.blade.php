@@ -21,12 +21,10 @@
                   <div>
                   <p>Dear {{$content['name']}},</p>
                   <p>Looks like you need to reset your password. Please click the link below on.
-                  </p>
-                      <p> <a href="{{ url('admin/password/reset?token='.$content['temp_password'].'&key='.$content['encrypt_key']) }} ">Reset Your Password</a>
-                    <br>
-                     <br> or copy & paste this link into your mobile browser <br>
-                    <a href="{{ url('admin/password/reset?token='.$content['temp_password'].'&key='.$content['encrypt_key']) }} ">{{ url('admin/password/reset?token='.$content['temp_password'].'&key='.$content['encrypt_key']) }}</a>
-                   
+                  </p> 
+                      <p>
+                           <a href="<?php echo 'http://eventbid.com.au/#/update-password;token='.$content['temp_password'].';key='.$content['encrypt_key']; ?>" style="background:#efeb10; color:#000; padding:10px 25px; float:left; text-decoration:none; border-radius:40px;">Reset Password</a>
+                        <br> 
                   </p> 
                   <p> Regards, </p>
                   <p>Team</p>

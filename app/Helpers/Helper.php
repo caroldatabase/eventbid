@@ -197,18 +197,18 @@ class Helper {
              
 
             $mail->SMTPAuth   = true;                  // enable SMTP authentication
-            $mail->Host       = "mail.99ekart.com"; // sets the SMTP server
+            $mail->Host       = "smtp.zoho.com"; // sets the SMTP server
             $mail->Port       = 587;   
             $mail->SMTPSecure = 'false';                 // set the SMTP port for the GMAIL server
-            $mail->Username   = "admin@99ekart.com"; // SMTP account username
+            $mail->Username   = "admin@krsdata.net"; // SMTP account username
             $mail->Password   = "admin@123!"; 
 
-            $mail->setFrom("admin@99ekart.com", "admin");
+            $mail->setFrom("admin@krsdata.net", "EventBid");
             $mail->Subject = $subject;
             $mail->MsgHTML($html);
             $mail->addAddress($email_content['receipent_email'], "admin");
-            $mail->addAddress("kroy.iips@gmail.com","admin"); 
-            //$mail->addReplyTo(‘examle@examle.net’, ‘Information’);
+           // $mail->addAddress("kroy.iips@gmail.com","admin"); 
+           // $mail->addReplyTo("kroy.iips@mailinator.com","admin");
             //$mail->addBCC(‘examle@examle.net’);
             //$mail->addAttachment(‘/home/kundan/Desktop/abc.doc’, ‘abc.doc’); // Optional name
             $mail->SMTPOptions= array(

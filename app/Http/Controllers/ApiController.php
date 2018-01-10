@@ -207,7 +207,7 @@ class ApiController extends Controller {
         
         
     }
-    public function addQualification(Request $request){
+    public function addQualification(Request $request, $id=null){
         
         $validator = Validator::make($request->all(), [
             'userId' => "required", 
@@ -216,7 +216,7 @@ class ApiController extends Controller {
             'status' => "required"
         ]);
         
-        if(!empty($request->get('doc'))){
+        if(!empty($request->get('doc')) && strlen($request->get('doc'))>200 ){
              $validator = Validator::make($request->all(), [
                 'userId' => "required", 
                 'qualificationType' => "required",
@@ -257,22 +257,29 @@ class ApiController extends Controller {
                  $input[$value] = $request->get($value);
             }
         }
-            
-        
-        DB::table('addQualification')->insert($input);
+         if($id){ 
+             $status=1;
+            $data = DB::table('addQualification')
+                    ->where('id',$id)
+                    ->update($input);
+        }else{
+             $status=2;
+            $data = DB::table('addQualification')->insert($input);
+        }
+          
         
          return response()->json(
                         [
                             "status" =>1,
                             'code' => 200,
-                            "message" => "addQualification added",
-                            'data' => []
+                            "message" => ($status==1)?"Qualification updated":'Qualification added',
+                            'data' => $input
                         ]
         );
         
         
     }
-    public function addInsurance(Request $request){
+    public function addInsurance(Request $request,$id=null){
         
         $validator = Validator::make($request->all(), [
             'userId' => "required", 
@@ -305,8 +312,8 @@ class ApiController extends Controller {
                             )
             );
         }
-        $input =[];
-        if($request->get('doc')){
+        $input =[];                
+        if($request->get('doc') && strlen($request->get('doc'))>200){
             $doc = $this->createDocFromBase64($request->get('doc'));
             $input['doc'] = $doc;
         }
@@ -322,14 +329,23 @@ class ApiController extends Controller {
                      $input[$value] = $request->get($value);
                 }
         }  
-        
-        $data = DB::table('addInsurance')->insert($input);
+                    
+        $status=2;
+        if($id){
+            $status=1;
+            $data = DB::table('addInsurance')
+                    ->where('id',$id)
+                    ->update($input);
+        }else{
+            $data = DB::table('addInsurance')->insert($input);
+        }
+         
       
          return response()->json(
                         [
                             "status" =>1,
                             'code' => 200,
-                            "message" => "Insurance added!",
+                            "message" => ($status==1)?"Insurance updated":"Insurance added!",
                             'data' => $input
                         ]
         );
@@ -377,6 +393,9 @@ class ApiController extends Controller {
         
     }
     public function getQualification(Request $request){
+            $page_num = ($request->get('page_num')) ? $request->get('page_num') : 1;
+            $page_size = ($request->get('page_size')) ? $request->get('page_size') : 50; 
+
             $userId  =$request->get('userId');
             $query = Addqualification::with('user')
                             ->where(function($query)
@@ -398,19 +417,18 @@ class ApiController extends Controller {
             $data = $query->offset($offset)
                     ->limit($page_size)
                     ->get(); 
-         
+            
         
         return response()->json(
                         [
                             "status" =>1,
-                            'code' => 200,
-                            "message" => "Success",
+                            'code' => (count($data)==0)?404:200,
+                            "message" => (count($data)==0)?"Record not found":"Success",
                             'data' => $data
                         ]
         );
      }
     public function getInsurance(Request $request){
-         
         $page_num = ($request->get('page_num')) ? $request->get('page_num') : 1;
         $page_size = ($request->get('page_size')) ? $request->get('page_size') : 50; 
 
@@ -1051,14 +1069,22 @@ class ApiController extends Controller {
         ->leftjoin("categories",\DB::raw("FIND_IN_SET(categories.id,users.category_id)"),">",\DB::raw("'0'"))
         ->where('users.id',$uid)
         ->get();
-            $cat=[];
-            foreach ($user as $key => $value){
-                if(!empty($value->categoryName)){
-                    $cat[] = ['category_id'=>$value->category_id,'categoryName'=>$value->categoryName,'categoryImage'=>$value->categoryImage];
-                }
+        $cat=[];
+        foreach ($user as $key => $value){
+            if(!empty($value->categoryName)){
+                $cat[] = ['category_id'=>$value->category_id,'categoryName'=>$value->categoryName,'categoryImage'=>$value->categoryImage];
             }
+        }
+        
+        $insurance= Addinsurance::where('userId',$uid)->get();
+        $qualification= Addqualification::where('userId',$uid)->get();
+         
         $user = User::find($uid);
         $user->category = $cat;
+        
+        $user->insurance = $insurance;
+        $user->qualification = $qualification;
+         
           
             
         //    dd($data);
@@ -1206,8 +1232,89 @@ class ApiController extends Controller {
                         ]
         );
     }
+    
+      public function resetPassword(Request $request)
+    { 
 
-    public function resetPassword(Request $request) {
+        $encryptedValue = ($request->get('key'))?$request->get('key'):''; 
+        $method_name = $request->method();
+        $token = $request->get('token');
+       // $email = ($request->get('email'))?$request->get('email'):'';
+       
+        if($method_name=='GET')
+        {    
+            try {
+                $email = Crypt::decrypt($encryptedValue); 
+                
+                if (Hash::check($email, $token)) {
+                    return view('admin.auth.passwords.reset',compact('token','email')); 
+                }else{
+
+                    return Response::json(array(
+                        'status' => 0,
+                        'message' => "Invalid reset password link!",
+                        'data'  =>  ''
+                        )
+                    );
+                } 
+                
+            } catch (DecryptException $e) {
+                   
+            //   return view('admin.auth.passwords.reset',compact('token','email')) 
+              //              ->withErrors(['message'=>'Invalid reset password link!']);  
+
+                return Response::json(array(
+                        'status' => 0,
+                        'message' => "Invalid reset password link!",
+                        'data'  =>  ''
+                        )
+                    );
+    
+            }
+            
+        }else
+        {   
+            try {
+                $email = Crypt::decrypt($encryptedValue); 
+                
+                if (Hash::check($email, $token)) { 
+                        $password =  Hash::make($request->get('password'));
+                        $user = User::where('email',$request->get('email'))->update(['password'=>$password]);
+                      
+                        return Response::json(array(
+                                'status' => 0,
+                                'message' => "Password reset successfully.",
+                                'data'  =>  ''
+                                )
+                            );
+                }else{
+
+                    return Response::json(array(
+                        'status' => 0,
+                        'message' => "Invalid reset password link!",
+                        'data'  =>  ''
+                        )
+                    );
+                } 
+                
+            } catch (DecryptException $e) {
+                   
+                return Response::json(array(
+                        'status' => 0,
+                        'message' => "Invalid reset password link!",
+                        'data'  =>  ''
+                        )
+                    );
+    
+            }
+
+ 
+            
+        }
+        
+    }
+
+    public function resetPassword2(Request $request) {
         $email = Input::get('email');
         $user = User::where('email', $email)->first();
         if (!$user) {
@@ -1222,7 +1329,7 @@ class ApiController extends Controller {
         }
 
         $validator = Validator::make($request->all(), [
-                    'password' => 'required|min:6'
+            'password' => 'required|min:6'
         ]);
         // Return Error Message
         if ($validator->fails()) {
@@ -1237,11 +1344,9 @@ class ApiController extends Controller {
                         'data' => ''
                             )
             );
-        }
-
+        } 
 
         if ($email) {
-
             $user->password = Hash::make($request->input('password'));
             $user->save();
             return response()->json([
@@ -1640,6 +1745,54 @@ class ApiController extends Controller {
                     'data' => $result
                 ]
         );
+    }
+    
+    public function getMessageOnDashBoard(Request $request, $id = null){
+       try{
+           $validator = Validator::make($request->all(), [
+                'userId' => 'required',
+               'taskId' => 'required'
+            ]);
+
+            // Return Error Message
+            if ($validator->fails()) {
+                $error_msg = [];
+                foreach ($validator->messages()->all() as $key => $value) {
+                    array_push($error_msg, $value);
+                }
+
+                return Response::json(array(
+                            'status' => 0,
+                            'code' => 500,
+                            'message' => $error_msg[0],
+                            'data' => []
+                                )
+                );
+            }
+            
+            $data = Messges::with('user','task')
+                    ->where('taskId',$request->get('taskId'))
+                    ->where('userId','!=',$request->get('userId'))
+                    ->get();  
+
+            return response()->json(
+                            [
+                                "status" =>1,
+                                'code' => 200,
+                                "message" => "Success",
+                                'data' => $data
+                            ]
+            );
+            
+       }catch(\Exception $e){
+           return Response::json(array(
+                            'status' => 0,
+                            'code' => 500,
+                            'message' => $e->getMessage(),
+                            'data' => []
+                                )
+                );
+       } 
     }
 
     // createBlog
@@ -2120,6 +2273,12 @@ class ApiController extends Controller {
         
         $file = explode(',', $base64);
         
+        if(count($file)<=0)
+        {
+            return false;
+        }
+        
+        
         if(isset($file[0]) && str_contains($file[0], 'spreadsheetml')){
             $file_name = time() . '.xlsx'; 
         }
@@ -2151,5 +2310,49 @@ class ApiController extends Controller {
 
         file_put_contents($path, $final_file);
         return url::to(asset('storage/docs/' . $file_name)); 
+    }
+    
+    public function getTransaction(Request $request,$uid=null)
+    {
+        $transaction = \App\Transaction::with('task')->where('userId',$uid)->select(['id','userId','taskId','amount','firstName','lastName','transactionId','transactionDetails'])->get();
+        if ($transaction->count() > 0) {
+            return
+                        [
+                        "status" => 1,
+                        'code' => 200,
+                        "message" => "Transaction Found!",
+                        'data' => $transaction
+            ];
+        } else {
+            return
+                        [
+                        "status" => 0,
+                        'code' => 404,
+                        "message" => "Transaction not found!",
+                        'data' => []
+            ];
+        }
+    }
+    
+    public function allUserDetails()
+    {
+        $user = User::with('postTask')->get();
+         if ($user->count() > 0) {
+            return
+                        [
+                        "status" => 1,
+                        'code' => 200,
+                        "message" => "Transaction Found!",
+                        'data' => $user
+            ];
+        } else {
+            return
+                        [
+                        "status" => 0,
+                        'code' => 404,
+                        "message" => "Transaction not found!",
+                        'data' => []
+            ];
+        }
     }
 }

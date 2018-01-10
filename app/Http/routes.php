@@ -43,11 +43,35 @@ Route::group(['prefix' => 'api/v1'], function()
             Route::match(['post','get'],'addPersonalMessage', 'ApiController@addPersonalMessage'); 
             Route::match(['post','get'],'addQualification', 'ApiController@addQualification'); 
             Route::match(['post','get'],'addInsurance', 'ApiController@addInsurance'); 
+            Route::match(['post','get'],'updateInsurance/{id}', 'ApiController@addInsurance'); 
+            Route::match(['post','get'],'updateQualification/{id}', 'ApiController@addQualification'); 
+            
             Route::match(['post','get'],'getPersonalMessage', 'ApiController@getPersonalMessage'); 
             Route::match(['post','get'],'getInsurance', 'ApiController@getInsurance'); 
             Route::match(['post','get'],'getQualification', 'ApiController@getQualification');
             Route::match(['post','get'],'approveQualification/{id}', 'ApiController@aprroveQorI');
             Route::match(['post','get'],'approveInsurance/{id}', 'ApiController@aprroveQorI'); 
+            
+            Route::match(['get','post'],'getTransaction/{uid}',[
+                'as' => 'getTransaction',
+                'uses' => 'ApiController@getTransaction'
+                ]
+            );
+             
+            Route::match(['get','post'],'allUserDetails',[
+                'as' => 'allUserDetails',
+                'uses' => 'ApiController@allUserDetails'
+                ]
+            );
+            
+            Route::match(['get','post'],'getMessageOnDashBoard',[
+                'as' => 'getMessageOnDashBoard',
+                'uses' => 'ApiController@getMessageOnDashBoard'
+                ]
+            ); 
+               
+            //Route::match(['post','get'],'user/','ApiController@changePassword');
+            Route::match(['post','get'],'user/resetPassword','ApiController@resetPassword');
             
             //=======================
             
@@ -107,10 +131,8 @@ Route::group(['prefix' => 'api/v1'], function()
                 'uses' => 'ApiController@comment'
                 ]
             );
-
-               
-            //Route::match(['post','get'],'user/','ApiController@changePassword');
-            Route::match(['post','get'],'user/resetPassword','ApiController@resetPassword');
+            
+             
              
             Route::group(['middleware' => 'jwt-auth'], function () 
             { 
