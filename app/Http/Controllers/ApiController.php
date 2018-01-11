@@ -1078,14 +1078,14 @@ class ApiController extends Controller {
             }
         }
         
-        $insurance= Addinsurance::where('userId',$uid)->get();
-        $qualification= Addqualification::where('userId',$uid)->get();
+        //$insurance= Addinsurance::where('userId',$uid)->get();
+        //$qualification= Addqualification::where('userId',$uid)->get();
          
         $user = User::find($uid);
         $user->category = $cat;
         
-        $user->insurance = $insurance;
-        $user->qualification = $qualification;
+        //$user->insurance = $insurance;
+        //$user->qualification = $qualification;
          
           
             
