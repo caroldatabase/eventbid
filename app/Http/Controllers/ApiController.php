@@ -556,6 +556,8 @@ class ApiController extends Controller {
                     $user->category_id = rtrim($category_id,',');
                 } 
             }
+            $feedback  = $request->get('feedback');
+            $rating   = $request->get('rating');
             
             $except = ['id', 'create_at', 'updated_at', 'photo','portfolio','email','category_id'];
             $input = $request->all();
