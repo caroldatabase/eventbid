@@ -11,7 +11,7 @@ class  Addqualification extends Model
      * 
      * @var string
      */
-    protected $table = 'addqualification';
+    protected $table = 'addQualification';
     protected $guarded = ['created_at' , 'updated_at' , 'id' ];
     
      

@@ -11,7 +11,7 @@ class Addinsurance extends Model
      * 
      * @var string
      */
-    protected $table = 'addinsurance';
+    protected $table = 'addInsurance';
     protected $guarded = ['created_at' , 'updated_at' , 'id' ];
     
     public function user()
