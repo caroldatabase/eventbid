@@ -26,9 +26,11 @@
                            <a href="<?php echo 'http://eventbid.com.au/#/update-password;token='.$content['temp_password'].';key='.$content['encrypt_key']; ?>" style="background:#efeb10; color:#000; padding:10px 25px; float:left; text-decoration:none; border-radius:40px;">Reset Password</a>
                         <br> 
                   </p> 
-                  <p> Regards, </p>
-                  <p>Team</p>
                   </div>
+                  <br>
+                  <p> Regards, </p>
+                  <p>Eventbid Team </p>
+                  
                 </td>
               </tr>
             </table> 

@@ -557,9 +557,16 @@ class ApiController extends Controller {
                 } 
             }
             $feedback  = $request->get('feedback');
-            $rating   = $request->get('rating');
+            $rating   = $request->get('review_rating');
             
-            $except = ['id', 'create_at', 'updated_at', 'photo','portfolio','email','category_id'];
+            if($feedback){
+                $user->feedback = json_encode($feedback);
+            }if($rating){
+                $user->rating = json_encode($rating);
+            }
+            
+            
+            $except = ['id', 'create_at', 'updated_at', 'photo','portfolio','email','category_id','feedback','review_rating'];
             $input = $request->all();
             foreach ($table_cname as $key => $value) {
                 if (in_array($value, $except)) {
@@ -1753,7 +1760,7 @@ class ApiController extends Controller {
        try{
            $validator = Validator::make($request->all(), [
                 'userId' => 'required',
-               'taskId' => 'required'
+               //'taskId' => 'required'
             ]);
 
             // Return Error Message
@@ -1771,12 +1778,19 @@ class ApiController extends Controller {
                                 )
                 );
             }
-            
-            $data = Messges::with('user','task')
-                    ->where('taskId',$request->get('taskId'))
-                    ->where('userId','!=',$request->get('userId'))
-                    ->get();  
+            $date =  \Carbon\Carbon::now()->subDays(7)->format('y-m-d h:i:s');
+            $taskStatus = ['inprogress','assigned'];
 
+            $taskIds = PostTask::where('post_user_id',$request->get('userId'))
+                                    ->whereIn('task_status',$taskStatus)->lists('id');
+
+            $data = Messges::with(['user'=>function($query){
+                    $query->select('id','first_name','last_name','email','photo');
+            }])->with('task')
+                    ->whereIn('taskId',$taskIds)
+                    ->where('userId','!=',$request->get('userId'))
+                    ->where('updated_at','>=',$date)
+                    ->get();
             return response()->json(
                             [
                                 "status" =>1,
