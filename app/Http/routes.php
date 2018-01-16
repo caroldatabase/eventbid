@@ -29,7 +29,7 @@ Route::match(['post','get'],'saveCard','PaymentController@saveCard');
 Route::group(['prefix' => 'api/v1'], function()
 {   
     Route::group(['middleware' => 'api'], function () {
-            Route::match(['post','get'],'transferMoney','PaymentController@transferMoney');  
+            Route::match(['post','get'],'transferMoneyKey','PaymentController@transferMoney');  
       
             Route::match(['post','get'],'newEBCategory/create','CustomCategoryController@newEBCategory'); 
             Route::match(['post','get'],'newEBCategory/delete/{id}','CustomCategoryController@newEBCategoryDelete'); 
