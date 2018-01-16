@@ -56,7 +56,7 @@ class PaymentController extends Controller {
     public $setUsername     = "kundan.r-facilitator-3_api1.cisinlabs.com";
     public $setPassword     = "32UN5286G4FDKWK7";
     public $setSignature    = "AgsyRufAX1NOEGmzAg0vXIX4pkjQAEaRyKcNiHzfR5Ka0I-74umoKXhH";
-    
+    public $appId           = "APP-80W284485P519543T";
  
     
     public function __construct(Request $request) {
@@ -67,6 +67,58 @@ class PaymentController extends Controller {
         $user_id =  $request->get('userId'); 
        
     } 
+
+    public function transferMoney(Request $request)
+    {
+        $post_data = $request->all();
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => "https://svcs.sandbox.paypal.com/AdaptivePayments/Pay",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => json_encode($post_data),
+          CURLOPT_HTTPHEADER => array(
+            "cache-control: no-cache",
+            "content-type: application/json",
+            "x-paypal-application-id: ".$this->appId,
+            "x-paypal-request-data-format: JSON",
+            "x-paypal-response-data-format: JSON",
+            "x-paypal-security-password: ".$this->setPassword,
+            "x-paypal-security-signature: ".$this->setSignature,
+            "x-paypal-security-userid: ".$this->setUsername
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+          return Response::json(array(
+                         'status' => 0,
+                         'code'   => 500,
+                         'message' => "Something went wrong",
+                         'data'  =>  json_decode($err)
+                         )
+                     );
+        } else {
+           
+            return Response::json(array(
+                         'status' => 1,
+                         'code'   => 200,
+                         'message' => "PayKey Generated",
+                         'data'  =>  json_decode($response)
+                         )
+                     );
+        }
+    }
  
     // make payment 
     public function makePayment(Request $request)
@@ -226,7 +278,7 @@ class PaymentController extends Controller {
              try{ 
                  $task = PostTask::find($request->get('taskId'));
                  if(!$task){
-                      return Response::json(array(
+                    return Response::json(array(
                          'status' => 0,
                          'code'   => 500,
                          'message' => "Task ID is invalid!",

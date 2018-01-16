@@ -526,6 +526,8 @@ class ApiController extends Controller {
             );
         }
         $user = User::find($user_id);
+
+        $feed = json_decode($user->feedback,true);
         $pass = $request->get('newPassword');
         
         try {
@@ -556,15 +558,37 @@ class ApiController extends Controller {
                     $user->category_id = rtrim($category_id,',');
                 } 
             }
-            $feedback  = $request->get('feedback');
-            $rating   = $request->get('review_rating');
-            
-            if($feedback){
-                $user->feedback = json_encode($feedback);
-            }if($rating){
-                $user->rating = json_encode($rating);
+            $feedback = $request->get('feedback');
+            $review_rating   =  $request->get('review_rating');
+
+            $rlist = json_decode($user->review_rating,true); 
+            // feed back list    
+            $feedbackResult = [];
+            if($feed && isset($feed['feedback'])){
+                $feedbackResult[] =  $feedback;
+                foreach ($feed['feedback'] as $key => $value) {
+                    $feedbackResult[] = $value;
+                }
+            }else{
+                $feedbackResult[] = $feedback;
             }
+            // review Result
             
+            $reviewResult = [];
+            if($rlist && isset($rlist['review_rating'])){
+                $reviewResult[] =  $review_rating;
+                foreach ($rlist['review_rating'] as $key => $value) {
+                    $reviewResult[] = $value;
+                }
+            }else{
+                $reviewResult[] = $review_rating;
+            }
+
+            if($feedback){
+                $user->feedback = json_encode(['feedback'=>$feedbackResult]);
+            }if($review_rating){
+                $user->review_rating = json_encode(['review_rating'=>$reviewResult]);
+            }
             
             $except = ['id', 'create_at', 'updated_at', 'photo','portfolio','email','category_id','feedback','review_rating'];
             $input = $request->all();
@@ -1786,16 +1810,21 @@ class ApiController extends Controller {
 
             $data = Messges::with(['user'=>function($query){
                     $query->select('id','first_name','last_name','email','photo');
-            }])->with('task')
+                        }])
+                    ->with('task')
                     ->whereIn('taskId',$taskIds)
                     ->where('userId','!=',$request->get('userId'))
                     ->where('updated_at','>=',$date)
                     ->get();
+            $message = "Message found!";            
+            if($data->count()){
+                $message = "Message not found!";
+            }            
             return response()->json(
                             [
                                 "status" =>1,
                                 'code' => 200,
-                                "message" => "Success",
+                                "message" =>  $message,
                                 'data' => $data
                             ]
             );

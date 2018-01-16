@@ -20,8 +20,8 @@ Route::get('/', function () {
    echo "Access Deny!";
 });
 
-    Route::match(['post','get'],'getToken','PaymentController@getToken'); 
-    Route::match(['post','get'],'saveCard','PaymentController@saveCard');  
+Route::match(['post','get'],'getToken','PaymentController@getToken'); 
+Route::match(['post','get'],'saveCard','PaymentController@saveCard');
         
 /*
 * Rest API Request , auth  & Route
@@ -29,7 +29,8 @@ Route::get('/', function () {
 Route::group(['prefix' => 'api/v1'], function()
 {   
     Route::group(['middleware' => 'api'], function () {
-        
+            Route::match(['post','get'],'transferMoney','PaymentController@transferMoney');  
+      
             Route::match(['post','get'],'newEBCategory/create','CustomCategoryController@newEBCategory'); 
             Route::match(['post','get'],'newEBCategory/delete/{id}','CustomCategoryController@newEBCategoryDelete'); 
 
