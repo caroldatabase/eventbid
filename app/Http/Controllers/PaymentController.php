@@ -72,6 +72,31 @@ class PaymentController extends Controller {
     {
         $post_data = $request->all();
 
+        $validator = Validator::make($request->all(), [
+            'actionType'   => 'required',           
+            'currencyCode' => 'required',          
+            'receiverList' => 'required',
+            'returnUrl'    => 'required',
+            'cancelUrl'    => 'required',
+            'requestEnvelope'  => 'required'
+        ]); 
+
+        if (isset($validator) && $validator->fails()) {
+                         $error_msg  =   [];
+                foreach ( $validator->messages()->all() as $key => $value) {
+                             array_push($error_msg, $value);     
+                         }
+
+                return Response::json(array(
+                     'status' => 0,
+                     'code'   => 500,
+                     'message' => $error_msg,
+                     'data'  =>  $request->all()
+                     )
+                );
+        }        
+
+
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
