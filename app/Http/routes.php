@@ -16,21 +16,36 @@ header('Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorizatio
 header('Access-Control-Allow-Credentials: true');
 
 Route::get('/', function () {
-
-   echo "Access Deny!";
+    echo "Access Deny!";
 });
+
 
 Route::match(['post','get'],'getToken','PaymentController@getToken'); 
 Route::match(['post','get'],'saveCard','PaymentController@saveCard');
-        
+
+
+
+//greaTransactionDetails
+
+
+//[1:36 AM, 1/21/2018] Kanika Webdunia: grt task list for merchant
+//[1:36 AM, 1/21/2018] Kanika Webdunia: Get
+
+
 /*
 * Rest API Request , auth  & Route
 */ 
 Route::group(['prefix' => 'api/v1'], function()
 {   
     Route::group(['middleware' => 'api'], function () {
+            // 21 january
+            Route::match(['post','get'],'getCompleteTasktist','ApiController@getCompleteTasktist');
+            Route::match(['post','get'],'approvePaymentFromAdminMerchant/{taskId}','ApiController@approvePaymentFromAdminMerchant');
+            Route::match(['post','get'],'getTransactionHistory','ApiController@getTransactionHistory');
+    
+
             Route::match(['post','get'],'paypalPayKey','PaymentController@transferMoney');  
-      
+                 
             Route::match(['post','get'],'newEBCategory/create','CustomCategoryController@newEBCategory'); 
             Route::match(['post','get'],'newEBCategory/delete/{id}','CustomCategoryController@newEBCategoryDelete'); 
 

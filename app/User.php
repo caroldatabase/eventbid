@@ -50,5 +50,12 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\PostTask', 'seeker_user_id');
     }
+
+    public function taskTransaction()
+    {
+        return $this->hasMany('App\PostTask', 'post_user_id');
+                
+
+    }
      
 }

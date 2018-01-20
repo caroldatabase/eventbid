@@ -14,6 +14,7 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Auth;
 use Response;
+use Request;
 use Session;
 use Redirect;
 use URL;
@@ -58,6 +59,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {   
+      //dd($e);
        $path_info_url = $request->getpathInfo();
        $api_url='';
        $web_url ='';
@@ -87,7 +89,7 @@ class Handler extends ExceptionHandler
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
         $error_from_route =0;
-        if($e instanceof NotFoundHttpException)
+        if($e instanceof NotFoundHttpException )
         {   
             $error_from_route =1;
             if($api_url)
@@ -95,14 +97,19 @@ class Handler extends ExceptionHandler
                 echo json_encode(
                     [ "status"=>1,
                       "code"=>200,
-                      "message"=>"Request URL not available" ,
-                      "data" => "" 
+                      "message"=>"Request URL is not valid" ,
+                      "data" => []
                     ]
                 );
             }else{
                
-              $url =  URL::previous().'?error=InvalidURL'; 
-              return Redirect::to($url);
+              echo json_encode(
+                    [ "status"=>0,
+                      "code"=>500,
+                      "message"=>"Request URL is not valid" ,
+                      "data" => []
+                    ]
+                );
             } 
             exit();
         }

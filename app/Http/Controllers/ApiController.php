@@ -805,6 +805,101 @@ class ApiController extends Controller {
         );
     }
 
+    public function getTransactionHistory()
+    {
+        $user =User::whereHas('taskTransaction', function($q){
+            $q->where('task_status','completed')
+                ->where('isPaymentMade','true');
+        })->with('taskTransaction')->get();
+
+         return response()->json(
+                    [
+                        "status" => 1,
+                        "code" => count($user)?200:404,
+                        "message" => count($user)?"Transaction History":"There is no transaction found" ,
+                        'data' => $user
+                    ]
+        );
+              
+    }
+    public function approvePaymentFromAdminMerchant(Request $request,$taskId=null){
+        try{
+            $task = PostTask::find($taskId);
+            $msg = "Payment aprroved";
+                $status=1;
+            if(is_null($task)){
+                $msg = "Task ID is invalid!";
+                $status=0;    
+            }else
+            {
+                $task->isPaymentMade = 'true';
+                $task->save();
+            }
+            
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            $status =0;
+            $task=[];
+        }
+         return response()->json(
+                        [
+                            "status" => $status,
+                            "code" => isset($task) ? 200 : 500,
+                            "message" => $msg,
+                            'data' => $task
+                        ]
+        );
+    }
+
+    public function getCompleteTasktist(Request $request){
+         try {
+            $page_num = ($request->get('page_num')) ? $request->get('page_num') : 1;
+            $page_size = ($request->get('page_size')) ? $request->get('page_size') : 20;
+            $task_status = ($request->get('task_status')) ? $request->get('task_status') : 'completed';
+            $isPaymentMade = ($request->get('isPaymentMadeFromMerchant')) ? $request->get('isPaymentMadeFromMerchant') : 'false';
+
+            $post_user_id = ($request->get('post_user_id')) ? $request->get('post_user_id') : null;
+            $seeker_user_id = ($request->get('seeker_user_id')) ? $request->get('seeker_user_id') : null;
+
+            if ($page_num == 1) {
+                    $offset = 0;
+                } else {
+                    $offset = $page_size * ($page_num - 1);
+                }
+               $postTask =  PostTask::with(['postUserDetail'=>function($q){
+                                $q->select('id','first_name','last_name','email','user_type','photo','paypalAccount');
+                            }])
+                            ->with(['seekerUserDetail'=>function($q){
+                                $q->select('id','first_name','last_name','email','user_type','photo','paypalAccount');
+                            }])
+                            ->where('task_status','completed')->where('isPaymentMade','false')->offset($offset)
+                        ->limit($page_size)
+                        ->get();
+
+           
+            $msg = ($postTask->count()) ? "Task list record found." : "Task list record not found!";
+        } catch (\Exception $e) {
+
+            $msg = $e->getMessage();
+            $postTask = [];
+        }
+
+        $total = PostTask::where('task_status','completed')->where('isPaymentMade','false')->count();
+
+        return response()->json(
+                        [
+                            "status" => 1,
+                            "code" => ($postTask->count()) ? 200 : 404,
+                            'total_record' => $total,
+                            'found_record' => $postTask->count(),
+                            'page_num' => intval($page_num),
+                            'page_size' => intval($page_size),
+                            "message" => $msg,
+                            'data' => $postTask
+                        ]
+        );
+    } 
+
     public function getPostTask(Request $request, $id = null) {
         
         try {
