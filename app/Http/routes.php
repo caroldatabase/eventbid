@@ -39,7 +39,7 @@ Route::group(['prefix' => 'api/v1'], function()
 {   
     Route::group(['middleware' => 'api'], function () {
             // 21 january
-            Route::match(['post','get'],'getCompleteTasktist','ApiController@getCompleteTasktist');
+            Route::match(['post','get'],'getCompletedTasktist','ApiController@getCompleteTasktist');
             Route::match(['post','get'],'approvePaymentFromAdminMerchant/{taskId}','ApiController@approvePaymentFromAdminMerchant');
             Route::match(['post','get'],'getTransactionHistory','ApiController@getTransactionHistory');
     
