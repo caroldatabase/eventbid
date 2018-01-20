@@ -589,8 +589,11 @@ class ApiController extends Controller {
             }if($review_rating){
                 $user->review_rating = json_encode(['review_rating'=>$reviewResult]);
             }
+            if(is_array($request->get('verification_skills'))){
+                $verification_skills = json_encode($request->get('verification_skills'));    
+            }
             
-            $except = ['id', 'create_at', 'updated_at', 'photo','portfolio','email','category_id','feedback','review_rating'];
+            $except = ['id', 'create_at', 'updated_at', 'photo','portfolio','email','category_id','feedback','review_rating',''];
             $input = $request->all();
             foreach ($table_cname as $key => $value) {
                 if (in_array($value, $except)) {
