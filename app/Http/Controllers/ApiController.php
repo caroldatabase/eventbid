@@ -833,6 +833,9 @@ class ApiController extends Controller {
             }else
             {
                 $task->isPaymentMade = 'true';
+                if($request->get('transactionDetails')){
+                    $task->transactionDetails = json_encode($request->get('transactionDetails'));
+                }
                 $task->save();
             }
             
