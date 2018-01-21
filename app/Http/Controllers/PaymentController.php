@@ -57,7 +57,8 @@ class PaymentController extends Controller {
     public $setPassword     = "32UN5286G4FDKWK7";
     public $setSignature    = "AgsyRufAX1NOEGmzAg0vXIX4pkjQAEaRyKcNiHzfR5Ka0I-74umoKXhH";
     public $appId           = "APP-80W284485P519543T";
- 
+    public $paymentDetailUrl = "https://svcs.sandbox.paypal.com/AdaptivePayments/PaymentDetails";
+    public $payKeyUrl       = "https://svcs.sandbox.paypal.com/AdaptivePayments/Pay";
     
     public function __construct(Request $request) {
 
@@ -100,7 +101,7 @@ class PaymentController extends Controller {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-          CURLOPT_URL => "https://svcs.sandbox.paypal.com/AdaptivePayments/Pay",
+          CURLOPT_URL => $this->payKeyUrl,
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -154,7 +155,7 @@ class PaymentController extends Controller {
         }
     }
 
-      public function getPaymentStatus(Request $request)
+    public function getPaymentStatus(Request $request)
     {
         $post_data = $request->all();
         $validator = Validator::make($request->all(), [
@@ -178,12 +179,13 @@ class PaymentController extends Controller {
 
         $curl = curl_init();
 
-        $post_data['payKey'] = $request->get('payKey');
-        $post_data['requestEnvelope.errorLanguage'] = "en_US";
-                
-
+        
+        $post_data['payKey'] = $request->get('payKey');// "AP-1YB99489BY047905B";
+        $post_data['requestEnvelope']['errorLanguage'] = "en_US";
+        $post_data['requestEnvelope']['detailLevel'] = "ReturnAll";
+        
         curl_setopt_array($curl, array(
-          CURLOPT_URL => "https://svcs.sandbox.paypal.com/AdaptivePayments/PaymentDetails",
+          CURLOPT_URL => $this->paymentDetailUrl,
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -221,7 +223,7 @@ class PaymentController extends Controller {
             return Response::json(array(
                          'status' => 1,
                          'code'   => 200,
-                         'message' => "PayKey status",
+                         'message' => "Payment status",
                          'data'  =>  json_decode($response)
                          )
                      );
