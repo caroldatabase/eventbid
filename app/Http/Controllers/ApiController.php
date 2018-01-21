@@ -547,7 +547,7 @@ class ApiController extends Controller {
                     $user->photo =$photo;
                 } 
             }
-            if(is_array($request->get('portfolio')) && (count($request->get('portfolio'))>0){
+            if(is_array($request->get('portfolio')) && count($request->get('portfolio'))>0){
                 foreach ($request->get('portfolio') as $key => $val){
                    
                    $portfolio[] = $this->createImage($val); 
