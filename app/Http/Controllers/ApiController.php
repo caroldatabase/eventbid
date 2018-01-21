@@ -85,7 +85,16 @@ class ApiController extends Controller {
             $u = $this->updateProfile($request, $user);
             return $u;
         }
-
+        $category_id = "";
+            if(is_array($request->get('category_id'))){
+                foreach ($request->get('category_id') as $key => $category){
+                   
+                   $category_id = $category.','.$category_id; 
+                }
+                if(isset($category)){
+                    $user->category_id = rtrim($category_id,',');
+                } 
+        }
         //Server side valiation
 
         $login_user_type = $request->get('login_user_type');
