@@ -1835,8 +1835,16 @@ class ApiController extends Controller {
                             ->where($business_type, $uid)->get();
             $result = [];
             foreach ($task as $key => $value) {
-                $result[$value->task_status][] = $value;
+                $status = strtolower($value->task_status);
+                $result[$status][] = $value;
             }
+
+            $getOfferTask = Interest::where('taskPostedUserID',$uid)->lists('taskId');
+            
+            $result['looking_user_offers'][]  = PostTask::with('category', 'postUserDetail', 'seekerUserDetail')
+                            ->whereIn('id', $getOfferTask)
+                            ->get();
+
 
             if (!empty($result)) {
                 $msg = "Bussiness Task details";
