@@ -100,7 +100,7 @@ class PaymentController extends Controller {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-          CURLOPT_URL => "https://svcs.sandbox.paypal.com/AdaptivePayments/PaymentDetails",
+          CURLOPT_URL => "https://svcs.sandbox.paypal.com/AdaptivePayments/Pay",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -134,19 +134,27 @@ class PaymentController extends Controller {
                          )
                      );
         } else {
-           
+            $data = json_decode($response);
+            if($request->get('taskId')){
+                $PostTask  = PostTask::find($request->get('taskId'));
+                if($PostTask){
+                    $PostTask->transactionDetails = $data->payKey;
+                    $PostTask->save();    
+                }
+                
+            }
+            
             return Response::json(array(
                          'status' => 1,
                          'code'   => 200,
                          'message' => "PayKey Generated",
-                         'data'  =>  json_decode($response)
+                         'data'  =>  $data
                          )
                      );
         }
     }
 
-
-    public function getPaymentStatus(Request $request)
+      public function getPaymentStatus(Request $request)
     {
         $post_data = $request->all();
         $validator = Validator::make($request->all(), [
@@ -219,7 +227,6 @@ class PaymentController extends Controller {
                      );
         }
     }
- 
  
     // make payment 
     public function makePayment(Request $request)
