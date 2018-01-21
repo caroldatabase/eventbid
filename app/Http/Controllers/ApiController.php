@@ -555,8 +555,14 @@ class ApiController extends Controller {
                 if(isset($portfolio)){
                     $user->portfolio = json_encode($portfolio);
                 } 
+            }else{
+                if(count($request->get('portfolio'))==0){
+                    $user->portfolio = null;
+                }
             }
             
+
+
             $category_id = "";
             if(is_array($request->get('category_id'))){
                 foreach ($request->get('category_id') as $key => $category){
@@ -582,6 +588,12 @@ class ApiController extends Controller {
                 $feedbackResult[] = $feedback;
             }
             // review Result
+
+            if($request->get('paypalAccount')){
+                $user->paypalAccount =  $request->get('paypalAccount');  
+            }else{
+                $user->paypalAccount = null;
+            }
             
             $reviewResult = [];
             if($rlist && isset($rlist['review_rating'])){
