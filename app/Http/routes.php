@@ -42,7 +42,9 @@ Route::group(['prefix' => 'api/v1'], function()
             Route::match(['post','get'],'getCompletedTasktist','ApiController@getCompleteTasktist');
             Route::match(['post','get'],'approvePaymentFromAdminMerchant/{taskId}','ApiController@approvePaymentFromAdminMerchant');
             Route::match(['post','get'],'getTransactionHistory','ApiController@getTransactionHistory');
-    
+            Route::match(['post','get'],'getPaymentStatus','ApiController@getPaymentStatus');
+
+
 
             Route::match(['post','get'],'paypalPayKey','PaymentController@transferMoney');  
                  

@@ -100,7 +100,7 @@ class PaymentController extends Controller {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-          CURLOPT_URL => "https://svcs.sandbox.paypal.com/AdaptivePayments/Pay",
+          CURLOPT_URL => "https://svcs.sandbox.paypal.com/AdaptivePayments/PaymentDetails",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -144,6 +144,82 @@ class PaymentController extends Controller {
                      );
         }
     }
+
+
+    public function getPaymentStatus(Request $request)
+    {
+        $post_data = $request->all();
+        $validator = Validator::make($request->all(), [
+            'payKey'   => 'required'
+        ]); 
+
+        if (isset($validator) && $validator->fails()) {
+                         $error_msg  =   [];
+                foreach ( $validator->messages()->all() as $key => $value) {
+                             array_push($error_msg, $value);     
+                         }
+
+                return Response::json(array(
+                     'status' => 0,
+                     'code'   => 500,
+                     'message' => $error_msg,
+                     'data'  =>  $request->all()
+                     )
+                );
+        }        
+
+        $curl = curl_init();
+
+        $post_data['payKey'] = $request->get('payKey');
+        $post_data['requestEnvelope.errorLanguage'] = "en_US";
+                
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => "https://svcs.sandbox.paypal.com/AdaptivePayments/PaymentDetails",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => json_encode($post_data),
+          CURLOPT_HTTPHEADER => array(
+            "cache-control: no-cache",
+            "content-type: application/json",
+            "x-paypal-application-id: ".$this->appId,
+            "x-paypal-request-data-format: JSON",
+            "x-paypal-response-data-format: JSON",
+            "x-paypal-security-password: ".$this->setPassword,
+            "x-paypal-security-signature: ".$this->setSignature,
+            "x-paypal-security-userid: ".$this->setUsername
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+          return Response::json(array(
+                         'status' => 0,
+                         'code'   => 500,
+                         'message' => "Something went wrong",
+                         'data'  =>  json_decode($err)
+                         )
+                     );
+        } else {
+           
+            return Response::json(array(
+                         'status' => 1,
+                         'code'   => 200,
+                         'message' => "PayKey status",
+                         'data'  =>  json_decode($response)
+                         )
+                     );
+        }
+    }
+ 
  
     // make payment 
     public function makePayment(Request $request)
