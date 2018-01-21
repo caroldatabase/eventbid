@@ -561,8 +561,6 @@ class ApiController extends Controller {
                 }
             }
             
-
-
             $category_id = "";
             if(is_array($request->get('category_id'))){
                 foreach ($request->get('category_id') as $key => $category){
