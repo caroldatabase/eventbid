@@ -547,7 +547,7 @@ class ApiController extends Controller {
                     $user->photo =$photo;
                 } 
             }
-            if(is_array($request->get('portfolio'))){
+            if(is_array($request->get('portfolio')) && (count($request->get('portfolio'))>0){
                 foreach ($request->get('portfolio') as $key => $val){
                    
                    $portfolio[] = $this->createImage($val); 
@@ -557,12 +557,12 @@ class ApiController extends Controller {
                 } 
             }else{
                 if(count($request->get('portfolio'))==0){
-                    $user->portfolio = null;
+                    $user->portfolio = "";
                 }
             }
             
             $category_id = "";
-            if(is_array($request->get('category_id'))){
+            if(is_array($request->get('category_id')) count($request->get('category_id'))>0){
                 foreach ($request->get('category_id') as $key => $category){
                    
                    $category_id = $category.','.$category_id; 
