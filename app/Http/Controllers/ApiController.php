@@ -562,7 +562,7 @@ class ApiController extends Controller {
             }
             
             $category_id = "";
-            if(is_array($request->get('category_id')) count($request->get('category_id'))>0){
+            if(is_array($request->get('category_id')) && count($request->get('category_id'))>0){
                 foreach ($request->get('category_id') as $key => $category){
                    
                    $category_id = $category.','.$category_id; 
