@@ -177,23 +177,24 @@ class PaymentController extends Controller {
                 );
         }        
 
-        $curl = curl_init();
+        $taskId     =   PostTask::where('transactionDetails',$request->get('payKey'))->first();
 
+        $curl       =   curl_init();
         
         $post_data['payKey'] = $request->get('payKey');// "AP-1YB99489BY047905B";
         $post_data['requestEnvelope']['errorLanguage'] = "en_US";
         $post_data['requestEnvelope']['detailLevel'] = "ReturnAll";
         
         curl_setopt_array($curl, array(
-          CURLOPT_URL => $this->paymentDetailUrl,
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => "",
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 30,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => "POST",
-          CURLOPT_POSTFIELDS => json_encode($post_data),
-          CURLOPT_HTTPHEADER => array(
+            CURLOPT_URL => $this->paymentDetailUrl,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($post_data),
+            CURLOPT_HTTPHEADER => array(
             "cache-control: no-cache",
             "content-type: application/json",
             "x-paypal-application-id: ".$this->appId,
@@ -213,6 +214,7 @@ class PaymentController extends Controller {
         if ($err) {
           return Response::json(array(
                          'status' => 0,
+                         'taskId' => isset($taskId->id)?$taskId->id:'',
                          'code'   => 500,
                          'message' => "Something went wrong",
                          'data'  =>  json_decode($err)
@@ -222,6 +224,7 @@ class PaymentController extends Controller {
            
             return Response::json(array(
                          'status' => 1,
+                         'taskId' => isset($taskId->id)?$taskId->id:'',
                          'code'   => 200,
                          'message' => "Payment status",
                          'data'  =>  json_decode($response)
