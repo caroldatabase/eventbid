@@ -1934,23 +1934,62 @@ class ApiController extends Controller {
 
             $taskIds = PostTask::where('post_user_id',$request->get('userId'))
                                     ->whereIn('task_status',$taskStatus)->lists('id');
-               //     dd($taskIds); 
+                                        
+            if(count($taskIds)==0){
+                      return Response::json(array(
+                            'status' => 0,
+                            'code' => 500,
+                            'message' =>"user id does not exist",
+                            'data' => []
+                                )
+                );
+            }       
+
+
+                                    //dd($taskIds);
+
+           $s = PostTask::where('post_user_id',$request->get('userId'))
+                                    ->whereIn('task_status',$taskStatus)->lists('id');
+
+
+            $p = PostTask::whereIn('post_user_id',$s)->whereIn('id',$taskIds)->lists('id');
+
+            $u = Messges::whereNotIn('taskId',$taskIds)->where('userId',$request->get('userId'))->lists('taskId');
+
+            $u2 = Messges::whereIn('taskId',$taskIds)->where('userId','!=',$request->get('userId'))->lists('id');
+
+
+            $arr=[];
+               foreach ($u2 as $key => $value) {
+                    $arr[] = $value;
+                } 
             
-           $u = Messges::whereIn('taskId',$taskIds)->where('userId',$request->get('userId'))->lists('id');
-
-
+               foreach ($u as $key => $value) {
+                    $arr[] = $value;
+                } 
+                 //   dd($u,$u2,$taskIds,$request->get('userId'));
+                    
             $data = Messges::with(['user'=>function($query){
                     $query->select('id','first_name','last_name','email','photo');
                         }])
                     ->with('task')
-                    ->whereIn('taskId',$taskIds)
-                   ->where(function($q)use($request,$u){
-                        $q->whereNotIn('id',$u);
-                   })
+                   // ->whereIn('taskId',$arr)
+                        ->whereIn('taskId',$taskIds)->where('userId','!=',$request->get('userId'))
+                        ->orwhereNotIn('taskId',$taskIds)->where('userId',$request->get('userId'))
+                   // ->where(function($q)use($request,$u,$p,$taskIds){
+                   //   if($u){
+                   //       $q->whereNotIn('id',$u);
+                   //   }if($p or $taskIds){
+                   //       $q->OrwhereIn('taskId',$p);
+                   //        $q->whereIn('taskId',$taskIds);
+                    
+                   //  }
+
+                   //  })
                     ->where('updated_at','>=',$date)
                     ->get();
 
-                    // dd($data->count());
+                  //]   dd($taskIds);
 
             $message = "Message not found!";            
             if($data->count()){
