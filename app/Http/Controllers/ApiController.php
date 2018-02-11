@@ -1838,7 +1838,7 @@ class ApiController extends Controller {
             }
 
             $getOfferTask = Interest::where('taskPostedUserID',$uid)->lists('taskId');
-            
+            dd($getOfferTask);
             $result['looking_user_offers'][]  = PostTask::with('category', 'postUserDetail', 'seekerUserDetail')
                             ->whereIn('id', $getOfferTask)
                             ->get();
@@ -1934,13 +1934,19 @@ class ApiController extends Controller {
 
             $taskIds = PostTask::where('post_user_id',$request->get('userId'))
                                     ->whereIn('task_status',$taskStatus)->lists('id');
-               //     dd($taskIds);                   
+               //     dd($taskIds); 
+            
+           $u = Messges::whereIn('taskId',$taskIds)->where('userId',$request->get('userId'))->lists('id');
+
+
             $data = Messges::with(['user'=>function($query){
                     $query->select('id','first_name','last_name','email','photo');
                         }])
                     ->with('task')
                     ->whereIn('taskId',$taskIds)
-                   ->where('userId','!=',$request->get('userId'))
+                   ->where(function($q)use($request,$u){
+                        $q->whereNotIn('id',$u);
+                   })
                     ->where('updated_at','>=',$date)
                     ->get();
 
