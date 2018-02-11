@@ -213,9 +213,45 @@ class ApiController extends Controller {
                             'data' => $input
                         ]
         );
-        
-        
     }
+    public function getPersonalMessage(Request $request){
+        
+        $rs = $request->all();
+        $validator = Validator::make($request->all(), [
+            'taskId' => "required", 
+           // 'poster_userid' => "required"
+        ]);
+        
+         if ($validator->fails()) {
+            $error_msg = [];
+            foreach ($validator->messages()->all() as $key => $value) {
+                array_push($error_msg, $value);
+            }
+
+            return Response::json(array(
+                        'status' => 0,
+                        'code' => 500,
+                        'message' => $error_msg[0],
+                        'data' => $request->all()
+                            )
+            );
+        }
+
+        $data = Messges::with('user','task')
+                    ->where('taskId',$request->get('taskId'))
+                 //   ->where('userId',$request->get('poster_userid'))
+                    ->get();  
+
+        return response()->json(
+                        [
+                            "status" =>1,
+                            'code' => 200,
+                            "message" => "Success",
+                            'data' => $data
+                        ]
+        );
+    }
+    
     public function addQualification(Request $request, $id=null){
         
         $validator = Validator::make($request->all(), [
@@ -362,45 +398,7 @@ class ApiController extends Controller {
         
     }
     
-    public function getPersonalMessage(Request $request){
-        
-        $rs = $request->all();
-        $validator = Validator::make($request->all(), [
-            'taskId' => "required", 
-           // 'poster_userid' => "required"
-        ]);
-        
-         if ($validator->fails()) {
-            $error_msg = [];
-            foreach ($validator->messages()->all() as $key => $value) {
-                array_push($error_msg, $value);
-            }
 
-            return Response::json(array(
-                        'status' => 0,
-                        'code' => 500,
-                        'message' => $error_msg[0],
-                        'data' => $request->all()
-                            )
-            );
-        }
-
-        $data = Messges::with('user','task')
-                    ->where('taskId',$request->get('taskId'))
-                 //   ->where('userId',$request->get('poster_userid'))
-                    ->get();  
-
-        return response()->json(
-                        [
-                            "status" =>1,
-                            'code' => 200,
-                            "message" => "Success",
-                            'data' => $data
-                        ]
-        );
-        
-        
-    }
     public function getQualification(Request $request){
             $page_num = ($request->get('page_num')) ? $request->get('page_num') : 1;
             $page_size = ($request->get('page_size')) ? $request->get('page_size') : 50; 
@@ -1941,7 +1939,7 @@ class ApiController extends Controller {
                         }])
                     ->with('task')
                     ->whereIn('taskId',$taskIds)
-                    ->where('userId','!=',$request->get('userId'))
+                  //  ->where('userId','!=',$request->get('userId'))
                     ->where('updated_at','>=',$date)
                     ->get();
             $message = "Message found!";            
