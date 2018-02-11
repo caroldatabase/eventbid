@@ -54,8 +54,6 @@ class User extends Authenticatable
     public function taskTransaction()
     {
         return $this->hasMany('App\PostTask', 'post_user_id');
-                
-
     }
      
 }

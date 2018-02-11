@@ -25,12 +25,6 @@ Route::match(['post','get'],'saveCard','PaymentController@saveCard');
 
 
 
-//greaTransactionDetails
-
-
-//[1:36 AM, 1/21/2018] Kanika Webdunia: grt task list for merchant
-//[1:36 AM, 1/21/2018] Kanika Webdunia: Get
-
 
 /*
 * Rest API Request , auth  & Route

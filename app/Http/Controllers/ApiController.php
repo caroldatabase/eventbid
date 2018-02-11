@@ -1928,28 +1928,32 @@ class ApiController extends Controller {
                                 )
                 );
             }
-            $date =  \Carbon\Carbon::now()->subDays(7)->format('y-m-d h:i:s');
+            $date =  \Carbon\Carbon::now()->subDays(15)->format('y-m-d h:i:s');
+
             $taskStatus = ['inprogress','assigned'];
 
             $taskIds = PostTask::where('post_user_id',$request->get('userId'))
                                     ->whereIn('task_status',$taskStatus)->lists('id');
-
+               //     dd($taskIds);                   
             $data = Messges::with(['user'=>function($query){
                     $query->select('id','first_name','last_name','email','photo');
                         }])
                     ->with('task')
                     ->whereIn('taskId',$taskIds)
-                  //  ->where('userId','!=',$request->get('userId'))
+                   ->where('userId','!=',$request->get('userId'))
                     ->where('updated_at','>=',$date)
                     ->get();
-            $message = "Message found!";            
+
+                    // dd($data->count());
+
+            $message = "Message not found!";            
             if($data->count()){
-                $message = "Message not found!";
+                $message = "Message  found!";
             }            
             return response()->json(
                             [
-                                "status" =>1,
-                                'code' => 200,
+                                "status" =>($data->count())?1:0,
+                                'code' => ($data->count())?200:404,
                                 "message" =>  $message,
                                 'data' => $data
                             ]
