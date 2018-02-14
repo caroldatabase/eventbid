@@ -1837,17 +1837,17 @@ class ApiController extends Controller {
                 $result[$status][] = $value;
             }
 
-            $getOfferTask = Interest::where('taskPostedUserID',$uid)->lists('taskId');
-           
+            $getOfferTask = Interest::where('showInterestedUserID',$uid)->lists('taskId');
+            
             $result['looking_user_offers'][]  = PostTask::with('category', 'postUserDetail', 'seekerUserDetail')
                             ->whereIn('id', $getOfferTask)
                             ->get();
 
 
             if (!empty($result)) {
-                $msg = "Bussiness Task details";
+                $msg    = "Bussiness Task details";
                 $status = 1;
-                $code = 200;
+                $code   = 200;
             } else {
                 $msg = "Bussiness Task details not found";
                 $status = 0;
