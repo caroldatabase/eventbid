@@ -24,4 +24,8 @@ class Messges extends Model
         return $this->belongsTo('App\PostTask', 'taskId','id')->with('postUserDetail','seekerUserDetail');
     }
 
+    public function posterUser(){
+        return $this->belongsTo('App\User', 'userId','id');
+    }
+
 }
