@@ -1841,7 +1841,6 @@ class ApiController extends Controller {
            
             $result['looking_user_offers'][]  = PostTask::with('category', 'postUserDetail', 'seekerUserDetail')
                             ->whereIn('id', $getOfferTask)
-                            ->
                             ->get();
 
 
