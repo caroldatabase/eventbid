@@ -1953,7 +1953,6 @@ class ApiController extends Controller {
             }
             
             
-            
             if(count($taskIds)==0 AND count( $msgId) ==0){
                       return Response::json(array(
                             'status' => 0,
@@ -1962,7 +1961,12 @@ class ApiController extends Controller {
                             'data' => []
                                 )
                 );
-            }  
+            } 
+
+
+            
+           # dd($taskIds);
+
 
             $data = Messges::with(['user'=>function($query){
                     $query->select('id','first_name','last_name','email','photo');
@@ -1972,10 +1976,12 @@ class ApiController extends Controller {
                         ->whereIn('taskId',$taskIds)->where('userId','!=',$request->get('userId'))
                         ->orwhereNotIn('taskId',$taskIds)->where('userId',$request->get('userId'))
                     ->where('updated_at','>=',$date)
+                    ->where('userId','!=',$request->get('userId'))
                     ->orderBy('id','desc')
+                    
                     ->get();
 
-                  //]   dd($taskIds);
+
 
             $message = "Message not found!";            
             if($data->count()){
