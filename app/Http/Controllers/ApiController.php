@@ -1909,8 +1909,7 @@ class ApiController extends Controller {
     public function getMessageOnDashBoard(Request $request, $id = null){
        try{
            $validator = Validator::make($request->all(), [
-                'userId' => 'required',
-               //'taskId' => 'required'
+                'userId' => 'required', 
             ]);
 
             // Return Error Message
@@ -1936,24 +1935,16 @@ class ApiController extends Controller {
                                     ->whereIn('task_status',$taskStatus)->lists('id');
             $msgId = [];
             if(count($taskIds)==0){
-                    $msgId = Messges::whereNotIn('taskId',$taskIds)->where('userId',$request->get('userId'))->lists('id');
+                    $msgId = Messges::where('userId',$request->get('userId'))->lists('taskId');
 
-                   if($msgId){
-                    $data = Messges::with(['user'=>function($query){
-                    $query->select('id','first_name','last_name','email','photo');
-                        }])
-                    ->with(['posterUser'=>function($query)use($request){
-                    $query->where('id',$request->get('userId'));
-                        }])
-                    ->with('task')
-                   ->whereIn('id',$msgId)
-                   ->orderBy('id','desc')
-                    ->get();
-                   }
-            }
-            
-            
-            if(count($taskIds)==0 AND count( $msgId) ==0){
+                    if($msgId){
+                       $taskIds =  Messges::whereIn('taskId',$msgId)
+                            ->whereNotIn('userId',[$request->get('userId')])->lists('taskId');
+                    }
+                    
+            } 
+
+            if(count($taskIds)==0){
                       return Response::json(array(
                             'status' => 0,
                             'code' => 500,
@@ -1963,16 +1954,11 @@ class ApiController extends Controller {
                 );
             } 
 
-
             
-           # dd($taskIds);
-
-
             $data = Messges::with(['user'=>function($query){
                     $query->select('id','first_name','last_name','email','photo');
                         }])
-                    ->with('task')
-                   // ->whereIn('taskId',$arr)
+                    ->with('task') 
                         ->whereIn('taskId',$taskIds)->where('userId','!=',$request->get('userId'))
                         ->orwhereNotIn('taskId',$taskIds)->where('userId',$request->get('userId'))
                     ->where('updated_at','>=',$date)
@@ -1980,9 +1966,7 @@ class ApiController extends Controller {
                     ->orderBy('id','desc')
                     
                     ->get();
-
-
-
+ 
             $message = "Message not found!";            
             if($data->count()){
                 $message = "Message  found!";
