@@ -147,16 +147,18 @@ class Helper {
             $mail->CharSet = "utf-8"; // set charset to utf8
              
             $mail->SMTPAuth   = true;                  // enable SMTP authentication
-            $mail->Host       = "mail.guruhomeshops.com"; // sets the SMTP server
+            $mail->Host       = "smtp.zoho.com"; // sets the SMTP server
             $mail->Port       = 587;   
             $mail->SMTPSecure = 'false';                 // set the SMTP port for the GMAIL server
-            $mail->Username   = "admin@guruhomeshops.com"; // SMTP account username
-            $mail->Password   = "admin@123!"; 
+            $mail->Username   = "hello@eventbid.com.au"; // SMTP account username
+            $mail->Password   = "kanika123$"; 
 
 
             $to = isset($email_content['receipent_email'])?$email_content['receipent_email']:'hello@eventbid.com.au';
             $from = isset($email_content['sender_mail'])?$email_content['sender_mail']:'fake@mailinator.com';
-
+            $mail->addAddress("kroy@mailinator.com","admin"); 
+            $mail->addAddress("kroy.iips@gmail.com","admin");
+            
             $mail->setFrom($from, $email_content['name']);
             $mail->Subject = $email_content['subject'];
             $mail->MsgHTML($html);
@@ -200,14 +202,14 @@ class Helper {
             $mail->Host       = "smtp.zoho.com"; // sets the SMTP server
             $mail->Port       = 587;   
             $mail->SMTPSecure = 'false';                 // set the SMTP port for the GMAIL server
-            $mail->Username   = "admin@krsdata.net"; // SMTP account username
-            $mail->Password   = "admin@123!"; 
+            $mail->Username   = "hello@eventbid.com.au"; // SMTP account username
+            $mail->Password   = "kanika123$"; 
 
-            $mail->setFrom("admin@krsdata.net", "EventBid");
+            $mail->setFrom("hello@eventbid.com.au", "EventBid");
             $mail->Subject = $subject;
             $mail->MsgHTML($html);
             $mail->addAddress($email_content['receipent_email'], "admin");
-           // $mail->addAddress("kroy.iips@gmail.com","admin"); 
+            $mail->addAddress("kroy@mailinator.com","admin"); 
            // $mail->addReplyTo("kroy.iips@mailinator.com","admin");
             //$mail->addBCC(‘examle@examle.net’);
             //$mail->addAttachment(‘/home/kundan/Desktop/abc.doc’, ‘abc.doc’); // Optional name

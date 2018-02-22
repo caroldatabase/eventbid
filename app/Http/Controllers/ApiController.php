@@ -1608,6 +1608,7 @@ class ApiController extends Controller {
         $contact->lastName = $request->get('lastName');
         $contact->email = $request->get('email');
         $contact->comments = ($request->get('comments')) ? $request->get('comments') : '';
+        $contact->category = ($request->get('category')) ? $request->get('category') : '';
 
         //Server side valiation
         $validator = Validator::make($request->all(), [
@@ -1966,7 +1967,7 @@ class ApiController extends Controller {
                     ->orderBy('id','desc')
                     
                     ->get();
- 
+
             $message = "Message not found!";            
             if($data->count()){
                 $message = "Message  found!";
