@@ -158,8 +158,19 @@ class Helper {
             $from = isset($email_content['sender_mail'])?$email_content['sender_mail']:'fake@mailinator.com';
            // $mail->addAddress("kroy@mailinator.com","admin"); 
           //  $mail->addAddress("kroy.iips@gmail.com","admin");
+
+            $mail->SMTPAuth   = true;                  // enable SMTP authentication
+            $mail->Host       = "smtp.zoho.com"; // sets the SMTP server
+            $mail->Port       = 587;   
+            $mail->SMTPSecure = 'false';                 // set the SMTP port for the GMAIL server
+            $mail->Username   = "no-reply@eventbid.com.au"; // SMTP account username
+            $mail->Password   = "kanika123$"; 
+
+            $mail->setFrom("no-reply@eventbid.com.au", $email_content['name']);
+            $mail->addAddress($email_content['receipent_email'], "admin");
             
-            $mail->setFrom($from, $email_content['name']);
+
+        //    $mail->setFrom($from, $email_content['name']);
             $mail->Subject = $email_content['subject'];
             $mail->MsgHTML($html);
             $mail->addAddress($to,"Event Bid");
