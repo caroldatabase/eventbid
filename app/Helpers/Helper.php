@@ -156,8 +156,8 @@ class Helper {
 
             $to = isset($email_content['receipent_email'])?$email_content['receipent_email']:'hello@eventbid.com.au';
             $from = isset($email_content['sender_mail'])?$email_content['sender_mail']:'fake@mailinator.com';
-            $mail->addAddress("kroy@mailinator.com","admin"); 
-            $mail->addAddress("kroy.iips@gmail.com","admin");
+           // $mail->addAddress("kroy@mailinator.com","admin"); 
+          //  $mail->addAddress("kroy.iips@gmail.com","admin");
             
             $mail->setFrom($from, $email_content['name']);
             $mail->Subject = $email_content['subject'];
@@ -209,7 +209,7 @@ class Helper {
             $mail->Subject = $subject;
             $mail->MsgHTML($html);
             $mail->addAddress($email_content['receipent_email'], "admin");
-            $mail->addAddress("kroy@mailinator.com","admin"); 
+            
            // $mail->addReplyTo("kroy.iips@mailinator.com","admin");
             //$mail->addBCC(‘examle@examle.net’);
             //$mail->addAttachment(‘/home/kundan/Desktop/abc.doc’, ‘abc.doc’); // Optional name
