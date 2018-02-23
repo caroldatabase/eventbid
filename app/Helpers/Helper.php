@@ -138,7 +138,7 @@ class Helper {
     public  function sendMailContactUs($email_content, $template)
     {        
         $email_content['email'] = isset($email_content['receipent_email'])?$email_content['receipent_email']:'hello@eventbid.com'; 
-
+       // dd($email_content['data']);
         $mail = new PHPMailer;
         $html = view::make('emails.'.$template,['content' => $email_content['data']]);
         $html = $html->render(); 

@@ -22,11 +22,10 @@ table {
                         <p>Hello {{ (isset($content['notify']))?"":"Eventbid Team" }},</p>
                         <br> 
 
-                         {{ (isset($content['notify']))?"Thank you! We have registered your request.We will notify you soon.":"You have new notification request from ".$content['email'] }} 
+                         {{ (isset($content['notify']))?"Thank you! We have registered your request.We will notify you soon.":"You have new notification request from ".$content['email'] }} with category <b>{{ $content['category'] }} <b>.
 
-                          <p>Regards,</p>
-                          <br>  
-                          {{ (isset($content['notify']))?"Eventbid Team":$content['email'] }}
+                          <p>Regards,</p> 
+                          <p>{{ (isset($content['notify']))?"Eventbid Team":$content['email'] }}
                           </p> 
 
                   </div>
