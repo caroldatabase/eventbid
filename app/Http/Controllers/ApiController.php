@@ -494,12 +494,12 @@ class ApiController extends Controller {
         
         if($request->get('approveType')=="qualification"){
              $data = Addqualification::find($id);
-             $data->status = "approved";
+             $data->status = $request->get('status');
              $data->save();
              
         }elseif($request->get('approveType')=="insurance"){
              $data = Addinsurance::find($id);
-             $data->status = "approved";
+             $data->status = $request->get('status');
              $data->save();
         }
         
@@ -508,7 +508,7 @@ class ApiController extends Controller {
                         [
                             "status" =>1,
                             'code' => 200,
-                            "message" => "Status Approved successfully",
+                            "message" => "Status ".$request->get('status')." successfully",
                             'data' => $data
                         ]
         );
