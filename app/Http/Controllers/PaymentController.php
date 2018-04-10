@@ -47,18 +47,18 @@ class PaymentController extends Controller {
 
     private $user_id;
     
-    public $paypal_client_id = "ATdYXuRZyC3GlZNPHAYjC3XjUms9nP3h2GARTXHFfdOyHMhOwEQOguB5kQCsKBV9LQKhZ1k2RYIVQw6L"; //client ID
-    public $paypal_secret   = "EMYsuTV_9Fl8nwzUbMHmiHyVrP5TO5W-KEW3JosVRzNbvHNoKr37WYvho4P1uP4fDoBZE-ReAbR9EjW-"; //Secret ID
-    public $paymentUrl      = "https://api.sandbox.paypal.com/v1/payments/payment";
-    public $tokenUrl        = "https://api.sandbox.paypal.com/v1/oauth2/token";
-    public $saveCard        = "https://api.sandbox.paypal.com/v1/vault/credit-cards";
-    public $addCard         = "https://api.sandbox.paypal.com/v1/vault/credit-cards";
-    public $setUsername     = "rebecca-facilitator_api1.gmail.com";
-    public $setPassword     = "RVYLKA4M487FR8X4";
-    public $setSignature    = "AivFIBVgCVTqveMHIxh0lvPo5SscAe.iNcHFqMFm0vgEwQhQ0w6Wtl5N";
+    public $paypal_client_id = "AeOct_E2o6EKn1oipKd5ADSsdv0C2l03binyY8Q2KWM7YJTRxGpQoEQKjOhqfjzoRffcYXNfW1j1z2Sz"; //client ID
+    public $paypal_secret   = "EJmNtHYL_5PboxgZLNUekBMrJrevVE_TrDQ0Wjawmr_wOrOwX_DUzsft9qGDR5L3cMznbBep_WNei4pX"; //Secret ID
+    public $paymentUrl      = "https://api.paypal.com/v1/payments/payment";
+    public $tokenUrl        = "https://api.paypal.com/v1/oauth2/token";
+    public $saveCard        = "https://api.paypal.com/v1/vault/credit-cards";
+    public $addCard         = "https://api.paypal.com/v1/vault/credit-cards";
+    public $setUsername     = "rebecca_api1.eventbid.com.au";
+    public $setPassword     = "5R2C5C7GSACNLLNW";
+    public $setSignature    = "AUhHxxoHVJnXwS-zk7UF5Hg9I.HIAqhI2IsV.JLJMEpJ9Y0LXNjBoB61";
     public $appId           = "APP-80W284485P519543T";
-    public $paymentDetailUrl = "https://svcs.sandbox.paypal.com/AdaptivePayments/PaymentDetails";
-    public $payKeyUrl       = "https://svcs.sandbox.paypal.com/AdaptivePayments/Pay";
+    public $paymentDetailUrl = "https://svcs.paypal.com/AdaptivePayments/PaymentDetails";
+    public $payKeyUrl       = "https://svcs.paypal.com/AdaptivePayments/Pay";
     
     public function __construct(Request $request) {
 
