@@ -1059,7 +1059,18 @@ class ApiController extends Controller {
         $category_question = $request->get('category_question');
         if (isset($category_question) && is_array($category_question)) {
             $postTask->category_question = json_encode($request->get('category_question'));
+        } 
+
+        if ($request->get('ispaymentRelease')) {
+            $postTask->ispaymentRelease = $request->get('ispaymentRelease');
         }
+        if ($request->get('release_fund_transactionId')) {
+            $postTask->release_fund_transactionId = $request->get('release_fund_transactionId');
+        }
+ 
+
+
+
 
         $photo = $request->get('inspirationPhoto');
         $pic = 1;
