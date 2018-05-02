@@ -45,20 +45,22 @@ class PaymentController extends Controller {
     
      */
 
+ 
+
     private $user_id;
     
-    public $paypal_client_id = "AeOct_E2o6EKn1oipKd5ADSsdv0C2l03binyY8Q2KWM7YJTRxGpQoEQKjOhqfjzoRffcYXNfW1j1z2Sz"; //client ID
-    public $paypal_secret   = "EJmNtHYL_5PboxgZLNUekBMrJrevVE_TrDQ0Wjawmr_wOrOwX_DUzsft9qGDR5L3cMznbBep_WNei4pX"; //Secret ID
-    public $paymentUrl      = "https://api.paypal.com/v1/payments/payment";
-    public $tokenUrl        = "https://api.paypal.com/v1/oauth2/token";
-    public $saveCard        = "https://api.paypal.com/v1/vault/credit-cards";
-    public $addCard         = "https://api.paypal.com/v1/vault/credit-cards";
-    public $setUsername     = "rebecca_api1.eventbid.com.au";
-    public $setPassword     = "5R2C5C7GSACNLLNW";
-    public $setSignature    = "AUhHxxoHVJnXwS-zk7UF5Hg9I.HIAqhI2IsV.JLJMEpJ9Y0LXNjBoB61";
-    public $appId           = "APP-80W284485P519543T";
-    public $paymentDetailUrl = "https://svcs.paypal.com/AdaptivePayments/PaymentDetails";
-    public $payKeyUrl       = "https://svcs.paypal.com/AdaptivePayments/Pay";
+    public $paypal_client_id    = "AeOct_E2o6EKn1oipKd5ADSsdv0C2l03binyY8Q2KWM7YJTRxGpQoEQKjOhqfjzoRffcYXNfW1j1z2Sz"; //client ID
+    public $paypal_secret       = "EJmNtHYL_5PboxgZLNUekBMrJrevVE_TrDQ0Wjawmr_wOrOwX_DUzsft9qGDR5L3cMznbBep_WNei4pX"; //Secret ID
+    public $paymentUrl          = "https://api.paypal.com/v1/payments/payment";
+    public $tokenUrl            = "https://api.paypal.com/v1/oauth2/token";
+    public $saveCard            = "https://api.paypal.com/v1/vault/credit-cards";
+    public $addCard             = "https://api.paypal.com/v1/vault/credit-cards";
+    public $setUsername         = "rebecca_api1.eventbid.com.au";
+    public $setPassword         = "5R2C5C7GSACNLLNW";
+    public $setSignature        = "AUhHxxoHVJnXwS-zk7UF5Hg9I.HIAqhI2IsV.JLJMEpJ9Y0LXNjBoB61";
+    public $appId               = "APP-80W284485P519543T";
+    public $paymentDetailUrl    = "https://svcs.paypal.com/AdaptivePayments/PaymentDetails";
+    public $payKeyUrl           = "https://svcs.paypal.com/AdaptivePayments/Pay";
     
     public function __construct(Request $request) {
 
@@ -73,14 +75,16 @@ class PaymentController extends Controller {
     {
         $post_data = $request->all();
 
-        $validator = Validator::make($request->all(), [
-            'actionType'   => 'required',           
-            'currencyCode' => 'required',          
-            'receiverList' => 'required',
-            'returnUrl'    => 'required',
-            'cancelUrl'    => 'required',
-            'requestEnvelope'  => 'required'
-        ]); 
+        $validator = Validator::make($request->all(), 
+            [
+                'actionType'   => 'required',           
+                'currencyCode' => 'required',          
+                'receiverList' => 'required',
+                'returnUrl'    => 'required',
+                'cancelUrl'    => 'required',
+                'requestEnvelope'  => 'required'
+            ]
+        ); 
 
         if (isset($validator) && $validator->fails()) {
                          $error_msg  =   [];
@@ -252,6 +256,7 @@ class PaymentController extends Controller {
         ]); 
         
         if($request->get('saveCard')=="yes"){
+
             $addCard = $this->addCard($request);
            
             if($addCard['success']==false && ($addCard['code']!=201)){
@@ -368,17 +373,17 @@ class PaymentController extends Controller {
                              array_push($error_msg, $value);     
                          }
 
-                 return Response::json(array(
-                     'status' => 0,
-                     'code'   => 500,
-                     'message' => $error_msg,
-                     'data'  =>  $request->all()
+                return Response::json(array(
+                     'status'   =>  0,
+                     'code'     =>  500,
+                     'message'  =>  $error_msg,
+                     'data'     =>  $request->all()
                      )
-                 );
-             } 
-             $amount = sprintf("%.2f", $request->get('amount'));
+                );
+            } 
+            $amount = sprintf("%.2f", $request->get('amount'));
 
-             if($amount<1){
+            if($amount<1){
                 return Response::json(array(
                      'status' => 0,
                      'code'   => 500,
@@ -386,7 +391,7 @@ class PaymentController extends Controller {
                      'data'  =>  $request->all()
                      )
                  );
-             }
+            }
 
              try{ 
                  $task = PostTask::find($request->get('taskId'));
@@ -394,7 +399,7 @@ class PaymentController extends Controller {
                     return Response::json(array(
                          'status' => 0,
                          'code'   => 500,
-                         'message' => "Task ID is invalid!",
+                         'message' => "Task Id is invalid!",
                          'data'  =>  $request->all()
                          )
                      );
@@ -403,15 +408,15 @@ class PaymentController extends Controller {
                  $gateway->setUsername($this->setUsername);
                  $gateway->setPassword($this->setPassword);
                  $gateway->setSignature($this->setSignature); 
-                 $gateway->setTestMode( true ); 
+                 $gateway->setTestMode( false ); 
 
                  $card = new CreditCard(array(
-                     'firstName'             => $request->get('first_name'),
-                     'lastName'              => $request->get('last_name'),
-                     'number'                => $request->get('card_number'),
-                     'expiryMonth'           => $request->get('expire_month'),
-                     'expiryYear'            => $request->get('expire_year'),
-                     'cvv'                   => $request->get('cvv')
+                     'firstName'    => $request->get('first_name'),
+                     'lastName'     => $request->get('last_name'),
+                     'number'       => $request->get('card_number'),
+                     'expiryMonth'  => $request->get('expire_month'),
+                     'expiryYear'   => $request->get('expire_year'),
+                     'cvv'          => $request->get('cvv')
                  )); 
 
                  $transaction_paypal = $gateway->purchase(array(
@@ -424,16 +429,16 @@ class PaymentController extends Controller {
 
                  $response   = $transaction_paypal->send();
                  $data       = $response->getData(); 
-
+                 
                  // L_LONGMESSAGE0
                  if(isset($data['ACK']) && $data['ACK']=="Failure")
                  {
                          $transaction = new Transaction;
                          $transaction->firstName     = $request->get('first_name');
-                         $transaction->lastName 	= $request->get('last_name');
-                         $transaction->userId 	= $request->get('userId');
-                         $transaction->taskId 	= $request->get('taskId');
-                         $transaction->amount 	= $request->get('amount');
+                         $transaction->lastName 	 = $request->get('last_name');
+                         $transaction->userId 	     = $request->get('userId');
+                         $transaction->taskId 	     = $request->get('taskId');
+                         $transaction->amount 	     = $request->get('amount');
 
                          $transaction->cardDetails = json_encode($request->all());
                          $transaction->transactionDetails =  json_encode($data);
@@ -446,15 +451,16 @@ class PaymentController extends Controller {
                  if(isset($data['ACK']) && $data['ACK']=="Success")
                  {
                      $transaction = new Transaction;
-                     $transaction->firstName     = $request->get('first_name');
-                     $transaction->lastName 	= $request->get('last_name');
-                     $transaction->userId 	= $request->get('userId');
-                     $transaction->taskId 	= $request->get('taskId');
-                     $transaction->amount 	= $request->get('amount');
-                     $transaction->cardDetails = json_encode($request->except('card_number','cvv'));
+                     $transaction->firstName       = $request->get('first_name');
+                     $transaction->lastName 	   = $request->get('last_name');
+                     $transaction->userId 	       = $request->get('userId');
+                     $transaction->taskId 	       = $request->get('taskId');
+                     $transaction->amount 	       = $request->get('amount');
+                     $transaction->cardDetails     = json_encode($request->except('card_number','cvv'));
                      $transaction->transactionDetails =  json_encode($data);
-                     $transaction->transactionId =  $data['TRANSACTIONID'];
+                     $transaction->transactionId   =  $data['TRANSACTIONID'];
                      $transaction->save();
+
                      return ['status'=>1,'code'=>200,'message'=>$data['ACK'],'data'=>$data];
                  } 
 
