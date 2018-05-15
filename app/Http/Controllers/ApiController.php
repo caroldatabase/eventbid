@@ -1067,7 +1067,18 @@ class ApiController extends Controller {
         if ($request->get('release_fund_transactionId')) {
             $postTask->release_fund_transactionId = $request->get('release_fund_transactionId');
         }
- 
+
+         if ($request->get('isPaymentMade')) {
+            $postTask->isPaymentMade = $request->get('isPaymentMade');
+        }
+        if ($request->get('make_payment_transactionId')) {
+            $postTask->make_payment_transactionId = $request->get('make_payment_transactionId');
+        }
+        if ($request->get('transactionDetails')) {
+            $postTask->transactionDetails = $request->get('transactionDetails');
+        }
+        
+    
 
 
 
