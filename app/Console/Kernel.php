@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         // Commands\Inspire::class,
      Commands\AdminCommand::class,
      Commands\ControllerMakeCommand::class,
+     Commands\UpdateStatus::class,
      
      
         
@@ -30,7 +31,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('UpdateStatus')->daily();
     }
 }
