@@ -29,14 +29,16 @@ class UpdateStatus extends Command
      */
     public function handle()
     {
-        echo config('app.timezone');
+         
+        $d =  \Carbon\Carbon::parse(date('Y-m-d'))->format('Y-m-d');
 
-         DB::table('post_tasks')
-            ->where('date_required', '<',date('d-m-Y'))
-            ->where('task_status','open')
-            ->update(['task_status' => 'expired']);
+app/Console/Commands/UpdateStatus.php           $t = DB::table('post_tasks')
+                      ->where(DB::raw("STR_TO_DATE(date_required,'%d-%m-%Y')"),'<',$d )
+                      ->where('task_status','open')
+            ->update(['task_status'=>'expired']);
+ 
 
-        $this->info('status updated successfully '.date('Y-m-d'));
+        $this->info('current time zone' .config('app.timezone') .date('m-d-Y H:i:s A').' and status updated successfully on '.$d ." and total count= ".$t);
 
     }
 }
