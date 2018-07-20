@@ -32,7 +32,7 @@ class UpdateStatus extends Command
          
         $d =  \Carbon\Carbon::parse(date('Y-m-d'))->format('Y-m-d');
 
-app/Console/Commands/UpdateStatus.php           $t = DB::table('post_tasks')
+        $t = DB::table('post_tasks')
                       ->where(DB::raw("STR_TO_DATE(date_required,'%d-%m-%Y')"),'<',$d )
                       ->where('task_status','open')
             ->update(['task_status'=>'expired']);
